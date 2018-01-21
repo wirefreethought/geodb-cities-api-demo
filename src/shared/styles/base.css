@@ -1,0 +1,15 @@
+.endpoint-operation {
+  background-color: lavender;
+  padding: 8px;
+  width:100%;
+}
+
+.form-field {
+  padding:8px;
+}
+
+.form-button {
+  padding-left:8px;
+  padding-top:8px;
+  padding-bottom:16px;
+}
