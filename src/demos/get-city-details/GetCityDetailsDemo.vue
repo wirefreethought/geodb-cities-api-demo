@@ -9,7 +9,7 @@
       <div v-if="cityDetails" width="100%" class="form-field">
         <div v-if="cityDetails.region">State/Province/Region: {{cityDetails.region}}</div>
         <div>Location (latitude, longitude): {{cityDetails.location.latitude}}, {{cityDetails.location.longitude}}</div>
-        <div>Time-Zone: {{cityDetails.timezone | toHumanReadableTimeZone}}</div>
+        <div>Time-Zone: {{cityDetails.timezone | formatTimeZone}}</div>
         <div>Population: {{cityDetails.population}}</div>
         <div v-if="cityDetails.elevationMeters">Elevation (meters): {{cityDetails.elevationMeters}}</div>
       </div>
@@ -24,11 +24,13 @@
 <script>
   import CityAutocomplete from "../../shared/components/CityAutocomplete";
   import Config from "../../shared/scripts/config";
+  import DateTimeUtils from '../../shared/scripts/date-time-utils-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
     name: 'get-city-details-demo',
+    mixins: [DateTimeUtils],
     components: {
       CityAutocomplete
     },
@@ -45,15 +47,6 @@
           : this.baseEndpointOperation + "/{cityId}";
 
         return operation;
-      }
-    },
-    filters: {
-      toHumanReadableTimeZone: function (timeZone) {
-        if (!timeZone) {
-          return ''
-        }
-
-        return timeZone.replace('__', '/');
       }
     },
     methods: {

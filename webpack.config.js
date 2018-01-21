@@ -9,6 +9,7 @@ module.exports = {
     'geodb-find-cities-demo': './src/demos/find-cities/index.js',
     'geodb-find-nearby-cities-demo': './src/demos/find-nearby-cities/index.js',
     'geodb-get-city-details-demo': './src/demos/get-city-details/index.js',
+    'geodb-get-city-datetime-demo': './src/demos/get-city-datetime/index.js',
     'geodb-get-city-distance-demo': './src/demos/get-city-distance/index.js'
   },
   output: {
