@@ -10,7 +10,8 @@ module.exports = {
     'geodb-find-nearby-cities-demo': './src/demos/find-nearby-cities/index.js',
     'geodb-get-city-details-demo': './src/demos/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/demos/get-city-datetime/index.js',
-    'geodb-get-city-distance-demo': './src/demos/get-city-distance/index.js'
+    'geodb-get-city-distance-demo': './src/demos/get-city-distance/index.js',
+    'geodb-get-city-time-demo': './src/demos/get-city-time/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
