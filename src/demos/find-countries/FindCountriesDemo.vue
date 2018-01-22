@@ -7,7 +7,7 @@
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the country name" style="width:150px"/>
         </div>
         <div class="form-field">
-          <label>Currency Code</label><br/><input v-model="currencyCode" placeholder="Currency code"/>
+          <label>Currency</label><br/><input v-model="currencyCode" placeholder="Currency code"/>
         </div>
       </div>
       <div class="form-button">
@@ -47,7 +47,7 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
-        columns: ['name', 'code'],
+        columns: ['name', 'code', 'currency'],
 
         currentRequest: {},
 
@@ -95,7 +95,7 @@
             var _data = new Array();
 
             for (var country of response.data) {
-              _data.push(country);
+              _data.push({'name': country.name, 'code': country.code, 'currency': country.currencyCode});
             }
 
             self.count = response.metadata.totalCount;
