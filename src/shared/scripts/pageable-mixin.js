@@ -8,7 +8,7 @@ export default {
     }
   },
   computed: {
-    offset() {
+    offset: function() {
       return this.currentPage * this.pageSize;
     }
   },

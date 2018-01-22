@@ -14,7 +14,7 @@
           </span>
           <span v-else>&nbsp</span>
 
-          <span>Results: {{count}}</span>
+          <span>Page {{currentPage + 1}} of {{count / pageSize | roundUp}}</span>
 
           <span v-if="!atLastPage()">
             <a @click="onNextPage">Next</a> | <a @click="onLastPage">Last</a>
@@ -85,9 +85,17 @@
         default: '100%'
       }
     },
+    computed: {
+      lastPage: function() {
+        return Math.floor((this.count / this.pageSize) + 0.5) - 1;
+      }
+    },
     filters: {
       capitalize: function (str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      roundUp: function (value) {
+        return Math.floor(value + 0.5);
       }
     },
     methods: {
@@ -95,13 +103,13 @@
         return this.currentPage === 0;
       },
       atLastPage: function() {
-        return this.currentPage === ((this.count / this.pageSize) - 1);
+        return this.currentPage === this.lastPage;
       },
       onFirstPage: function() {
         this.$emit("pageChanged", 0);
       },
       onLastPage: function() {
-        this.$emit("pageChanged", (this.count / this.pageSize) - 1);
+        this.$emit("pageChanged", this.lastPage);
       },
       onNextPage: function() {
         this.$emit("pageChanged", this.currentPage + 1);

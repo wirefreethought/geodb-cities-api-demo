@@ -7,6 +7,7 @@ var CompressionPlugin = require("compression-webpack-plugin")
 module.exports = {
   entry: {
     'geodb-find-cities-demo': './src/demos/find-cities/index.js',
+    'geodb-find-countries-demo': './src/demos/find-countries/index.js',
     'geodb-find-nearby-cities-demo': './src/demos/find-nearby-cities/index.js',
     'geodb-get-city-details-demo': './src/demos/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/demos/get-city-datetime/index.js',
