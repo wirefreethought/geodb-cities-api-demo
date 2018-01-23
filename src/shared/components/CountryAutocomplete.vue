@@ -1,14 +1,14 @@
 <template>
   <autocomplete
-    :options="currentCityResults"
-    placeholder="Enter city..."
+    :options="currentCountryResults"
+    placeholder="Enter country..."
     width="250px"
     @input="onNamePrefixChanged"
-    @select="onCitySelected">
-    <template slot="item" scope="city">
+    @select="onCountrySelected">
+    <template slot="item" scope="country">
       <div class="media">
         <p>
-          <strong>{{ city.title }}</strong>
+          <strong>{{ country.title }}</strong>
         </p>
       </div>
     </template>
@@ -23,39 +23,35 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'city-autocomplete',
+    name: 'country-autocomplete',
     components: {
       Autocomplete
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
-        currentCityResults: []
+        baseEndpointOperation: 'GET /v1/geo/countries',
+        currentCountryResults: []
       }
     },
     methods: {
       onNamePrefixChanged(prefix) {
         var self = this;
 
-        geoApi.findCitiesUsingGET({
+        geoApi.getCountriesUsingGET({
           'namePrefix': prefix,
           'limit': 5,
           'offset': 0
         }).then(
           function (data) {
-            var response = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var response = Config.GEO_DB.CountriesResponse.constructFromObject(data);
 
             var _results = new Array();
 
-            for (var city of response.data) {
-              var fullCityName = city.regionCode
-                ? city.city + ", " + city.regionCode + ", " + city.countryCode
-                :  city.city + ", " + city.countryCode;
-
-              _results.push({id: city.id, name: fullCityName});
+            for (var country of response.data) {
+              _results.push({code: country.code, name: country.name});
             }
 
-            self.currentCityResults = _results;
+            self.currentCountryResults = _results;
           },
 
           function (error) {
@@ -63,8 +59,8 @@
           }
         );
       },
-      onCitySelected(city) {
-        this.$emit("onCitySelected", city);
+      onCountrySelected(country) {
+        this.$emit("onCountrySelected", country);
       }
     }
   }

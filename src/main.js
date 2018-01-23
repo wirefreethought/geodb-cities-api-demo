@@ -22,6 +22,7 @@ import GetCityDetailsDemo from './components/get-city-details/GetCityDetailsDemo
 import GetCityDistanceDemo from './components/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/get-city-datetime/GetCityDateTimeDemo';
 import GetCityTimeDemo from './components/get-city-time/GetCityTimeDemo';
+import GetCountryDetailsDemo from './components/get-country-details/GetCountryDetailsDemo';
 import FindCountriesDemo from './components/find-countries/FindCountriesDemo';
 
 import App from './App'
@@ -47,7 +48,6 @@ const router = new VueRouter({
     {
       path: '/find-cities',
       component: FindCitiesDemo
-
     },
     {
       path: '/find-nearby-cities',
@@ -72,6 +72,10 @@ const router = new VueRouter({
     {
       path: '/find-countries',
       component: FindCountriesDemo
+    },
+    {
+      path: '/get-country-details',
+      component: GetCountryDetailsDemo
     }]
 })
 

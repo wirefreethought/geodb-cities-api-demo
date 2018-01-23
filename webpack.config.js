@@ -15,7 +15,8 @@ module.exports = {
     'geodb-get-city-details-demo': './src/components/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/components/get-city-datetime/index.js',
     'geodb-get-city-distance-demo': './src/components/get-city-distance/index.js',
-    'geodb-get-city-time-demo': './src/components/get-city-time/index.js'
+    'geodb-get-city-time-demo': './src/components/get-city-time/index.js',
+    'geodb-get-country-details-demo': './src/components/get-country-details/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),

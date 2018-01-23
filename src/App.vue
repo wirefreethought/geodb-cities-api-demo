@@ -84,6 +84,11 @@
             title: 'Find Countries',
             action: '/find-countries'
           },
+          {
+            icon: 'widgets',
+            title: 'Get Country Details',
+            action: '/get-country-details'
+          }
         ],
         miniVariant: false,
         right: true,
