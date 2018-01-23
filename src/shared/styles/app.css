@@ -1,0 +1,96 @@
+body {
+  font: normal 15px 'Libre Franklin';
+  color: #333;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #505050;
+}
+
+h1, h2, h3 {
+  margin: 10px 0 10px 0;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #707070;
+  text-decoration: none;
+}
+
+h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+  color: #707070;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  color: #333;
+}
+
+a, a:visited {
+  color: #AE880F;;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+a img {
+  border: none;
+}
+
+ul {
+  list-style-type: square;
+}
+
+ul, ol {
+  padding-left: 25px;
+}
+
+ul ul, ol ol {
+  padding-left: 25px;
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  display: inline-block;
+  margin: 0;
+  line-height: 1;
+  height: 100%;
+}
+
+input {
+  min-height: 25px
+}
+
+input, textarea, select {
+  font: normal 15px 'Libre Franklin';
+  border: none;
+  color: #222;
+  border: 2px solid #ccc;
+}
+
+button, input.form_field_submit_button {
+  padding: 10px 15px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background: #111;
+  background: -moz-linear-gradient(top, #474747 0%, #000000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #474747), color-stop(100%, #000000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #474747 0%, #000000 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #474747 0%, #000000 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #474747 0%, #000000 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #474747 0%, #000000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#474747', endColorstr='#000000', GradientType=0); /* IE6-9 */
+  border-top: 1px solid #333;
+}
+
+button:hover, input.form_field_submit_button:hover {
+  background: #474747;
+  color: #fff;
+  border-color: #474747;
+}
+
+select {
+  padding: 6px;
+}

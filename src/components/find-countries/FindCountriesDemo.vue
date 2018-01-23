@@ -27,7 +27,7 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/base.css";
+  @import "../../shared/styles/component.css";
 </style>
 
 <script>

@@ -41,6 +41,10 @@
   </v-app>
 </template>
 
+<style scoped>
+  @import './shared/styles/app.css';
+</style>
+
 <script>
   export default {
     data() {

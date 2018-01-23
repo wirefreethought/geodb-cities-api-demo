@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+        <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/base.css";
+  @import "../../shared/styles/component.css";
 </style>
 
 <script>
