@@ -1,23 +1,36 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var resolve = (p) => path.resolve(__dirname, p);
+
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
   entry: {
-    'geodb-find-cities-demo': './src/demos/find-cities/index.js',
-    'geodb-find-countries-demo': './src/demos/find-countries/index.js',
-    'geodb-find-nearby-cities-demo': './src/demos/find-nearby-cities/index.js',
-    'geodb-get-city-details-demo': './src/demos/get-city-details/index.js',
-    'geodb-get-city-datetime-demo': './src/demos/get-city-datetime/index.js',
-    'geodb-get-city-distance-demo': './src/demos/get-city-distance/index.js',
-    'geodb-get-city-time-demo': './src/demos/get-city-time/index.js'
+    'geodb-demo': './src/main.js',
+    'geodb-find-cities-demo': './src/components/find-cities/index.js',
+    'geodb-find-countries-demo': './src/components/find-countries/index.js',
+    'geodb-find-nearby-cities-demo': './src/components/find-nearby-cities/index.js',
+    'geodb-get-city-details-demo': './src/components/get-city-details/index.js',
+    'geodb-get-city-datetime-demo': './src/components/get-city-datetime/index.js',
+    'geodb-get-city-distance-demo': './src/components/get-city-distance/index.js',
+    'geodb-get-city-time-demo': './src/components/get-city-time/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: '[name].js'
+  },
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ],
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      'public': resolve('./public')
+    }
   },
   module: {
     rules: [
@@ -32,13 +45,18 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: {
+            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+            // the "scss" and "sass" values for the lang attribute to the right configs here.
+            // other preprocessors should work out of the box, no loader config like this necessary.
+            'scss': 'vue-style-loader!css-loader!sass-loader',
+            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
           }
-          // other vue-loader options go here
         }
       },
       {
@@ -50,19 +68,14 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]'
+          objectAssign: 'Object.assign'
         }
+      },
+      {
+        test: /\.styl$/,
+        loader: ['style-loader', 'css-loader', 'stylus-loader']
       }
     ]
-  },
-  plugins: [
-    new BundleAnalyzerPlugin()
-  ],
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    },
-    extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
     historyApiFallback: true,
