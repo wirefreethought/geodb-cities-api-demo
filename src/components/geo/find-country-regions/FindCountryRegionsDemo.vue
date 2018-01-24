@@ -30,15 +30,15 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CountryAutocomplete from '../../shared/components/CountryAutocomplete';
-  import DataTable from '../../shared/components/DataTable';
+  import CountryAutocomplete from '../../../shared/components/CountryAutocomplete';
+  import DataTable from '../../../shared/components/DataTable';
 
-  import Config from "../../shared/scripts/config";
-  import PageableMixin from '../../shared/scripts/pageable-mixin';
+  import Config from "../../../shared/scripts/config";
+  import PageableMixin from '../../../shared/scripts/pageable-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
@@ -62,14 +62,16 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset;
+        var operation = this.baseEndpointOperation;
 
         operation = this.countryCode
           ? operation += "/" + this.countryCode + "/regions"
           : operation += "/{countryCode}/regions";
 
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
+
         if (this.namePrefix) {
-          operation += "?namePrefix=" + encodeURIComponent(this.namePrefix);
+          operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
         }
 
         return operation;

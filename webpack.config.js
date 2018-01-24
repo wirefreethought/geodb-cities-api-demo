@@ -8,17 +8,22 @@ var CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
   entry: {
+    // Geo Demos
     'geodb-demo': './src/main.js',
-    'geodb-find-cities-demo': './src/components/find-cities/index.js',
-    'geodb-find-countries-demo': './src/components/find-countries/index.js',
-    'geodb-find-country-regions-demo': './src/components/find-country-regions/index.js',
-    'geodb-find-country-region-cities-demo': './src/components/find-country-region-cities/index.js',
-    'geodb-find-nearby-cities-demo': './src/components/find-nearby-cities/index.js',
-    'geodb-get-city-details-demo': './src/components/get-city-details/index.js',
-    'geodb-get-city-datetime-demo': './src/components/get-city-datetime/index.js',
-    'geodb-get-city-distance-demo': './src/components/get-city-distance/index.js',
-    'geodb-get-city-time-demo': './src/components/get-city-time/index.js',
-    'geodb-get-country-details-demo': './src/components/get-country-details/index.js'
+    'geodb-find-cities-demo': './src/components/geo/find-cities/index.js',
+    'geodb-find-countries-demo': './src/components/geo/find-countries/index.js',
+    'geodb-find-country-regions-demo': './src/components/geo/find-country-regions/index.js',
+    'geodb-find-country-region-cities-demo': './src/components/geo/find-country-region-cities/index.js',
+    'geodb-find-nearby-cities-demo': './src/components/geo/find-nearby-cities/index.js',
+    'geodb-get-city-details-demo': './src/components/geo/get-city-details/index.js',
+    'geodb-get-city-datetime-demo': './src/components/geo/get-city-datetime/index.js',
+    'geodb-get-city-distance-demo': './src/components/geo/get-city-distance/index.js',
+    'geodb-get-city-time-demo': './src/components/geo/get-city-time/index.js',
+    'geodb-get-country-details-demo': './src/components/geo/get-country-details/index.js',
+
+    // Locale Demos
+    'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js'
+
   },
   output: {
     path: path.resolve(__dirname, './dist'),

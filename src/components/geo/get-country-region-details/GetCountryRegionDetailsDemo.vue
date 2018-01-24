@@ -21,14 +21,14 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CountryAutocomplete from '../../shared/components/CountryAutocomplete';
-  import RegionAutocomplete from '../../shared/components/RegionAutocomplete';
+  import CountryAutocomplete from '../../../shared/components/CountryAutocomplete';
+  import RegionAutocomplete from '../../../shared/components/RegionAutocomplete';
 
-  import Config from "../../shared/scripts/config";
+  import Config from "../../../shared/scripts/config";
 
   const geoApi = new Config.GEO_DB.GeoApi();
 

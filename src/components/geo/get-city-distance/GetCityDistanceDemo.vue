@@ -21,12 +21,12 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CityAutocomplete from "../../shared/components/CityAutocomplete";
-  import Config from "../../shared/scripts/config";
+  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+  import Config from "../../../shared/scripts/config";
 
   const geoApi = new Config.GEO_DB.GeoApi();
 

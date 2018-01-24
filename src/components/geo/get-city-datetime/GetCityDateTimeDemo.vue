@@ -1,5 +1,5 @@
 <template>
-  <div id="get-city-time-demo">
+  <div id="get-city-datetime-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
@@ -7,9 +7,9 @@
           <label>City</label>
           <city-autocomplete @onCitySelected="onCitySelected($event)"/>
         </div>
-        <div v-if="time" class="form-field">
-          <label>Time</label>
-          <div>{{time}}</div>
+        <div v-if="dateTime" class="form-field">
+          <label>Date-Time (ISO8601)</label>
+          <div>{{dateTime | formatDateTime}}</div>
         </div>
       </div>
     </div>
@@ -17,13 +17,13 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CityAutocomplete from "../../shared/components/CityAutocomplete";
-  import Config from "../../shared/scripts/config";
-  import DateTimeUtils from '../../shared/scripts/date-time-utils-mixin';
+  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+  import Config from "../../../shared/scripts/config";
+  import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
@@ -38,26 +38,26 @@
         baseEndpointOperation: 'GET /v1/geo/cities',
 
         cityId: null,
-        time: null
+        dateTime: null
       }
     },
     computed: {
       endpointOperation() {
         var operation = this.cityId
-          ? this.baseEndpointOperation + "/" + this.cityId + "/time"
-          : this.baseEndpointOperation + "/{cityId}/time";
+          ? this.baseEndpointOperation + "/" + this.cityId + "/dateTime"
+          : this.baseEndpointOperation + "/{cityId}/dateTime";
 
         return operation;
       }
     },
     methods: {
-      updateTime() {
+      updateDateTime() {
         if (this.cityId) {
           var self = this;
 
-          geoApi.getCityTimeUsingGET(this.cityId).then(
+          geoApi.getCityDateTimeUsingGET(this.cityId).then(
               function (data) {
-                self.time = data.data;
+                self.dateTime = data.data;
               },
 
               function (error) {
@@ -65,7 +65,7 @@
               }
           );
         } else {
-          this.time = null;
+          this.dateTime = null;
         }
       },
       onCitySelected(city) {
@@ -74,7 +74,7 @@
     },
     watch: {
       cityId: function() {
-        this.updateTime();
+        this.updateDateTime();
       }
     }
   }

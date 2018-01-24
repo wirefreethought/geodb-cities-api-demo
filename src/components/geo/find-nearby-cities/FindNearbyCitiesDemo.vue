@@ -31,15 +31,15 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import DataTable from '../../shared/components/DataTable';
-  import CityAutocomplete from "../../shared/components/CityAutocomplete";
+  import DataTable from '../../../shared/components/DataTable';
+  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
 
-  import Config from "../../shared/scripts/config";
-  import PageableMixin from '../../shared/scripts/pageable-mixin';
+  import Config from "../../../shared/scripts/config";
+  import PageableMixin from '../../../shared/scripts/pageable-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 

@@ -18,13 +18,13 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CityAutocomplete from "../../shared/components/CityAutocomplete";
-  import Config from "../../shared/scripts/config";
-  import DateTimeUtils from '../../shared/scripts/date-time-utils-mixin';
+  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+  import Config from "../../../shared/scripts/config";
+  import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 

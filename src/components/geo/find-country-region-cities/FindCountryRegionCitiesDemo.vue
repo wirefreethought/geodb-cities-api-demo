@@ -32,16 +32,16 @@
 </template>
 
 <style scoped>
-  @import "../../shared/styles/component.css";
+  @import "../../../shared/styles/component.css";
 </style>
 
 <script>
-  import CountryAutocomplete from "../../shared/components/CountryAutocomplete";
-  import DataTable from '../../shared/components/DataTable';
-  import RegionAutocomplete from "../../shared/components/RegionAutocomplete";
+  import CountryAutocomplete from "../../../shared/components/CountryAutocomplete";
+  import DataTable from '../../../shared/components/DataTable';
+  import RegionAutocomplete from "../../../shared/components/RegionAutocomplete";
 
-  import Config from "../../shared/scripts/config";
-  import PageableMixin from '../../shared/scripts/pageable-mixin';
+  import Config from "../../../shared/scripts/config";
+  import PageableMixin from '../../../shared/scripts/pageable-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
 

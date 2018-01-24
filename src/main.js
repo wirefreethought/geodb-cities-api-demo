@@ -16,17 +16,19 @@ import {
   transitions
 } from 'vuetify';
 
-import FindCitiesDemo from './components/find-cities/FindCitiesDemo';
-import FindNearbyCitiesDemo from './components/find-nearby-cities/FindNearbyCitiesDemo';
-import GetCityDetailsDemo from './components/get-city-details/GetCityDetailsDemo';
-import GetCityDistanceDemo from './components/get-city-distance/GetCityDistanceDemo';
-import GetCityDateTimeDemo from './components/get-city-datetime/GetCityDateTimeDemo';
-import GetCityTimeDemo from './components/get-city-time/GetCityTimeDemo';
-import GetCountryDetailsDemo from './components/get-country-details/GetCountryDetailsDemo';
-import GetCountryRegionDetailsDemo from './components/get-country-region-details/GetCountryRegionDetailsDemo';
-import FindCountriesDemo from './components/find-countries/FindCountriesDemo';
-import FindCountryRegionsDemo from './components/find-country-regions/FindCountryRegionsDemo';
-import FindCountryRegionCitiesDemo from './components/find-country-region-cities/FindCountryRegionCitiesDemo';
+import FindCitiesDemo from './components/geo/find-cities/FindCitiesDemo';
+import FindNearbyCitiesDemo from './components/geo/find-nearby-cities/FindNearbyCitiesDemo';
+import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
+import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
+import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';
+import GetCityTimeDemo from './components/geo/get-city-time/GetCityTimeDemo';
+import GetCountryDetailsDemo from './components/geo/get-country-details/GetCountryDetailsDemo';
+import GetCountryRegionDetailsDemo from './components/geo/get-country-region-details/GetCountryRegionDetailsDemo';
+import FindCountriesDemo from './components/geo/find-countries/FindCountriesDemo';
+import FindCountryRegionsDemo from './components/geo/find-country-regions/FindCountryRegionsDemo';
+import FindCountryRegionCitiesDemo from './components/geo/find-country-region-cities/FindCountryRegionCitiesDemo';
+
+import FindCurrenciesDemo from './components/locale/find-currencies/FindCurrenciesDemo';
 
 import App from './App'
 
@@ -91,6 +93,10 @@ const router = new VueRouter({
     {
       path: '/find-country-region-cities',
       component: FindCountryRegionCitiesDemo
+    },
+    {
+      path: '/find-currencies',
+      component: FindCurrenciesDemo
     }]
 })
 

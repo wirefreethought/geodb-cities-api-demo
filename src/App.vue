@@ -107,6 +107,11 @@
             icon: 'widgets',
             title: 'Find Region Cities',
             action: '/find-country-region-cities'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Currencies',
+            action: '/find-currencies'
           }
         ],
         miniVariant: false,
