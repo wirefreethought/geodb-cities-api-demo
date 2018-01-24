@@ -24,6 +24,7 @@ import GetCityDateTimeDemo from './components/get-city-datetime/GetCityDateTimeD
 import GetCityTimeDemo from './components/get-city-time/GetCityTimeDemo';
 import GetCountryDetailsDemo from './components/get-country-details/GetCountryDetailsDemo';
 import FindCountriesDemo from './components/find-countries/FindCountriesDemo';
+import FindCountryRegionsDemo from './components/find-country-regions/FindCountryRegionsDemo';
 
 import App from './App'
 
@@ -76,6 +77,10 @@ const router = new VueRouter({
     {
       path: '/get-country-details',
       component: GetCountryDetailsDemo
+    },
+    {
+      path: '/find-country-regions',
+      component: FindCountryRegionsDemo
     }]
 })
 

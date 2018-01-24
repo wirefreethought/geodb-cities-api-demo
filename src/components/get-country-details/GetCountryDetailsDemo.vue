@@ -21,6 +21,7 @@
 
 <script>
   import CountryAutocomplete from "../../shared/components/CountryAutocomplete";
+
   import Config from "../../shared/scripts/config";
 
   const geoApi = new Config.GEO_DB.GeoApi();

@@ -11,6 +11,7 @@ module.exports = {
     'geodb-demo': './src/main.js',
     'geodb-find-cities-demo': './src/components/find-cities/index.js',
     'geodb-find-countries-demo': './src/components/find-countries/index.js',
+    'geodb-find-country-regions-demo': './src/components/find-country-regions/index.js',
     'geodb-find-nearby-cities-demo': './src/components/find-nearby-cities/index.js',
     'geodb-get-city-details-demo': './src/components/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/components/get-city-datetime/index.js',
