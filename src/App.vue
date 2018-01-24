@@ -97,6 +97,11 @@
             icon: 'widgets',
             title: 'Find Country Regions',
             action: '/find-country-regions'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Region Details',
+            action: '/get-country-region-details'
           }
         ],
         miniVariant: false,

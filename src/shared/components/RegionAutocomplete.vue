@@ -1,14 +1,14 @@
 <template>
   <autocomplete
     :options="currentResults"
-    placeholder="Enter country..."
+    placeholder="Enter region..."
     width="250px"
     @input="onNamePrefixChanged"
-    @select="onCountrySelected">
-    <template slot="item" scope="country">
+    @select="onRegionSelected">
+    <template slot="item" scope="region">
       <div class="media">
         <p>
-          <strong>{{ country.title }}</strong>
+          <strong>{{ region.title }}</strong>
         </p>
       </div>
     </template>
@@ -23,9 +23,15 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'country-autocomplete',
+    name: 'region-autocomplete',
     components: {
       Autocomplete
+    },
+    props: {
+      countryCode: {
+        type: String,
+        required: true
+      }
     },
     data() {
       return {
@@ -36,18 +42,18 @@
       onNamePrefixChanged(prefix) {
         var self = this;
 
-        geoApi.getCountriesUsingGET({
+        geoApi.getRegionsUsingGET(this.countryCode, {
           'namePrefix': prefix,
           'limit': 5,
           'offset': 0
         }).then(
           function (data) {
-            var response = Config.GEO_DB.CountriesResponse.constructFromObject(data);
+            var response = Config.GEO_DB.RegionsResponse.constructFromObject(data);
 
             var _results = new Array();
 
-            for (var country of response.data) {
-              _results.push({code: country.code, name: country.name});
+            for (var region of response.data) {
+              _results.push({code: region.isoCode, name: region.name});
             }
 
             self.currentResults = _results;
@@ -58,8 +64,8 @@
           }
         );
       },
-      onCountrySelected(country) {
-        this.$emit("onCountrySelected", country);
+      onRegionSelected(region) {
+        this.$emit("onRegionSelected", region);
       }
     }
   }

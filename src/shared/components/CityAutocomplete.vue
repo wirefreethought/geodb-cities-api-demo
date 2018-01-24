@@ -1,6 +1,6 @@
 <template>
   <autocomplete
-    :options="currentCityResults"
+    :options="currentResults"
     placeholder="Enter city..."
     width="250px"
     @input="onNamePrefixChanged"
@@ -29,8 +29,7 @@
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
-        currentCityResults: []
+        currentResults: []
       }
     },
     methods: {
@@ -55,7 +54,7 @@
               _results.push({id: city.id, name: fullCityName});
             }
 
-            self.currentCityResults = _results;
+            self.currentResults = _results;
           },
 
           function (error) {

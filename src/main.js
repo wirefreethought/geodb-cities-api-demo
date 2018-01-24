@@ -23,6 +23,7 @@ import GetCityDistanceDemo from './components/get-city-distance/GetCityDistanceD
 import GetCityDateTimeDemo from './components/get-city-datetime/GetCityDateTimeDemo';
 import GetCityTimeDemo from './components/get-city-time/GetCityTimeDemo';
 import GetCountryDetailsDemo from './components/get-country-details/GetCountryDetailsDemo';
+import GetCountryRegionDetailsDemo from './components/get-country-region-details/GetCountryRegionDetailsDemo';
 import FindCountriesDemo from './components/find-countries/FindCountriesDemo';
 import FindCountryRegionsDemo from './components/find-country-regions/FindCountryRegionsDemo';
 
@@ -81,6 +82,10 @@ const router = new VueRouter({
     {
       path: '/find-country-regions',
       component: FindCountryRegionsDemo
+    },
+    {
+      path: '/get-country-region-details',
+      component: GetCountryRegionDetailsDemo
     }]
 })
 

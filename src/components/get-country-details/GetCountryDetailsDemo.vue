@@ -27,13 +27,13 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'get-city-details-demo',
+    name: 'get-country-details-demo',
     components: {
       CountryAutocomplete
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/geo/countries',
         countryDetails: null
       }
     },
