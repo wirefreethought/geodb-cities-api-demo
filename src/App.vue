@@ -60,8 +60,33 @@
           },
           {
             icon: 'widgets',
+            title: 'Find Countries',
+            action: '/find-countries'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Country Regions',
+            action: '/find-country-regions'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Currencies',
+            action: '/find-currencies'
+          },
+          {
+            icon: 'widgets',
             title: 'Find Nearby Cities',
             action: '/find-nearby-cities'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Region Cities',
+            action: '/find-country-region-cities'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get City Date-Time',
+            action: '/get-city-datetime'
           },
           {
             icon: 'widgets',
@@ -75,18 +100,8 @@
           },
           {
             icon: 'widgets',
-            title: 'Get City Date-Time',
-            action: '/get-city-datetime'
-          },
-          {
-            icon: 'widgets',
             title: 'Get City Time',
             action: '/get-city-time'
-          },
-          {
-            icon: 'widgets',
-            title: 'Find Countries',
-            action: '/find-countries'
           },
           {
             icon: 'widgets',
@@ -95,28 +110,13 @@
           },
           {
             icon: 'widgets',
-            title: 'Find Country Regions',
-            action: '/find-country-regions'
+            title: 'Get Locales',
+            action: '/get-locales'
           },
           {
             icon: 'widgets',
             title: 'Get Region Details',
             action: '/get-country-region-details'
-          },
-          {
-            icon: 'widgets',
-            title: 'Find Region Cities',
-            action: '/find-country-region-cities'
-          },
-          {
-            icon: 'widgets',
-            title: 'Find Currencies',
-            action: '/find-currencies'
-          },
-          {
-            icon: 'widgets',
-            title: 'Get Locales',
-            action: '/get-locales'
           },
           {
             icon: 'widgets',

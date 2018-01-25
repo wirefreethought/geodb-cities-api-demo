@@ -20,6 +20,7 @@ module.exports = {
     'geodb-get-city-distance-demo': './src/components/geo/get-city-distance/index.js',
     'geodb-get-city-time-demo': './src/components/geo/get-city-time/index.js',
     'geodb-get-country-details-demo': './src/components/geo/get-country-details/index.js',
+    'geodb-get-country-region-details-demo': './src/components/geo/get-country-region-details/index.js',
 
     // Locale Demos
     'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js',
