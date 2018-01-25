@@ -29,6 +29,7 @@ import FindCountryRegionsDemo from './components/geo/find-country-regions/FindCo
 import FindCountryRegionCitiesDemo from './components/geo/find-country-region-cities/FindCountryRegionCitiesDemo';
 
 import FindCurrenciesDemo from './components/locale/find-currencies/FindCurrenciesDemo';
+import GetLocalesDemo from './components/locale/get-locales/GetLocalesDemo';
 
 import App from './App'
 
@@ -97,6 +98,10 @@ const router = new VueRouter({
     {
       path: '/find-currencies',
       component: FindCurrenciesDemo
+    },
+    {
+      path: '/get-locales',
+      component: GetLocalesDemo
     }]
 })
 

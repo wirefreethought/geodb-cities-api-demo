@@ -22,8 +22,8 @@ module.exports = {
     'geodb-get-country-details-demo': './src/components/geo/get-country-details/index.js',
 
     // Locale Demos
-    'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js'
-
+    'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js',
+    'geodb-get-locales-demo': './src/components/locale/get-locales/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),

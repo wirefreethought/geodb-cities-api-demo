@@ -112,6 +112,11 @@
             icon: 'widgets',
             title: 'Find Currencies',
             action: '/find-currencies'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Locales',
+            action: '/get-locales'
           }
         ],
         miniVariant: false,

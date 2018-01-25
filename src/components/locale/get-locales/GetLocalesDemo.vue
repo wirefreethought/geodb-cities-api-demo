@@ -1,5 +1,5 @@
 <template>
-  <div id="find-currencies">
+  <div id="get-locales">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -28,15 +28,15 @@
   const localeApi = new Config.GEO_DB.LocaleApi();
 
   export default {
-    name: 'find-currencies',
+    name: 'get-locales',
     mixins: [PageableMixin],
     components: {
       DataTable
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/locale/currencies',
-        columns: ['code', 'countries'],
+        baseEndpointOperation: 'GET /v1/locale/locales',
+        columns: ['code'],
 
         currentRequest: {},
 
@@ -63,16 +63,10 @@
           'offset': this.offset
         }).then(
           function(data) {
-            var response = Config.GEO_DB.CurrenciesResponse.constructFromObject(data);
-
-            var _data = new Array();
-
-            for (var currency of response.data) {
-              _data.push({'code': currency.code, 'countries': currency.countryCodes.join(", ")});
-            }
+            var response = Config.GEO_DB.LocalesResponse.constructFromObject(data);
 
             self.count = response.metadata.totalCount;
-            self.currentPageData = _data;
+            self.currentPageData = response.data;
           },
 
           function(error) {
