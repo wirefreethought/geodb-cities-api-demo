@@ -1,5 +1,5 @@
 <template>
-  <div id="get-city-time-demo">
+  <div id="get-timezone-datetime-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
@@ -26,36 +26,52 @@
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
+  const localeApi = new Config.GEO_DB.LocaleApi();
 
   export default {
-    name: 'get-city-datetime-demo',
+    name: 'get-timezone-datetime-demo',
     mixins: [DateTimeUtils],
     components: {
       CityAutocomplete
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/locale/timezones',
 
-        cityId: null,
+        zoneId: null,
         time: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.cityId
-          ? this.baseEndpointOperation + "/" + this.cityId + "/time"
-          : this.baseEndpointOperation + "/{cityId}/time";
+        var operation = this.zoneId
+          ? this.baseEndpointOperation + "/" + this.zoneId + "/time"
+          : this.baseEndpointOperation + "/{zoneId}/time";
 
         return operation;
       }
     },
     methods: {
+      onCitySelected(city) {
+        var self = this;
+
+        geoApi.getCityUsingGET(city.id).then(
+          function (data) {
+            var response = Config.GEO_DB.CityResponse.constructFromObject(data);
+
+            self.zoneId = response.data.timezone;
+          },
+
+          function (error) {
+            console.error(error);
+          }
+        );
+      },
       updateTime() {
-        if (this.cityId) {
+        if (this.zoneId) {
           var self = this;
 
-          geoApi.getCityTimeUsingGET(this.cityId).then(
+          localeApi.getTimeZoneTimeUsingGET(this.zoneId).then(
               function (data) {
                 self.time = data.data;
               },
@@ -67,13 +83,10 @@
         } else {
           this.time = null;
         }
-      },
-      onCitySelected(city) {
-        this.cityId = city.id;
       }
     },
     watch: {
-      cityId: function() {
+      zoneId: function() {
         this.updateTime();
       }
     }

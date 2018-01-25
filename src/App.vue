@@ -127,6 +127,11 @@
             icon: 'widgets',
             title: 'Get Time-Zone Date-Time',
             action: '/get-timezone-datetime'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Time-Zone Time',
+            action: '/get-timezone-time'
           }
         ],
         miniVariant: false,
