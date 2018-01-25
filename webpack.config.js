@@ -24,7 +24,8 @@ module.exports = {
     // Locale Demos
     'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js',
     'geodb-get-locales-demo': './src/components/locale/get-locales/index.js',
-    'geodb-get-timezones-demo': './src/components/locale/get-timezones/index.js'
+    'geodb-get-timezones-demo': './src/components/locale/get-timezones/index.js',
+    'geodb-get-timezone-datetime-demo': './src/components/locale/get-timezone-datetime/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),

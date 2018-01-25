@@ -36,7 +36,7 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/locale/timezones',
-        columns: ['code', 'zone', 'utc-offset-hours'],
+        columns: ['id', 'zone', 'utc-offset-hours'],
       }
     },
     computed: {
@@ -63,7 +63,7 @@
             var _data = new Array();
 
             for (var timeZone of response.data) {
-              _data.push({'code': timeZone.id, 'zone': timeZone.name, 'utc-offset-hours': timeZone.rawUtcOffsetHours});
+              _data.push({'id': timeZone.id, 'zone': timeZone.name, 'utc-offset-hours': timeZone.rawUtcOffsetHours});
             }
 
             self.count = response.metadata.totalCount;

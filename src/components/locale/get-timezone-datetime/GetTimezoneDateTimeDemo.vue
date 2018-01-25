@@ -1,5 +1,5 @@
 <template>
-  <div id="get-city-datetime-demo">
+  <div id="get-timezone-datetime-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
@@ -26,39 +26,52 @@
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
 
   const geoApi = new Config.GEO_DB.GeoApi();
+  const localeApi = new Config.GEO_DB.LocaleApi();
 
   export default {
-    name: 'get-city-datetime-demo',
+    name: 'get-timezone-datetime-demo',
     mixins: [DateTimeUtils],
     components: {
       CityAutocomplete
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/locale/timezones',
 
-        cityId: null,
+        zoneId: null,
         dateTime: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.cityId
-          ? this.baseEndpointOperation + "/" + this.cityId + "/dateTime"
-          : this.baseEndpointOperation + "/{cityId}/dateTime";
+        var operation = this.zoneId
+          ? this.baseEndpointOperation + "/" + this.zoneId + "/dateTime"
+          : this.baseEndpointOperation + "/{zoneId}/dateTime";
 
         return operation;
       }
     },
     methods: {
       onCitySelected(city) {
-        this.cityId = city.id;
+        var self = this;
+
+        geoApi.getCityUsingGET(city.id).then(
+          function (data) {
+            var response = Config.GEO_DB.CityResponse.constructFromObject(data);
+
+            self.zoneId = response.data.timezone;
+          },
+
+          function (error) {
+            console.error(error);
+          }
+        );
       },
       updateDateTime() {
-        if (this.cityId) {
+        if (this.zoneId) {
           var self = this;
 
-          geoApi.getCityDateTimeUsingGET(this.cityId).then(
+          localeApi.getTimeZoneDateTimeUsingGET(this.zoneId).then(
               function (data) {
                 self.dateTime = data.data;
               },
@@ -73,7 +86,7 @@
       }
     },
     watch: {
-      cityId: function() {
+      zoneId: function() {
         this.updateDateTime();
       }
     }
