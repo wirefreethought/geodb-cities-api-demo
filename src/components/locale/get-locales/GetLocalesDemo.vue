@@ -37,11 +37,6 @@
       return {
         baseEndpointOperation: 'GET /v1/locale/locales',
         columns: ['code'],
-
-        currentRequest: {},
-
-        countryCode: null,
-        namePrefix: null
       }
     },
     computed: {

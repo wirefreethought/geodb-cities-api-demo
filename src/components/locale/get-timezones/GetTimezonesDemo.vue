@@ -1,5 +1,5 @@
 <template>
-  <div id="find-currencies">
+  <div id="get-timezones">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -28,15 +28,15 @@
   const localeApi = new Config.GEO_DB.LocaleApi();
 
   export default {
-    name: 'find-currencies',
+    name: 'get-timezones',
     mixins: [PageableMixin],
     components: {
       DataTable
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/locale/currencies',
-        columns: ['code', 'countries'],
+        baseEndpointOperation: 'GET /v1/locale/timezones',
+        columns: ['code', 'zone', 'utc-offset-hours'],
       }
     },
     computed: {
@@ -53,17 +53,17 @@
       refreshPageData(page) {
         var self = this;
 
-        localeApi.getCurrenciesUsingGET({
+        localeApi.getTimezonesUsingGET({
           'limit': this.pageSize,
           'offset': this.offset
         }).then(
           function(data) {
-            var response = Config.GEO_DB.CurrenciesResponse.constructFromObject(data);
+            var response = Config.GEO_DB.TimeZonesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var currency of response.data) {
-              _data.push({'code': currency.code, 'countries': currency.countryCodes.join(", ")});
+            for (var timeZone of response.data) {
+              _data.push({'code': timeZone.id, 'zone': timeZone.name, 'utc-offset-hours': timeZone.rawUtcOffsetHours});
             }
 
             self.count = response.metadata.totalCount;

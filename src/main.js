@@ -30,6 +30,7 @@ import FindCountryRegionCitiesDemo from './components/geo/find-country-region-ci
 
 import FindCurrenciesDemo from './components/locale/find-currencies/FindCurrenciesDemo';
 import GetLocalesDemo from './components/locale/get-locales/GetLocalesDemo';
+import GetTimezonesDemo from './components/locale/get-timezones/GetTimezonesDemo';
 
 import App from './App'
 
@@ -102,6 +103,10 @@ const router = new VueRouter({
     {
       path: '/get-locales',
       component: GetLocalesDemo
+    },
+    {
+      path: '/get-timezones',
+      component: GetTimezonesDemo
     }]
 })
 

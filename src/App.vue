@@ -117,6 +117,11 @@
             icon: 'widgets',
             title: 'Get Locales',
             action: '/get-locales'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Time-Zones',
+            action: '/get-timezones'
           }
         ],
         miniVariant: false,
