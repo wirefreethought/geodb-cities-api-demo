@@ -1,3 +1,7 @@
+<!--
+  Based on Taha Shashtari's excellent Vue Autocomplete tutorial:
+  http://taha-sh.com/blog/building-an-awesome-reusable-autocomplete-input-component-in-vue-21-part-one
+-->
 <template>
   <div>
     <p>
