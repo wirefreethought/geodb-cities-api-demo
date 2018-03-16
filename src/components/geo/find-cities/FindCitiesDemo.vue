@@ -13,7 +13,7 @@
           <label>Near Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
         </div>
         <div class="form-field">
-          <label>Within Radius</label><br/><input v-model="locationRadius" placeholder="Radius in miles"/>
+          <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
       <div class="form-button">
@@ -60,7 +60,7 @@
         namePrefix: null,
         minPopulation: null,
         location: null,
-        locationRadius: null
+        radius: null
       }
     },
     computed: {
@@ -76,11 +76,11 @@
         }
 
         if (this.location) {
-          operation += "&location=" + encodeURIComponent(this.nearLocation);
+          operation += "&location=" + encodeURIComponent(this.location);
         }
 
-        if (this.locationRadius) {
-          operation += "&locationRadius=" + this.nearLocationRadius;
+        if (this.radius) {
+          operation += "&radius=" + this.radius;
         }
 
         return operation;
@@ -95,7 +95,7 @@
           namePrefix: this.namePrefix,
           minPopulation: this.minPopulation,
           location: this.location,
-          locationRadius: this.locationRadius
+          radius: this.radius
         };
       },
       refreshPageData(page) {
@@ -105,7 +105,7 @@
           'namePrefix': this.currentRequest.namePrefix,
           'minPopulation': this.currentRequest.minPopulation,
           'location': this.currentRequest.location,
-          'locationRadius': this.currentRequest.locationRadius,
+          'radius': this.currentRequest.radius,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(

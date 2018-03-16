@@ -97,7 +97,7 @@
       refreshPageData(page) {
         var self = this;
 
-        geoApi.findNearbyCitiesUsingGET(this.currentRequest.cityId, {
+        geoApi.findCitiesNearCityUsingGET(this.currentRequest.cityId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
           'limit': this.pageSize,
