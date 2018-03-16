@@ -9,10 +9,10 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^2.5.11",
+    "vue": "^2.5.16",
     "vue-router": "^3.0.1",
-    "vuetify": "^0.17.6",
-    "wft-geodb-js-client": "^1.0.8"
+    "vuetify": "^0.17.7",
+    "wft-geodb-js-client": "^1.0.9"
   },
   "browserslist": [
     "> 1%",

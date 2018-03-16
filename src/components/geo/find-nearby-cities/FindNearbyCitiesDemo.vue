@@ -11,7 +11,7 @@
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
         <div class="form-field">
-          <label>Within Radius</label><br/><input v-model="nearLocationRadius" placeholder="Radius in miles"/>
+          <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
       <div v-if="originCityId" class="form-button">
@@ -55,11 +55,11 @@
         baseEndpointOperation: 'GET /v1/geo/cities',
         columns: ['distance', 'city', 'country', 'location'],
 
-        currentRequest: {nearLocationRadius: 100},
+        currentRequest: {radius: 100},
 
         originCityId: null,
         minPopulation: null,
-        nearLocationRadius: 100
+        radius: 100
       }
     },
     computed: {
@@ -74,8 +74,8 @@
           operation += "&minPopulation=" + this.minPopulation;
         }
 
-        if (this.nearLocationRadius) {
-          operation += "&nearLocationRadius=" + this.nearLocationRadius;
+        if (this.radius) {
+          operation += "&radius=" + this.radius;
         }
 
         return operation;
@@ -91,7 +91,7 @@
         this.currentRequest = {
           cityId: this.originCityId,
           minPopulation: this.minPopulation,
-          nearLocationRadius: this.nearLocationRadius
+          radius: this.radius
         };
       },
       refreshPageData(page) {
@@ -99,7 +99,7 @@
 
         geoApi.findNearbyCitiesUsingGET(this.currentRequest.cityId, {
           'minPopulation': this.currentRequest.minPopulation,
-          'nearLocationRadius': this.currentRequest.nearLocationRadius,
+          'radius': this.currentRequest.radius,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(

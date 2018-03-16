@@ -10,10 +10,10 @@
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
         <div class="form-field">
-          <label>Near Location</label><br/><input v-model="nearLocation" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
+          <label>Near Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
         </div>
         <div class="form-field">
-          <label>Within Radius</label><br/><input v-model="nearLocationRadius" placeholder="Radius in miles"/>
+          <label>Within Radius</label><br/><input v-model="locationRadius" placeholder="Radius in miles"/>
         </div>
       </div>
       <div class="form-button">
@@ -59,8 +59,8 @@
 
         namePrefix: null,
         minPopulation: null,
-        nearLocation: null,
-        nearLocationRadius: null
+        location: null,
+        locationRadius: null
       }
     },
     computed: {
@@ -75,12 +75,12 @@
           operation += "&minPopulation=" + this.minPopulation;
         }
 
-        if (this.nearLocation) {
-          operation += "&nearLocation=" + encodeURIComponent(this.nearLocation);
+        if (this.location) {
+          operation += "&location=" + encodeURIComponent(this.nearLocation);
         }
 
-        if (this.nearLocationRadius) {
-          operation += "&nearLocationRadius=" + this.nearLocationRadius;
+        if (this.locationRadius) {
+          operation += "&locationRadius=" + this.nearLocationRadius;
         }
 
         return operation;
@@ -94,8 +94,8 @@
         this.currentRequest = {
           namePrefix: this.namePrefix,
           minPopulation: this.minPopulation,
-          nearLocation: this.nearLocation,
-          nearLocationRadius: this.nearLocationRadius
+          location: this.location,
+          locationRadius: this.locationRadius
         };
       },
       refreshPageData(page) {
@@ -104,8 +104,8 @@
         geoApi.findCitiesUsingGET({
           'namePrefix': this.currentRequest.namePrefix,
           'minPopulation': this.currentRequest.minPopulation,
-          'nearLocation': this.currentRequest.nearLocation,
-          'nearLocationRadius': this.currentRequest.nearLocationRadius,
+          'location': this.currentRequest.location,
+          'locationRadius': this.currentRequest.locationRadius,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(
