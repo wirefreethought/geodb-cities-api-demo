@@ -15,6 +15,9 @@
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
       </div>
+      <sort-by
+        :options="sortByOptions"
+        @sortChanged="onSortChanged"/>
       <div v-if="regionCode" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
@@ -39,6 +42,7 @@
   import CountryAutocomplete from "../../../shared/components/CountryAutocomplete";
   import DataTable from '../../../shared/components/DataTable';
   import RegionAutocomplete from "../../../shared/components/RegionAutocomplete";
+  import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -51,18 +55,29 @@
     components: {
       CountryAutocomplete,
       DataTable,
-      RegionAutocomplete
+      RegionAutocomplete,
+      SortBy
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
         columns: ['city', 'location'],
 
+        sortByOptions: [
+          {value: 'name', title: 'By City Name, A-Z'},
+          {value: '-name', title: 'By City Name, Z-A'},
+          {value: 'elevation', title: 'By Elevation, low-high'},
+          {value: '-elevation', title: 'By Elevation, high-low'},
+          {value: 'population', title: 'By Population, low-high'},
+          {value: '-population', title: 'By Population, high-low'}
+        ],
+
         currentRequest: {},
 
         countryCode: null,
         regionCode: null,
-        minPopulation: null
+        minPopulation: null,
+        sort: null
       }
     },
     computed: {
@@ -79,6 +94,10 @@
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
+        }
+
+        if (this.sort) {
+          operation += "&sort=" + this.sort;
         }
 
         return operation;
@@ -99,14 +118,25 @@
         this.currentRequest = {
           countryCode : this.countryCode,
           regionCode: this.regionCode,
-          minPopulation: this.minPopulation
+          minPopulation: this.minPopulation,
+          sort: this.sort
         };
       },
+      onSortChanged(sort) {
+        this.sort = sort;
+      },
       refreshPageData(page) {
+        if (!this.regionCode) {
+          return;
+        }
+
         var self = this;
+
+        console.log("region: " + this.regionCode);
 
         geoApi.findRegionCitiesUsingGET(this.countryCode, this.regionCode, {
           'minPopulation': this.currentRequest.minPopulation,
+          'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(

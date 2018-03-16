@@ -16,6 +16,9 @@
           <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
+      <sort-by
+        :options="sortByOptions"
+        @sortChanged="onSortChanged"/>
       <div class="form-button">
         <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
@@ -38,6 +41,7 @@
 
 <script>
   import DataTable from '../../../shared/components/DataTable';
+  import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -48,19 +52,32 @@
     name: 'find-cities-demo',
     mixins: [PageableMixin],
     components: {
-      DataTable
+      DataTable,
+      SortBy
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
         columns: ['city', 'country', 'location'],
 
+        sortByOptions: [
+          {value: 'name', title: 'By City Name, A-Z'},
+          {value: '-name', title: 'By City Name, Z-A'},
+          {value: 'countryCode', title: 'By Country Code, A-Z'},
+          {value: '-countryCode', title: 'By Country Code, Z-A'},
+          {value: 'elevation', title: 'By Elevation, low-high'},
+          {value: '-elevation', title: 'By Elevation, high-low'},
+          {value: 'population', title: 'By Population, low-high'},
+          {value: '-population', title: 'By Population, high-low'}
+        ],
+
         currentRequest: {},
 
         namePrefix: null,
         minPopulation: null,
         location: null,
-        radius: null
+        radius: null,
+        sort: null
       }
     },
     computed: {
@@ -83,6 +100,10 @@
           operation += "&radius=" + this.radius;
         }
 
+        if (this.sort) {
+          operation += "&sort=" + this.sort;
+        }
+
         return operation;
       }
     },
@@ -95,8 +116,12 @@
           namePrefix: this.namePrefix,
           minPopulation: this.minPopulation,
           location: this.location,
-          radius: this.radius
+          radius: this.radius,
+          sort: this.sort
         };
+      },
+      onSortChanged(sort) {
+        this.sort = sort;
       },
       refreshPageData(page) {
         var self = this;
@@ -106,6 +131,7 @@
           'minPopulation': this.currentRequest.minPopulation,
           'location': this.currentRequest.location,
           'radius': this.currentRequest.radius,
+          'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(

@@ -14,6 +14,9 @@
           <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
+      <sort-by
+        :options="sortByOptions"
+        @sortChanged="onSortChanged"/>
       <div v-if="originCityId" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
@@ -37,6 +40,7 @@
 <script>
   import DataTable from '../../../shared/components/DataTable';
   import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+  import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -48,18 +52,31 @@
     mixins: [PageableMixin],
     components: {
       CityAutocomplete,
-      DataTable
+      DataTable,
+      SortBy
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
         columns: ['distance', 'city', 'country', 'location'],
 
+        sortByOptions: [
+          {value: 'name', title: 'By City Name, A-Z'},
+          {value: '-name', title: 'By City Name, Z-A'},
+          {value: 'countryCode', title: 'By Country Code, A-Z'},
+          {value: '-countryCode', title: 'By Country Code, Z-A'},
+          {value: 'elevation', title: 'By Elevation, low-high'},
+          {value: '-elevation', title: 'By Elevation, high-low'},
+          {value: 'population', title: 'By Population, low-high'},
+          {value: '-population', title: 'By Population, high-low'}
+        ],
+
         currentRequest: {radius: 100},
 
         originCityId: null,
         minPopulation: null,
-        radius: 100
+        radius: 100,
+        sort: null
       }
     },
     computed: {
@@ -78,6 +95,10 @@
           operation += "&radius=" + this.radius;
         }
 
+        if (this.sort) {
+          operation += "&sort=" + this.sort;
+        }
+
         return operation;
       }
     },
@@ -94,12 +115,20 @@
           radius: this.radius
         };
       },
+      onSortChanged(sort) {
+        this.sort = sort;
+      },
       refreshPageData(page) {
+        if (!this.currentRequest.cityId) {
+          return;
+        }
+
         var self = this;
 
         geoApi.findCitiesNearCityUsingGET(this.currentRequest.cityId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
+          'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(
