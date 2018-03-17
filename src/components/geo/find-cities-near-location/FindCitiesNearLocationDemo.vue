@@ -1,29 +1,28 @@
 <template>
-  <div id="find-country-region-cities-demo">
+  <div id="find-cities-near-location-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Country</label>
-          <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
+          <label>Location</label><br/>
+          <input v-model="locationId" placeholder="GPS location (in ISO-6709 format: ±DD.DDDD±DDD.DDDD)"/>
         </div>
-        <div v-if="countryCode" class="form-field">
-          <label>Region</label>
-          <region-autocomplete :countryCode="countryCode" @onRegionSelected="onRegionSelected($event)"/>
-        </div>
-        <div v-if="regionCode" class="form-field">
+        <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
+        </div>
+        <div class="form-field">
+          <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
       <sort-by
         :options="sortByOptions"
         @sortChanged="onSortChanged"/>
-      <div v-if="regionCode" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div class="form-button">
+        <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
     </div>
 
-    <data-table v-if="regionCode"
+    <data-table v-if="count > 0"
       :data="currentPageData"
       :columns="columns"
       :count="count"
@@ -39,9 +38,7 @@
 </style>
 
 <script>
-  import CountryAutocomplete from "../../../shared/components/CountryAutocomplete";
   import DataTable from '../../../shared/components/DataTable';
-  import RegionAutocomplete from "../../../shared/components/RegionAutocomplete";
   import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
@@ -50,50 +47,50 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'find-country-region-cities-demo',
+    name: 'find-cities-near-location-demo',
     mixins: [PageableMixin],
     components: {
-      CountryAutocomplete,
       DataTable,
-      RegionAutocomplete,
       SortBy
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/countries',
-        columns: ['city', 'location'],
+        baseEndpointOperation: 'GET /v1/geo/locations',
+        columns: ['distance', 'city', 'country', 'location'],
 
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
           {value: '-name', title: 'City Name, Z-A'},
+          {value: 'countryCode', title: 'Country Code, A-Z'},
+          {value: '-countryCode', title: 'Country Code, Z-A'},
           {value: 'elevation', title: 'Elevation, LO-HI'},
           {value: '-elevation', title: 'Elevation, HI-LO'},
           {value: 'population', title: 'Population, LO-HI'},
           {value: '-population', title: 'Population, HI-LO'}
         ],
 
-        currentRequest: {},
+        currentRequest: {radius: 100},
 
-        countryCode: null,
-        regionCode: null,
+        locationId: null,
         minPopulation: null,
+        radius: 100,
         sort: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.countryCode
-          ? this.baseEndpointOperation + "/" + this.countryCode
-          : this.baseEndpointOperation + "/{countryCode}";
-
-        operation += this.regionDetails
-          ? "/regions/" + this.regionDetails.isoCode + "/cities"
-          : "/regions/{regionCode}/cities";
+        var operation = this.locationId
+          ? this.baseEndpointOperation + "/" + this.locationId + "/nearbyCities"
+          : this.baseEndpointOperation + "/{locationId}/nearbyCities";
 
         operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
+        }
+
+        if (this.radius) {
+          operation += "&radius=" + this.radius;
         }
 
         if (this.sort) {
@@ -104,38 +101,26 @@
       }
     },
     methods: {
-      onCountrySelected(country) {
-        this.countryCode = country.code;
-
-        this.onRequestUpdated();
-      },
-      onRegionSelected(region) {
-        this.regionCode = region.code;
-
-        this.onRequestUpdated();
-      },
       onRequestUpdated() {
         this.currentRequest = {
-          countryCode : this.countryCode,
-          regionCode: this.regionCode,
+          locationId: this.locationId,
           minPopulation: this.minPopulation,
-          sort: this.sort
+          radius: this.radius
         };
       },
       onSortChanged(sort) {
         this.sort = sort;
       },
       refreshPageData(page) {
-        if (!this.regionCode) {
+        if (!this.currentRequest.locationId) {
           return;
         }
 
         var self = this;
 
-        console.log("region: " + this.regionCode);
-
-        geoApi.findRegionCitiesUsingGET(this.countryCode, this.regionCode, {
+        geoApi.findCitiesNearLocationUsingGET(this.currentRequest.locationId, {
           'minPopulation': this.currentRequest.minPopulation,
+          'radius': this.currentRequest.radius,
           'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset
@@ -154,7 +139,7 @@
 
               location += "" + city.longitude;
 
-              _data.push({city: city.city, location: location});
+              _data.push({distance: city.distance, city: city.city, country: city.country, location: location});
             }
 
             self.count = citiesResponse.metadata.totalCount;

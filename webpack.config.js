@@ -14,7 +14,7 @@ module.exports = {
     'geodb-find-countries-demo': './src/components/geo/find-countries/index.js',
     'geodb-find-country-regions-demo': './src/components/geo/find-country-regions/index.js',
     'geodb-find-country-region-cities-demo': './src/components/geo/find-country-region-cities/index.js',
-    'geodb-find-nearby-cities-demo': './src/components/geo/find-nearby-cities/index.js',
+    'geodb-find-nearby-cities-demo': './src/components/geo/find-cities-near-city/index.js',
     'geodb-get-city-details-demo': './src/components/geo/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/components/geo/get-city-datetime/index.js',
     'geodb-get-city-distance-demo': './src/components/geo/get-city-distance/index.js',

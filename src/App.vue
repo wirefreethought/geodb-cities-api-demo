@@ -60,6 +60,16 @@
           },
           {
             icon: 'widgets',
+            title: 'Find Cities Near City',
+            action: '/find-cities-near-city'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Cities Near Location',
+            action: '/find-cities-near-location'
+          },
+          {
+            icon: 'widgets',
             title: 'Find Countries',
             action: '/find-countries'
           },
@@ -72,11 +82,6 @@
             icon: 'widgets',
             title: 'Find Currencies',
             action: '/find-currencies'
-          },
-          {
-            icon: 'widgets',
-            title: 'Find Nearby Cities',
-            action: '/find-nearby-cities'
           },
           {
             icon: 'widgets',

@@ -1,5 +1,5 @@
 <template>
-  <div id="find-nearby-cities-demo">
+  <div id="find-cities-near-city-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
@@ -48,7 +48,7 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'find-nearby-cities-demo',
+    name: 'find-cities-near-city-demo',
     mixins: [PageableMixin],
     components: {
       CityAutocomplete,
@@ -61,14 +61,14 @@
         columns: ['distance', 'city', 'country', 'location'],
 
         sortByOptions: [
-          {value: 'name', title: 'By City Name, A-Z'},
-          {value: '-name', title: 'By City Name, Z-A'},
-          {value: 'countryCode', title: 'By Country Code, A-Z'},
-          {value: '-countryCode', title: 'By Country Code, Z-A'},
-          {value: 'elevation', title: 'By Elevation, low-high'},
-          {value: '-elevation', title: 'By Elevation, high-low'},
-          {value: 'population', title: 'By Population, low-high'},
-          {value: '-population', title: 'By Population, high-low'}
+          {value: 'name', title: 'City Name, A-Z'},
+          {value: '-name', title: 'City Name, Z-A'},
+          {value: 'countryCode', title: 'Country Code, A-Z'},
+          {value: '-countryCode', title: 'Country Code, Z-A'},
+          {value: 'elevation', title: 'Elevation, LO-HI'},
+          {value: '-elevation', title: 'Elevation, HI-LO'},
+          {value: 'population', title: 'Population, LO-HI'},
+          {value: '-population', title: 'Population, HI-LO'}
         ],
 
         currentRequest: {radius: 100},

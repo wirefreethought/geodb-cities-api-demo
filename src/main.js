@@ -17,7 +17,8 @@ import {
 } from 'vuetify';
 
 import FindCitiesDemo from './components/geo/find-cities/FindCitiesDemo';
-import FindNearbyCitiesDemo from './components/geo/find-nearby-cities/FindNearbyCitiesDemo';
+import FindCitiesNearCityDemo from './components/geo/find-cities-near-city/FindCitiesNearCityDemo';
+import FindCitiesNearLocationDemo from './components/geo/find-cities-near-location/FindCitiesNearLocationDemo';
 import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
 import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';
@@ -59,8 +60,12 @@ const router = new VueRouter({
       component: FindCitiesDemo
     },
     {
-      path: '/find-nearby-cities',
-      component: FindNearbyCitiesDemo
+      path: '/find-cities-near-city',
+      component: FindCitiesNearCityDemo
+    },
+    {
+      path: '/find-cities-near-location',
+      component: FindCitiesNearLocationDemo
     },
     {
       path: '/get-city-details',
