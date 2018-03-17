@@ -5,7 +5,7 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Location</label><br/>
-          <input v-model="locationId" placeholder="GPS location (in ISO-6709 format: ±DD.DDDD±DDD.DDDD)"/>
+          <input v-model="locationId" placeholder="Lat/Long: ±DD.DDDD±DDD.DDDD" style="width:250px"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
