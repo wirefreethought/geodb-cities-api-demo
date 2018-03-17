@@ -7,7 +7,7 @@
         <option v-for="option in options" :value="option.value">{{option.title}}</option>
       </select>
     </div>
-    <div class="form-field">
+    <div v-if="sort1 !== ''"class="form-field">
       <label>Then By</label><br/>
       <select v-model="sort2" @change="onChanged">
         <option value="">NONE</option>
