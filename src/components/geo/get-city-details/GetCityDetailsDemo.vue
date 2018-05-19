@@ -6,9 +6,10 @@
         <label>City</label>
         <city-autocomplete @onCitySelected="onCitySelected($event)"/>
       </div>
+
       <div v-if="cityDetails" width="100%" class="form-field">
         <div v-if="cityDetails.region">State/Province/Region: {{cityDetails.region}}</div>
-        <div>Location (latitude, longitude): {{cityDetails.location.latitude}}, {{cityDetails.location.longitude}}</div>
+        <div>Location (latitude, longitude): {{cityDetails.latitude}}, {{cityDetails.longitude}}</div>
         <div>Time-Zone: {{cityDetails.timezone | formatTimeZone}}</div>
         <div>Population: {{cityDetails.population}}</div>
         <div v-if="cityDetails.elevationMeters">Elevation (meters): {{cityDetails.elevationMeters}}</div>
@@ -23,6 +24,7 @@
 
 <script>
   import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+
   import Config from "../../../shared/scripts/config";
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
 
@@ -53,17 +55,21 @@
       onCitySelected(city) {
         var self = this;
 
-        geoApi.getCityUsingGET(city.id).then(
-          function (data) {
-            var response = Config.GEO_DB.CityResponse.constructFromObject(data);
+        geoApi.getCityUsingGET(
+          city.id,
+          {
+            languageCode: this.languageCode
+          }).then(
+            function (data) {
+              var response = Config.GEO_DB.CityResponse.constructFromObject(data);
 
-            self.cityDetails = response.data;
-          },
+              self.cityDetails = response.data;
+            },
 
-          function (error) {
-            console.error(error);
-          }
-        );
+            function (error) {
+              console.error(error);
+            }
+          );
       }
     }
   }

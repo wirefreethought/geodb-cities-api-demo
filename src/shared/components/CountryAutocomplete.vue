@@ -1,6 +1,7 @@
 <template>
   <autocomplete
     :options="currentResults"
+    :selectedIcon="this.selectedCountry ? this.selectedCountry.flagImageUri : ''"
     placeholder="Enter country..."
     width="250px"
     @input="onNamePrefixChanged"
@@ -29,7 +30,8 @@
     },
     data() {
       return {
-        currentResults: []
+        currentResults: [],
+        selectedCountry: null
       }
     },
     methods: {
@@ -59,7 +61,21 @@
         );
       },
       onCountrySelected(country) {
-        this.$emit("onCountrySelected", country);
+        var self = this;
+
+        geoApi.getCountryUsingGET(country.code).then(
+          function (data) {
+            var response = Config.GEO_DB.CountryResponse.constructFromObject(data);
+
+            self.selectedCountry = response.data;
+
+            self.$emit("onCountrySelected", self.selectedCountry);
+          },
+
+          function (error) {
+            console.error(error);
+          }
+        );
       }
     }
   }

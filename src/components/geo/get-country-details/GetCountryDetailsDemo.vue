@@ -8,7 +8,9 @@
       </div>
       <div v-if="countryDetails" width="100%" class="form-field">
         <div>Code: {{countryDetails.code}}</div>
-        <div>Currency: {{countryDetails.currencyCode}}</div>
+        <div>
+          Supported Currencies: {{countryDetails.currencyCodes.join(', ')}}
+        </div>
         <div>States/Provinces/Regions: {{countryDetails.numRegions}}</div>
       </div>
     </div>
@@ -41,7 +43,7 @@
       endpointOperation() {
         var operation = this.countryDetails
           ? this.baseEndpointOperation + "/" + this.countryDetails.code
-          : this.baseEndpointOperation + "/{countryCode}";
+          : this.baseEndpointOperation + "/{countryId}";
 
         return operation;
       }

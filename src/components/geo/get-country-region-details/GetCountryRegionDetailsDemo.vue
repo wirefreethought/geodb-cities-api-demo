@@ -6,13 +6,12 @@
         <label>Country</label>
         <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
       </div>
-      <div v-if="countryCode" class="form-field">
+      <div v-if="countryId" class="form-field">
         <label>Region</label>
-        <region-autocomplete :countryCode="countryCode" @onRegionSelected="onRegionSelected($event)"/>
+        <region-autocomplete :countryId="countryId" @onRegionSelected="onRegionSelected($event)"/>
       </div>
       <div v-if="regionDetails" width="100%" class="form-field">
         <div>FIPS: {{regionDetails.fipsCode}}</div>
-        <div>HASC: {{regionDetails.hascCode}}</div>
         <div>ISO: {{regionDetails.isoCode}}</div>
         <div v-if="regionDetails.numCities > 0">Cities/Towns: {{regionDetails.numCities}}</div>
       </div>
@@ -41,15 +40,15 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
-        countryCode: null,
+        countryId: null,
         regionDetails: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.countryCode
-          ? this.baseEndpointOperation + "/" + this.countryCode
-          : this.baseEndpointOperation + "/{countryCode}";
+        var operation = this.countryId
+          ? this.baseEndpointOperation + "/" + this.countryId
+          : this.baseEndpointOperation + "/{countryId}";
 
         operation += this.regionDetails
           ? "/regions/" + this.regionDetails.isoCode
@@ -60,12 +59,13 @@
     },
     methods: {
       onCountrySelected(country) {
-        this.countryCode = country.code;
+        this.countryId = country.code;
+        this.regionDetails = null;
       },
       onRegionSelected(region) {
         var self = this;
 
-        geoApi.getRegionUsingGET(this.countryCode, region.code).then(
+        geoApi.getRegionUsingGET(this.countryId, region.code).then(
           function (data) {
             var response = Config.GEO_DB.RegionResponse.constructFromObject(data);
 

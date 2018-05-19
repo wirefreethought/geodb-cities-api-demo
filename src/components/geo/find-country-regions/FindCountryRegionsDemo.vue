@@ -11,12 +11,15 @@
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the region name" style="width:150px"/>
         </div>
       </div>
-      <div v-if="countryCode" class="form-button">
+
+      <language @languageChanged="onLanguageChanged"/>
+
+      <div v-if="country" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
 
-    <div v-if="countryCode">
+    <div v-if="country">
       <data-table
         :data="currentPageData"
         :columns="columns"
@@ -36,6 +39,7 @@
 <script>
   import CountryAutocomplete from '../../../shared/components/CountryAutocomplete';
   import DataTable from '../../../shared/components/DataTable';
+  import Language from '../../../shared/components/Language';
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -47,26 +51,29 @@
     mixins: [PageableMixin],
     components: {
       CountryAutocomplete,
-      DataTable
+      DataTable,
+      Language
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
-        columns: ['name', 'fips', 'hasc', 'iso'],
+        columns: ['name', 'fips', 'iso'],
 
         currentRequest: {},
 
-        countryCode: null,
-        namePrefix: null
+        country: null,
+        namePrefix: null,
+
+        languageCode: null
       }
     },
     computed: {
       endpointOperation() {
         var operation = this.baseEndpointOperation;
 
-        operation = this.countryCode
-          ? operation += "/" + this.countryCode + "/regions"
-          : operation += "/{countryCode}/regions";
+        operation = this.country
+          ? operation += "/" + this.country.code + "/regions"
+          : operation += "/{countryId}/regions";
 
         operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
@@ -74,25 +81,38 @@
           operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
         }
 
+        if (this.languageCode) {
+          operation +="&languageCode=" + this.languageCode;
+        }
+
         return operation;
       }
     },
     methods: {
+      onLanguageChanged(value) {
+        this.languageCode = value;
+      },
       onCountrySelected(country) {
-        this.countryCode = country.code;
+        this.country = country;
 
         this.onRequestUpdated();
       },
       onRequestUpdated() {
         this.currentRequest = {
+          countryId: this.country.code,
           namePrefix: this.namePrefix
         };
       },
       refreshPageData(page) {
+        if (!this.country) {
+          return;
+        }
+
         var self = this;
 
-        geoApi.getRegionsUsingGET(this.countryCode, {
+        geoApi.getRegionsUsingGET(this.currentRequest.countryId, {
           'namePrefix': this.currentRequest.namePrefix,
+          'languageCode': this.languageCode,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(
@@ -102,7 +122,7 @@
             var _data = new Array();
 
             for (var region of response.data) {
-              _data.push({'name': region.name, 'fips': region.fipsCode, 'hasc': region.hascCode, 'iso': region.isoCode});
+              _data.push({'name': region.name, 'fips': region.fipsCode, 'iso': region.isoCode});
             }
 
             self.count = response.metadata.totalCount;

@@ -7,17 +7,21 @@
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
-        <div v-if="countryCode" class="form-field">
+        <div v-if="country" class="form-field">
           <label>Region</label>
-          <region-autocomplete :countryCode="countryCode" @onRegionSelected="onRegionSelected($event)"/>
+          <region-autocomplete :countryId="country.code" @onRegionSelected="onRegionSelected($event)"/>
         </div>
         <div v-if="regionCode" class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
       </div>
-      <sort-by
-        :options="sortByOptions"
-        @sortChanged="onSortChanged"/>
+
+      <div style="display:flex; flex-flow:row">
+        <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
+
+        <language @languageChanged="onLanguageChanged"/>
+      </div>
+
       <div v-if="regionCode" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
@@ -41,6 +45,7 @@
 <script>
   import CountryAutocomplete from "../../../shared/components/CountryAutocomplete";
   import DataTable from '../../../shared/components/DataTable';
+  import Language from '../../../shared/components/Language';
   import RegionAutocomplete from "../../../shared/components/RegionAutocomplete";
   import SortBy from '../../../shared/components/SortBy';
 
@@ -55,6 +60,7 @@
     components: {
       CountryAutocomplete,
       DataTable,
+      Language,
       RegionAutocomplete,
       SortBy
     },
@@ -74,17 +80,19 @@
 
         currentRequest: {},
 
-        countryCode: null,
+        country: null,
         regionCode: null,
         minPopulation: null,
-        sort: null
+
+        sort: null,
+        languageCode: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.countryCode
-          ? this.baseEndpointOperation + "/" + this.countryCode
-          : this.baseEndpointOperation + "/{countryCode}";
+        var operation = this.country
+          ? this.baseEndpointOperation + "/" + this.country.code
+          : this.baseEndpointOperation + "/{countryId}";
 
         operation += this.regionDetails
           ? "/regions/" + this.regionDetails.isoCode + "/cities"
@@ -96,6 +104,10 @@
           operation += "&minPopulation=" + this.minPopulation;
         }
 
+        if (this.languageCode) {
+          operation +="&languageCode=" + this.languageCode;
+        }
+
         if (this.sort) {
           operation += "&sort=" + this.sort;
         }
@@ -105,9 +117,13 @@
     },
     methods: {
       onCountrySelected(country) {
-        this.countryCode = country.code;
+        this.country = country;
+        this.regionCode = null;
 
         this.onRequestUpdated();
+      },
+      onLanguageChanged(value) {
+        this.languageCode = value;
       },
       onRegionSelected(region) {
         this.regionCode = region.code;
@@ -116,7 +132,7 @@
       },
       onRequestUpdated() {
         this.currentRequest = {
-          countryCode : this.countryCode,
+          countryId : this.country.code,
           regionCode: this.regionCode,
           minPopulation: this.minPopulation,
           sort: this.sort
@@ -126,16 +142,15 @@
         this.sort = sort;
       },
       refreshPageData(page) {
-        if (!this.regionCode) {
+        if (!this.country || !this.regionCode) {
           return;
         }
 
         var self = this;
 
-        console.log("region: " + this.regionCode);
-
-        geoApi.findRegionCitiesUsingGET(this.countryCode, this.regionCode, {
+        geoApi.findRegionCitiesUsingGET(this.country.code, this.regionCode, {
           'minPopulation': this.currentRequest.minPopulation,
+          'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset

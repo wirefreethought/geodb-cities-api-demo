@@ -28,7 +28,7 @@
       Autocomplete
     },
     props: {
-      countryCode: {
+      countryId: {
         type: String,
         required: true
       }
@@ -42,7 +42,7 @@
       onNamePrefixChanged(prefix) {
         var self = this;
 
-        geoApi.getRegionsUsingGET(this.countryCode, {
+        geoApi.getRegionsUsingGET(this.countryId, {
           'namePrefix': prefix,
           'limit': 5,
           'offset': 0

@@ -16,9 +16,13 @@
           <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
-      <sort-by
-        :options="sortByOptions"
-        @sortChanged="onSortChanged"/>
+
+      <div style="display:flex; flex-flow:row">
+        <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
+
+        <language @languageChanged="onLanguageChanged"/>
+      </div>
+
       <div class="form-button">
         <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
@@ -41,6 +45,7 @@
 
 <script>
   import DataTable from '../../../shared/components/DataTable';
+  import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
@@ -53,6 +58,7 @@
     mixins: [PageableMixin],
     components: {
       DataTable,
+      Language,
       SortBy
     },
     data() {
@@ -77,7 +83,9 @@
         minPopulation: null,
         location: null,
         radius: null,
-        sort: null
+
+        sort: null,
+        languageCode: null
       }
     },
     computed: {
@@ -100,6 +108,10 @@
           operation += "&radius=" + this.radius;
         }
 
+        if (this.languageCode) {
+          operation +="&languageCode=" + this.languageCode;
+        }
+
         if (this.sort) {
           operation += "&sort=" + this.sort;
         }
@@ -111,17 +123,19 @@
       this.refreshPageData(0);
     },
     methods: {
+      onLanguageChanged(value) {
+        this.languageCode = value;
+      },
       onRequestUpdated() {
         this.currentRequest = {
           namePrefix: this.namePrefix,
           minPopulation: this.minPopulation,
           location: this.location,
-          radius: this.radius,
-          sort: this.sort
+          radius: this.radius
         };
       },
-      onSortChanged(sort) {
-        this.sort = sort;
+      onSortChanged(value) {
+        this.sort = value;
       },
       refreshPageData(page) {
         var self = this;
@@ -131,6 +145,7 @@
           'minPopulation': this.currentRequest.minPopulation,
           'location': this.currentRequest.location,
           'radius': this.currentRequest.radius,
+          'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset

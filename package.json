@@ -12,7 +12,7 @@
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuetify": "^0.17.7",
-    "wft-geodb-js-client": "^1.0.12"
+    "wft-geodb-js-client": "^1.1.0"
   },
   "browserslist": [
     "> 1%",

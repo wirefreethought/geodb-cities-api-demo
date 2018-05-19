@@ -1,5 +1,5 @@
 <template>
-  <div id="find-currencies">
+  <div id="get-currencies">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -28,7 +28,7 @@
   const localeApi = new Config.GEO_DB.LocaleApi();
 
   export default {
-    name: 'find-currencies',
+    name: 'get-currencies',
     mixins: [PageableMixin],
     components: {
       DataTable

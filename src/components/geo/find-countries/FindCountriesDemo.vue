@@ -6,10 +6,10 @@
         <div class="form-field">
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the country name" style="width:150px"/>
         </div>
-        <div class="form-field">
-          <label>Currency</label><br/><input v-model="currencyCode" placeholder="Currency code"/>
-        </div>
       </div>
+
+      <language @languageChanged="onLanguageChanged"/>
+
       <div class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
@@ -32,6 +32,7 @@
 
 <script>
   import DataTable from '../../../shared/components/DataTable';
+  import Language from '../../../shared/components/Language';
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -42,17 +43,19 @@
     name: 'find-countries-demo',
     mixins: [PageableMixin],
     components: {
-      DataTable
+      DataTable,
+      Language
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
-        columns: ['name', 'code', 'currency'],
+        columns: ['name', 'code', 'currencies'],
 
         currentRequest: {},
 
         namePrefix: null,
-        currencyCode: null
+
+        languageCode: null
       }
     },
     computed: {
@@ -63,8 +66,8 @@
           operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
         }
 
-        if (this.currencyCode) {
-          operation += "&currencyCode=" + this.currencyCode;
+        if (this.languageCode) {
+          operation +="&languageCode=" + this.languageCode;
         }
 
         return operation;
@@ -74,10 +77,12 @@
       this.refreshPageData(0);
     },
     methods: {
+      onLanguageChanged(value) {
+        this.languageCode = value;
+      },
       onRequestUpdated() {
         this.currentRequest = {
-          namePrefix: this.namePrefix,
-          currencyCode: this.currencyCode
+          namePrefix: this.namePrefix
         };
       },
       refreshPageData(page) {
@@ -86,6 +91,7 @@
         geoApi.getCountriesUsingGET({
           'namePrefix': this.currentRequest.namePrefix,
           'currencyCode': this.currentRequest.currencyCode,
+          'languageCode': this.languageCode,
           'limit': this.pageSize,
           'offset': this.offset
         }).then(
@@ -95,7 +101,7 @@
             var _data = new Array();
 
             for (var country of response.data) {
-              _data.push({'name': country.name, 'code': country.code, 'currency': country.currencyCode});
+              _data.push({'name': country.name, 'code': country.code, 'currencies': country.currencyCodes});
             }
 
             self.count = response.metadata.totalCount;

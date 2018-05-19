@@ -1,6 +1,6 @@
 <!--
   Based on Taha Shashtari's excellent Vue Autocomplete tutorial:
-  http://taha-sh.com/blog/building-an-awesome-reusable-autocomplete-input-component-in-vue-21-part-one
+  https://vuejsfeed.com/blog/build-a-reusable-autocomplete-component-with-vue-2-1
 -->
 <template>
   <div>
@@ -9,7 +9,7 @@
         v-model="keyword"
         class="input"
         :placeholder="placeholder"
-        :style="{width: width}"
+        :style="{width: width, backgroundRepeat: 'no-repeat', backgroundPosition: 'right center', backgroundSize: 'contain', backgroundImage: 'url(' + selectedIcon + ')'}"
         @input="onInput($event.target.value)"
         @keyup.esc="isOpen = false"
         @blur="isOpen = false"
@@ -95,6 +95,10 @@
         type: String,
         default: ''
       },
+      selectedIcon: {
+        type: String,
+        default: ''
+      },
       width: {
         type: String,
         default: 'fit-content'
@@ -104,7 +108,8 @@
       return {
         isOpen: false,
         highlightedPosition: 0,
-        keyword: ''
+        keyword: '',
+        thumbImageUri: null
       }
     },
     methods: {
@@ -132,6 +137,7 @@
         const selectedOption = this.options[this.highlightedPosition];
 
         this.keyword = selectedOption.name;
+
         this.isOpen = false;
 
         this.$emit('select', selectedOption);

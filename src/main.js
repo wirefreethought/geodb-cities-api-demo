@@ -19,17 +19,18 @@ import {
 import FindCitiesDemo from './components/geo/find-cities/FindCitiesDemo';
 import FindCitiesNearCityDemo from './components/geo/find-cities-near-city/FindCitiesNearCityDemo';
 import FindCitiesNearLocationDemo from './components/geo/find-cities-near-location/FindCitiesNearLocationDemo';
+import FindCountriesDemo from './components/geo/find-countries/FindCountriesDemo';
+import FindCountryRegionsDemo from './components/geo/find-country-regions/FindCountryRegionsDemo';
+import FindCountryRegionCitiesDemo from './components/geo/find-country-region-cities/FindCountryRegionCitiesDemo';
 import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
 import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';
 import GetCityTimeDemo from './components/geo/get-city-time/GetCityTimeDemo';
 import GetCountryDetailsDemo from './components/geo/get-country-details/GetCountryDetailsDemo';
 import GetCountryRegionDetailsDemo from './components/geo/get-country-region-details/GetCountryRegionDetailsDemo';
-import FindCountriesDemo from './components/geo/find-countries/FindCountriesDemo';
-import FindCountryRegionsDemo from './components/geo/find-country-regions/FindCountryRegionsDemo';
-import FindCountryRegionCitiesDemo from './components/geo/find-country-region-cities/FindCountryRegionCitiesDemo';
 
-import FindCurrenciesDemo from './components/locale/find-currencies/FindCurrenciesDemo';
+import GetCurrenciesDemo from './components/locale/get-currencies/GetCurrenciesDemo';
+import GetLanguagesDemo from './components/locale/get-languages/GetLanguagesDemo';
 import GetLocalesDemo from './components/locale/get-locales/GetLocalesDemo';
 import GetTimezonesDemo from './components/locale/get-timezones/GetTimezonesDemo';
 import GetTimezoneDateTimeDemo from './components/locale/get-timezone-datetime/GetTimezoneDateTimeDemo';
@@ -104,8 +105,12 @@ const router = new VueRouter({
       component: FindCountryRegionCitiesDemo
     },
     {
-      path: '/find-currencies',
-      component: FindCurrenciesDemo
+      path: '/get-currencies',
+      component: GetCurrenciesDemo
+    },
+    {
+      path: '/get-languages',
+      component: GetLanguagesDemo
     },
     {
       path: '/get-locales',

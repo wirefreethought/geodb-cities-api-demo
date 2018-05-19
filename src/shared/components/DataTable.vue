@@ -87,7 +87,7 @@
     },
     computed: {
       lastPage: function() {
-        return Math.floor((this.count / this.pageSize) + 0.5) - 1;
+        return Math.ceil(this.count / this.pageSize) - 1;
       }
     },
     filters: {
@@ -95,7 +95,7 @@
         return str.charAt(0).toUpperCase() + str.slice(1);
       },
       roundUp: function (value) {
-        return Math.floor(value + 0.5);
+        return Math.ceil(value);
       }
     },
     methods: {

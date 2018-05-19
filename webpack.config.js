@@ -11,10 +11,11 @@ module.exports = {
     // Geo Demos
     'geodb-demo': './src/main.js',
     'geodb-find-cities-demo': './src/components/geo/find-cities/index.js',
+    'geodb-find-cities-near-city-demo': './src/components/geo/find-cities-near-city/index.js',
+    'geodb-find-cities-near-location-demo': './src/components/geo/find-cities-near-location/index.js',
     'geodb-find-countries-demo': './src/components/geo/find-countries/index.js',
     'geodb-find-country-regions-demo': './src/components/geo/find-country-regions/index.js',
     'geodb-find-country-region-cities-demo': './src/components/geo/find-country-region-cities/index.js',
-    'geodb-find-nearby-cities-demo': './src/components/geo/find-cities-near-city/index.js',
     'geodb-get-city-details-demo': './src/components/geo/get-city-details/index.js',
     'geodb-get-city-datetime-demo': './src/components/geo/get-city-datetime/index.js',
     'geodb-get-city-distance-demo': './src/components/geo/get-city-distance/index.js',
@@ -23,7 +24,7 @@ module.exports = {
     'geodb-get-country-region-details-demo': './src/components/geo/get-country-region-details/index.js',
 
     // Locale Demos
-    'geodb-find-currencies-demo': './src/components/locale/find-currencies/index.js',
+    'geodb-find-currencies-demo': './src/components/locale/get-currencies/index.js',
     'geodb-get-locales-demo': './src/components/locale/get-locales/index.js',
     'geodb-get-timezones-demo': './src/components/locale/get-timezones/index.js',
     'geodb-get-timezone-datetime-demo': './src/components/locale/get-timezone-datetime/index.js',

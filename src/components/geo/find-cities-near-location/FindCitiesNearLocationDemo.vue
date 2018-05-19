@@ -14,9 +14,13 @@
           <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
         </div>
       </div>
-      <sort-by
-        :options="sortByOptions"
-        @sortChanged="onSortChanged"/>
+
+      <div style="display:flex; flex-flow:row">
+        <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
+
+        <language @languageChanged="onLanguageChanged"/>
+      </div>
+
       <div class="form-button">
         <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
@@ -39,6 +43,7 @@
 
 <script>
   import DataTable from '../../../shared/components/DataTable';
+  import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
 
   import Config from "../../../shared/scripts/config";
@@ -51,6 +56,7 @@
     mixins: [PageableMixin],
     components: {
       DataTable,
+      Language,
       SortBy
     },
     data() {
@@ -61,8 +67,8 @@
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
           {value: '-name', title: 'City Name, Z-A'},
-          {value: 'countryCode', title: 'Country Code, A-Z'},
-          {value: '-countryCode', title: 'Country Code, Z-A'},
+          {value: 'countryId', title: 'Country Code, A-Z'},
+          {value: '-countryId', title: 'Country Code, Z-A'},
           {value: 'elevation', title: 'Elevation, LO-HI'},
           {value: '-elevation', title: 'Elevation, HI-LO'},
           {value: 'population', title: 'Population, LO-HI'},
@@ -74,7 +80,9 @@
         locationId: null,
         minPopulation: null,
         radius: 100,
-        sort: null
+
+        sort: null,
+        languageCode: null
       }
     },
     computed: {
@@ -93,6 +101,10 @@
           operation += "&radius=" + this.radius;
         }
 
+        if (this.languageCode) {
+          operation +="&languageCode=" + this.languageCode;
+        }
+
         if (this.sort) {
           operation += "&sort=" + this.sort;
         }
@@ -101,6 +113,9 @@
       }
     },
     methods: {
+      onLanguageChanged(value) {
+        this.languageCode = value;
+      },
       onRequestUpdated() {
         this.currentRequest = {
           locationId: this.locationId,
@@ -108,8 +123,8 @@
           radius: this.radius
         };
       },
-      onSortChanged(sort) {
-        this.sort = sort;
+      onSortChanged(value) {
+        this.sort = value;
       },
       refreshPageData(page) {
         if (!this.currentRequest.locationId) {
@@ -121,6 +136,7 @@
         geoApi.findCitiesNearLocationUsingGET(this.currentRequest.locationId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
+          'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,
           'offset': this.offset

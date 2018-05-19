@@ -80,11 +80,6 @@
           },
           {
             icon: 'widgets',
-            title: 'Find Currencies',
-            action: '/find-currencies'
-          },
-          {
-            icon: 'widgets',
             title: 'Find Region Cities',
             action: '/find-country-region-cities'
           },
@@ -112,6 +107,16 @@
             icon: 'widgets',
             title: 'Get Country Details',
             action: '/get-country-details'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Currencies',
+            action: '/get-currencies'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Languages',
+            action: '/get-languages'
           },
           {
             icon: 'widgets',
