@@ -24,7 +24,8 @@ module.exports = {
     'geodb-get-country-region-details-demo': './src/components/geo/get-country-region-details/index.js',
 
     // Locale Demos
-    'geodb-find-currencies-demo': './src/components/locale/get-currencies/index.js',
+    'geodb-get-currencies-demo': './src/components/locale/get-currencies/index.js',
+    'geodb-get-languages-demo': './src/components/locale/get-languages/index.js',
     'geodb-get-locales-demo': './src/components/locale/get-locales/index.js',
     'geodb-get-timezones-demo': './src/components/locale/get-timezones/index.js',
     'geodb-get-timezone-datetime-demo': './src/components/locale/get-timezone-datetime/index.js',
