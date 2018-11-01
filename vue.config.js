@@ -3,6 +3,7 @@ var path = require('path')
 module.exports = {
   baseUrl: '/dist/',
   outputDir: path.resolve(__dirname, './dist'),
+  filenameHashing: false,
 
   chainWebpack: config => {
     config.module.rules.delete('eslint');
@@ -13,6 +14,9 @@ module.exports = {
         .end()
 
       // Geo Demos
+      .entry('geodb-find-cities-demo')
+      .add('./src/components/geo/find-cities/index.js')
+      .end()
       .entry('geodb-find-cities-near-city-demo')
         .add('./src/components/geo/find-cities-near-city/index.js')
         .end()
