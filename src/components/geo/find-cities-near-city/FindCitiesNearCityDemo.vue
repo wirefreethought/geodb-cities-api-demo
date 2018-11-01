@@ -146,7 +146,8 @@
           'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,
-          'offset': this.offset
+          'offset': this.offset,
+          'hateoasMode': false
         }).then(
           function (data) {
             var citiesResponse = Config.GEO_DB.CitiesResponse.constructFromObject(data);

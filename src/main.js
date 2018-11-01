@@ -1,10 +1,9 @@
-require('../node_modules/vuetify/src/stylus/app.styl')
-
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import './plugins/vuetify'
+
 import {
-  Vuetify,
   VApp,
   VNavigationDrawer,
   VFooter,
@@ -39,20 +38,6 @@ import GetTimezoneTimeDemo from './components/locale/get-timezone-time/GetTimezo
 import App from './App'
 
 Vue.use(VueRouter);
-
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VFooter,
-    VList,
-    VBtn,
-    VIcon,
-    VGrid,
-    VToolbar,
-    transitions
-  }
-});
 
 const router = new VueRouter({
   routes: [

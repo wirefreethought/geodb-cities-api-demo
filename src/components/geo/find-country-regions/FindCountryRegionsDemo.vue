@@ -114,7 +114,8 @@
           'namePrefix': this.currentRequest.namePrefix,
           'languageCode': this.languageCode,
           'limit': this.pageSize,
-          'offset': this.offset
+          'offset': this.offset,
+          'hateoasMode': false
         }).then(
           function(data) {
             var response = Config.GEO_DB.RegionsResponse.constructFromObject(data);

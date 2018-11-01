@@ -45,7 +45,8 @@
         geoApi.getRegionsUsingGET(this.countryId, {
           'namePrefix': prefix,
           'limit': 5,
-          'offset': 0
+          'offset': 0,
+          'hateoasMode': false
         }).then(
           function (data) {
             var response = Config.GEO_DB.RegionsResponse.constructFromObject(data);

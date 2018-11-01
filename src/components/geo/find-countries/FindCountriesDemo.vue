@@ -93,7 +93,8 @@
           'currencyCode': this.currentRequest.currencyCode,
           'languageCode': this.languageCode,
           'limit': this.pageSize,
-          'offset': this.offset
+          'offset': this.offset,
+          'hateoasMode': false
         }).then(
           function(data) {
             var response = Config.GEO_DB.CountriesResponse.constructFromObject(data);

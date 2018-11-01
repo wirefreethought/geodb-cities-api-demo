@@ -33,7 +33,8 @@
 
         localeApi.getLanguagesUsingGET({
           limit: limit,
-          offset: offset
+          offset: offset,
+          hateoasMode: false
         }).then(
           function (data) {
             var response = Config.GEO_DB.LanguagesResponse.constructFromObject(data);

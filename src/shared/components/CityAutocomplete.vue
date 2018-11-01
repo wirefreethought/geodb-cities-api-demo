@@ -39,7 +39,8 @@
         geoApi.findCitiesUsingGET({
           'namePrefix': prefix,
           'limit': 5,
-          'offset': 0
+          'offset': 0,
+          'hateoasMode': false
         }).then(
           function (data) {
             var response = Config.GEO_DB.CitiesResponse.constructFromObject(data);
