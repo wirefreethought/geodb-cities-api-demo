@@ -91,7 +91,7 @@
           ? this.baseEndpointOperation + "/" + this.locationId + "/nearbyCities"
           : this.baseEndpointOperation + "/{locationId}/nearbyCities";
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
@@ -135,6 +135,7 @@
 
         geoApi.findCitiesNearLocationUsingGET(this.currentRequest.locationId, {
           'minPopulation': this.currentRequest.minPopulation,
+          'types': 'CITY',
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
           'sort': this.sort,

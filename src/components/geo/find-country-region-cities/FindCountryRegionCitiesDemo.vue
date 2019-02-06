@@ -98,7 +98,7 @@
           ? "/regions/" + this.regionDetails.isoCode + "/cities"
           : "/regions/{regionCode}/cities";
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
@@ -150,6 +150,7 @@
 
         geoApi.findRegionCitiesUsingGET(this.country.code, this.regionCode, {
           'minPopulation': this.currentRequest.minPopulation,
+          'types': 'CITY',
           'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,

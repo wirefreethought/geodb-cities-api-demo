@@ -90,7 +90,7 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset;
+        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
 
         if (this.namePrefix) {
           operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
@@ -143,6 +143,7 @@
         geoApi.findCitiesUsingGET({
           'namePrefix': this.currentRequest.namePrefix,
           'minPopulation': this.currentRequest.minPopulation,
+          'types': 'CITY',
           'location': this.currentRequest.location,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
