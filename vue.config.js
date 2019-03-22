@@ -1,7 +1,7 @@
 var path = require('path')
 
 module.exports = {
-  baseUrl: '/dist/',
+  publicPath: '/dist/',
   outputDir: path.resolve(__dirname, './dist'),
   filenameHashing: false,
 
