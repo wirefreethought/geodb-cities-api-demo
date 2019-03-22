@@ -48,11 +48,11 @@
       endpointOperation() {
         var operation = this.toPlaceId
           ? this.baseEndpointOperation + "/" + this.toPlaceId + "/distance"
-          : this.baseEndpointOperation + "/{toPlaceId}/distance";
+          : this.baseEndpointOperation + "/{toCityId}/distance";
 
         operation = this.fromPlaceId
-          ? operation + "?fromPlaceId=" + this.fromPlaceId
-          : operation + "?fromPlaceId={fromPlaceId}";
+          ? operation + "?fromCityId=" + this.fromPlaceId
+          : operation + "?fromCityId={fromCityId}";
 
         return operation;
       }

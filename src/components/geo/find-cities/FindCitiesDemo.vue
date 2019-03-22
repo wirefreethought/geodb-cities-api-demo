@@ -64,7 +64,7 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
-        columns: ['city', 'country', 'location'],
+        columns: ['name', 'country', 'location'],
 
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
@@ -165,7 +165,7 @@
 
               location += "" + place.longitude;
 
-              _data.push({city: place.name, country: place.country, location: location });
+              _data.push({name: place.name, country: place.country, location: location });
             }
 
             self.count = placesResponse.metadata.totalCount;

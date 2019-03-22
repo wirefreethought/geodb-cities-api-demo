@@ -67,7 +67,7 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/countries',
-        columns: ['city', 'location'],
+        columns: ['name', 'location'],
 
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
@@ -98,7 +98,7 @@
           ? "/regions/" + this.regionDetails.isoCode + "/cities"
           : "/regions/{regionCode}/cities";
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
@@ -170,7 +170,7 @@
 
               location += "" + place.longitude;
 
-              _data.push({city: place.name, location: location});
+              _data.push({name: place.name, location: location});
             }
 
             self.count = placesResponse.metadata.totalCount;

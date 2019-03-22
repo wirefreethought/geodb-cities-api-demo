@@ -45,7 +45,7 @@
       endpointOperation() {
         var operation = this.placeId
           ? this.baseEndpointOperation + "/" + this.placeId + "/dateTime"
-          : this.baseEndpointOperation + "/{placeId}/dateTime";
+          : this.baseEndpointOperation + "/{cityId}/dateTime";
 
         return operation;
       }

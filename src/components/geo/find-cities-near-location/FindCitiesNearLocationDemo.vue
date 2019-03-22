@@ -62,7 +62,7 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/locations',
-        columns: ['distance', 'city', 'country', 'location'],
+        columns: ['distance', 'name', 'country', 'location'],
 
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
@@ -91,7 +91,7 @@
           ? this.baseEndpointOperation + "/" + this.locationId + "/nearbyCities"
           : this.baseEndpointOperation + "/{locationId}/nearbyCities";
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
@@ -156,7 +156,7 @@
 
               location += "" + place.longitude;
 
-              _data.push({distance: place.distance, city: place.name, country: place.country, location: location});
+              _data.push({distance: place.distance, name: place.name, country: place.country, location: location});
             }
 
             self.count = placesResponse.metadata.totalCount;
