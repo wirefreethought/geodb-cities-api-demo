@@ -26,7 +26,7 @@ import FindCountryRegionCitiesDemo from './components/geo/find-country-region-ci
 import FindCountryRegionDivisionsDemo from "./components/geo/find-country-region-divisions/FindCountryRegionDivisionsDemo";
 import FindDivisionsNearDivisionDemo from './components/geo/find-divisions-near-division/FindDivisionsNearDivisionDemo';
 import FindDivisionsNearLocationDemo from './components/geo/find-divisions-near-location/FindDivisionsNearLocationDemo';
-import GetAdminDisivionDetailsDemo from "./components/geo/get-admin-division-details/GetAdminDisivionDetailsDemo";
+import GetAdminDisivionDetailsDemo from "./components/geo/get-admin-division-details/GetAdminDivisionDetailsDemo";
 import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
 import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';

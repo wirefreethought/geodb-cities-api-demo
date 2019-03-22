@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import FindCountryRegionDivisions from './FindCountryRegionDivisions';
+import FindCountryRegionDivisionsDemo from './FindCountryRegionDivisionsDemo';
 
 new Vue({
   el: '#find-country-region-divisions-demo',
-  render: h => h(FindCountryRegionDivisions)
+  render: h => h(FindCountryRegionDivisionsDemo)
 })
