@@ -90,7 +90,7 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
+        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset;
 
         if (this.namePrefix) {
           operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
@@ -143,7 +143,6 @@
         geoApi.findCitiesUsingGET({
           'namePrefix': this.currentRequest.namePrefix,
           'minPopulation': this.currentRequest.minPopulation,
-          'types': 'CITY',
           'location': this.currentRequest.location,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
@@ -153,23 +152,23 @@
           'hateoasMode': false
         }).then(
           function(data) {
-            var citiesResponse = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var city of citiesResponse.data) {
-              var location = city.latitude;
+            for (var place of placesResponse.data) {
+              var location = place.latitude;
 
-              if (city.longitude >= 0) {
+              if (place.longitude >= 0) {
                 location += "+";
               }
 
-              location += "" + city.longitude;
+              location += "" + place.longitude;
 
-              _data.push({city: city.city, country: city.country, location: location });
+              _data.push({city: place.name, country: place.country, location: location });
             }
 
-            self.count = citiesResponse.metadata.totalCount;
+            self.count = placesResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 

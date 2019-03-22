@@ -5,7 +5,7 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Origin City</label><br/>
-          <city-autocomplete @onCitySelected="onCitySelected($event)"/>
+          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
@@ -21,12 +21,12 @@
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="originCityId" class="form-button">
+      <div v-if="originPlaceId" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
 
-    <data-table v-if="originCityId"
+    <data-table v-if="originPlaceId"
       :data="currentPageData"
       :columns="columns"
       :count="count"
@@ -43,9 +43,9 @@
 
 <script>
   import DataTable from '../../../shared/components/DataTable';
-  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
   import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
+  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -56,9 +56,9 @@
     name: 'find-cities-near-city-demo',
     mixins: [PageableMixin],
     components: {
-      CityAutocomplete,
       DataTable,
       Language,
+      PlaceAutocomplete,
       SortBy
     },
     data() {
@@ -79,7 +79,7 @@
 
         currentRequest: {radius: 100},
 
-        originCityId: null,
+        originPlaceId: null,
         minPopulation: null,
         radius: 100,
 
@@ -89,11 +89,11 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.originCityId
-          ? this.baseEndpointOperation + "/" + this.originCityId + "/nearbyCities"
-          : this.baseEndpointOperation + "/{cityId}/nearbyCities";
+        var operation = this.originPlaceId
+          ? this.baseEndpointOperation + "/" + this.originPlaceId + "/nearbyCities"
+          : this.baseEndpointOperation + "/{placeId}/nearbyCities";
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset + "&types=CITY";
+        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
@@ -115,17 +115,17 @@
       }
     },
     methods: {
-      onCitySelected(city) {
-        this.originCityId = city.id;
-
-        this.onRequestUpdated();
-      },
       onLanguageChanged(value) {
         this.languageCode = value;
       },
+      onPlaceSelected(place) {
+        this.originPlaceId = place.id;
+
+        this.onRequestUpdated();
+      },
       onRequestUpdated() {
         this.currentRequest = {
-          cityId: this.originCityId,
+          placeId: this.originPlaceId,
           minPopulation: this.minPopulation,
           radius: this.radius,
         };
@@ -134,15 +134,14 @@
         this.sort = value;
       },
       refreshPageData(page) {
-        if (!this.currentRequest.cityId) {
+        if (!this.currentRequest.placeId) {
           return;
         }
 
         var self = this;
 
-        geoApi.findCitiesNearCityUsingGET(this.currentRequest.cityId, {
+        geoApi.findCitiesNearCityUsingGET(this.currentRequest.placeId, {
           'minPopulation': this.currentRequest.minPopulation,
-          'types': 'CITY',
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
           'sort': this.sort,
@@ -151,23 +150,23 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var citiesResponse = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var city of citiesResponse.data) {
-              var location = city.latitude;
+            for (var place of placesResponse.data) {
+              var location = place.latitude;
 
-              if (city.longitude >= 0) {
+              if (place.longitude >= 0) {
                 location += "+";
               }
 
-              location += "" + city.longitude;
+              location += "" + place.longitude;
 
-              _data.push({distance: city.distance, city: city.city, country: city.country, location: location});
+              _data.push({distance: place.distance, city: place.name, country: place.country, location: location});
             }
 
-            self.count = citiesResponse.metadata.totalCount;
+            self.count = placesResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 

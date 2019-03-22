@@ -4,15 +4,15 @@
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div class="form-field">
         <label>City</label>
-        <city-autocomplete @onCitySelected="onCitySelected($event)"/>
+        <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
-      <div v-if="cityDetails" width="100%" class="form-field">
-        <div v-if="cityDetails.region">State/Province/Region: {{cityDetails.region}}</div>
-        <div>Location (latitude, longitude): {{cityDetails.latitude}}, {{cityDetails.longitude}}</div>
-        <div>Time-Zone: {{cityDetails.timezone | formatTimeZone}}</div>
-        <div>Population: {{cityDetails.population}}</div>
-        <div v-if="cityDetails.elevationMeters">Elevation (meters): {{cityDetails.elevationMeters}}</div>
+      <div v-if="placeDetails" width="100%" class="form-field">
+        <div v-if="placeDetails.region">State/Province/Region: {{placeDetails.region}}</div>
+        <div>Location (latitude, longitude): {{placeDetails.latitude}}, {{placeDetails.longitude}}</div>
+        <div>Time-Zone: {{placeDetails.timezone | formatTimeZone}}</div>
+        <div>Population: {{placeDetails.population}}</div>
+        <div v-if="placeDetails.elevationMeters">Elevation (meters): {{placeDetails.elevationMeters}}</div>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
 </style>
 
 <script>
-  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
+  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   import Config from "../../../shared/scripts/config";
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
@@ -34,36 +34,36 @@
     name: 'get-city-details-demo',
     mixins: [DateTimeUtils],
     components: {
-      CityAutocomplete
+      PlaceAutocomplete
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
-        cityDetails: null
+        placeDetails: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.cityDetails
-          ? this.baseEndpointOperation + "/" + this.cityDetails.id
-          : this.baseEndpointOperation + "/{cityId}";
+        var operation = this.placeDetails
+          ? this.baseEndpointOperation + "/" + this.placeDetails.id
+          : this.baseEndpointOperation + "/{placeId}";
 
         return operation;
       }
     },
     methods: {
-      onCitySelected(city) {
+      onPlaceSelected(place) {
         var self = this;
 
         geoApi.getCityUsingGET(
-          city.id,
+          place.id,
           {
             languageCode: this.languageCode
           }).then(
             function (data) {
-              var response = Config.GEO_DB.CityResponse.constructFromObject(data);
+              var response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data);
 
-              self.cityDetails = response.data;
+              self.placeDetails = response.data;
             },
 
             function (error) {

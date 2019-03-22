@@ -135,7 +135,6 @@
 
         geoApi.findCitiesNearLocationUsingGET(this.currentRequest.locationId, {
           'minPopulation': this.currentRequest.minPopulation,
-          'types': 'CITY',
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
           'sort': this.sort,
@@ -144,23 +143,23 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var citiesResponse = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var city of citiesResponse.data) {
-              var location = city.latitude;
+            for (var place of placesResponse.data) {
+              var location = place.latitude;
 
-              if (city.longitude >= 0) {
+              if (place.longitude >= 0) {
                 location += "+";
               }
 
-              location += "" + city.longitude;
+              location += "" + place.longitude;
 
-              _data.push({distance: city.distance, city: city.city, country: city.country, location: location});
+              _data.push({distance: place.distance, city: place.name, country: place.country, location: location});
             }
 
-            self.count = citiesResponse.metadata.totalCount;
+            self.count = placesResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 

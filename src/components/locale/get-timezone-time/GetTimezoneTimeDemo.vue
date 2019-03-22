@@ -5,7 +5,7 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>City</label>
-          <city-autocomplete @onCitySelected="onCitySelected($event)"/>
+          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div v-if="time" class="form-field">
           <label>Local Time</label>
@@ -21,9 +21,9 @@
 </style>
 
 <script>
-  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
   import Config from "../../../shared/scripts/config";
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
+  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   const geoApi = new Config.GEO_DB.GeoApi();
   const localeApi = new Config.GEO_DB.LocaleApi();
@@ -32,7 +32,7 @@
     name: 'get-timezone-datetime-demo',
     mixins: [DateTimeUtils],
     components: {
-      CityAutocomplete
+      PlaceAutocomplete
     },
     data() {
       return {
@@ -52,12 +52,12 @@
       }
     },
     methods: {
-      onCitySelected(city) {
+      onPlaceSelected(place) {
         var self = this;
 
-        geoApi.getCityUsingGET(city.id).then(
+        geoApi.getCityUsingGET(place.id).then(
           function (data) {
-            var response = Config.GEO_DB.CityResponse.constructFromObject(data);
+            var response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data);
 
             self.zoneId = response.data.timezone;
           },

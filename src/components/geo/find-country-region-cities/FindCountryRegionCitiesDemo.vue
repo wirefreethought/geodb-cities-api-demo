@@ -150,7 +150,6 @@
 
         geoApi.findRegionCitiesUsingGET(this.country.code, this.regionCode, {
           'minPopulation': this.currentRequest.minPopulation,
-          'types': 'CITY',
           'languageCode': this.languageCode,
           'sort': this.sort,
           'limit': this.pageSize,
@@ -158,23 +157,23 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var citiesResponse = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var city of citiesResponse.data) {
-              var location = city.latitude;
+            for (var place of placesResponse.data) {
+              var location = place.latitude;
 
-              if (city.longitude >= 0) {
+              if (place.longitude >= 0) {
                 location += "+";
               }
 
-              location += "" + city.longitude;
+              location += "" + place.longitude;
 
-              _data.push({city: city.city, location: location});
+              _data.push({city: place.name, location: location});
             }
 
-            self.count = citiesResponse.metadata.totalCount;
+            self.count = placesResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 

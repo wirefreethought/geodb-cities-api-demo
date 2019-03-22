@@ -4,11 +4,11 @@
     placeholder="Enter city..."
     width="250px"
     @input="onNamePrefixChanged"
-    @select="onCitySelected">
-    <template slot="item" scope="city">
+    @select="onPlaceSelected">
+    <template slot="item" scope="place">
       <div class="media">
         <p>
-          <strong>{{ city.title }}</strong>
+          <strong>{{ place.title }}</strong>
         </p>
       </div>
     </template>
@@ -23,7 +23,7 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'city-autocomplete',
+    name: 'place-autocomplete',
     components: {
       Autocomplete
     },
@@ -43,16 +43,16 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var response = Config.GEO_DB.CitiesResponse.constructFromObject(data);
+            var response = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _results = new Array();
 
-            for (var city of response.data) {
-              var fullCityName = city.regionCode
-                ? city.city + ", " + city.regionCode + ", " + city.countryCode
-                :  city.city + ", " + city.countryCode;
+            for (var place of response.data) {
+              var fullPlaceName = place.regionCode
+                ? place.name + ", " + place.regionCode + ", " + place.countryCode
+                :  place.name + ", " + place.countryCode;
 
-              _results.push({id: city.id, name: fullCityName});
+              _results.push({id: place.id, name: fullPlaceName});
             }
 
             self.currentResults = _results;
@@ -63,8 +63,8 @@
           }
         );
       },
-      onCitySelected(city) {
-        this.$emit("onCitySelected", city);
+      onPlaceSelected(place) {
+        this.$emit("onPlaceSelected", place);
       }
     }
   }

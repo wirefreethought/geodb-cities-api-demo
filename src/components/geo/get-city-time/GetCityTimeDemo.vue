@@ -5,7 +5,7 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>City</label>
-          <city-autocomplete @onCitySelected="onCitySelected($event)"/>
+          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div v-if="time" class="form-field">
           <label>Local Time</label>
@@ -21,9 +21,9 @@
 </style>
 
 <script>
-  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
   import Config from "../../../shared/scripts/config";
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
+  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
@@ -31,31 +31,31 @@
     name: 'get-city-datetime-demo',
     mixins: [DateTimeUtils],
     components: {
-      CityAutocomplete
+      PlaceAutocomplete
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
 
-        cityId: null,
+        placeId: null,
         time: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.cityId
-          ? this.baseEndpointOperation + "/" + this.cityId + "/time"
-          : this.baseEndpointOperation + "/{cityId}/time";
+        var operation = this.placeId
+          ? this.baseEndpointOperation + "/" + this.placeId + "/time"
+          : this.baseEndpointOperation + "/{placeId}/time";
 
         return operation;
       }
     },
     methods: {
       updateTime() {
-        if (this.cityId) {
+        if (this.placeId) {
           var self = this;
 
-          geoApi.getCityTimeUsingGET(this.cityId).then(
+          geoApi.getCityTimeUsingGET(this.placeId).then(
               function (data) {
                 self.time = data.data;
               },
@@ -68,12 +68,12 @@
           this.time = null;
         }
       },
-      onCitySelected(city) {
-        this.cityId = city.id;
+      onPlaceSelected(place) {
+        this.placeId = place.id;
       }
     },
     watch: {
-      cityId: function() {
+      placeId: function() {
         this.updateTime();
       }
     }

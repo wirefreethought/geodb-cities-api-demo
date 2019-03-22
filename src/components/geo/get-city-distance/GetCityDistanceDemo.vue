@@ -5,11 +5,11 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>From</label>
-          <city-autocomplete @onCitySelected="onFromCitySelected($event)"/>
+          <place-autocomplete @onPlaceSelected="onFromPlaceSelected($event)"/>
         </div>
         <div class="form-field">
           <label>To</label>
-          <city-autocomplete @onCitySelected="onToCitySelected($event)"/>
+          <place-autocomplete @onPlaceSelected="onToPlaceSelected($event)"/>
         </div>
         <div v-if="distance" class="form-field">
           <label>Distance</label>
@@ -25,44 +25,44 @@
 </style>
 
 <script>
-  import CityAutocomplete from "../../../shared/components/CityAutocomplete";
   import Config from "../../../shared/scripts/config";
+  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
     name: 'get-city-distance-demo',
     components: {
-      CityAutocomplete
+      PlaceAutocomplete
     },
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
 
-        fromCityId: null,
-        toCityId: null,
+        fromPlaceId: null,
+        toPlaceId: null,
         distance: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.toCityId
-          ? this.baseEndpointOperation + "/" + this.toCityId + "/distance"
-          : this.baseEndpointOperation + "/{toCityId}/distance";
+        var operation = this.toPlaceId
+          ? this.baseEndpointOperation + "/" + this.toPlaceId + "/distance"
+          : this.baseEndpointOperation + "/{toPlaceId}/distance";
 
-        operation = this.fromCityId
-          ? operation + "?fromCityId=" + this.fromCityId
-          : operation + "?fromCityId={fromCityId}";
+        operation = this.fromPlaceId
+          ? operation + "?fromPlaceId=" + this.fromPlaceId
+          : operation + "?fromPlaceId={fromPlaceId}";
 
         return operation;
       }
     },
     methods: {
       calculateDistance() {
-        if (this.fromCityId && this.toCityId) {
+        if (this.fromPlaceId && this.toPlaceId) {
           var self = this;
 
-          geoApi.getCityDistanceUsingGET(this.toCityId, this.fromCityId).then(
+          geoApi.getCityDistanceUsingGET(this.toPlaceId, this.fromPlaceId).then(
               function (data) {
                 self.distance = data.data;
               },
@@ -75,18 +75,18 @@
           this.distance = null;
         }
       },
-      onFromCitySelected(city) {
-        this.fromCityId = city.id;
+      onFromPlaceSelected(place) {
+        this.fromPlaceId = place.id;
       },
-      onToCitySelected(city) {
-        this.toCityId = city.id;
+      onToPlaceSelected(place) {
+        this.toPlaceId = place.id;
       }
     },
     watch: {
-      fromCityId: function() {
+      fromPlaceId: function() {
         this.calculateDistance();
       },
-      toCityId: function() {
+      toPlaceId: function() {
         this.calculateDistance();
       }
     }
