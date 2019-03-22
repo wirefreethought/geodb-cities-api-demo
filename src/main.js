@@ -15,12 +15,18 @@ import {
   transitions
 } from 'vuetify';
 
+import FindAdminDivisionsDemo from "./components/geo/find-admin-divisions/FindAdminDivisionsDemo";
 import FindCitiesDemo from './components/geo/find-cities/FindCitiesDemo';
 import FindCitiesNearCityDemo from './components/geo/find-cities-near-city/FindCitiesNearCityDemo';
+import FindCitiesNearDivisionDemo from './components/geo/find-cities-near-division/FindCitiesNearDivisionDemo';
 import FindCitiesNearLocationDemo from './components/geo/find-cities-near-location/FindCitiesNearLocationDemo';
 import FindCountriesDemo from './components/geo/find-countries/FindCountriesDemo';
 import FindCountryRegionsDemo from './components/geo/find-country-regions/FindCountryRegionsDemo';
 import FindCountryRegionCitiesDemo from './components/geo/find-country-region-cities/FindCountryRegionCitiesDemo';
+import FindCountryRegionDivisionsDemo from "./components/geo/find-country-region-divisions/FindCountryRegionDivisionsDemo";
+import FindDivisionsNearDivisionDemo from './components/geo/find-divisions-near-division/FindDivisionsNearDivisionDemo';
+import FindDivisionsNearLocationDemo from './components/geo/find-divisions-near-location/FindDivisionsNearLocationDemo';
+import GetAdminDisivionDetailsDemo from "./components/geo/get-admin-division-details/GetAdminDisivionDetailsDemo";
 import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
 import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';
@@ -42,6 +48,10 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   routes: [
     {
+      path: '/find-admin-divisions',
+      component: FindAdminDivisionsDemo
+    },
+    {
       path: '/find-cities',
       component: FindCitiesDemo
     },
@@ -50,24 +60,20 @@ const router = new VueRouter({
       component: FindCitiesNearCityDemo
     },
     {
+      path: '/find-cities-near-division',
+      component: FindCitiesNearDivisionDemo
+    },
+    {
       path: '/find-cities-near-location',
       component: FindCitiesNearLocationDemo
     },
     {
-      path: '/get-city-details',
-      component: GetCityDetailsDemo
+      path: '/find-divisions-near-division',
+      component: FindDivisionsNearDivisionDemo
     },
     {
-      path: '/get-city-distance',
-      component: GetCityDistanceDemo
-    },
-    {
-      path: '/get-city-datetime',
-      component: GetCityDateTimeDemo
-    },
-    {
-      path: '/get-city-time',
-      component: GetCityTimeDemo
+      path: '/find-divisions-near-location',
+      component: FindDivisionsNearLocationDemo
     },
     {
       path: '/find-countries',
@@ -86,8 +92,32 @@ const router = new VueRouter({
       component: GetCountryRegionDetailsDemo
     },
     {
+      path: '/find-country-region-divisions',
+      component: FindCountryRegionDivisionsDemo
+    },
+    {
       path: '/find-country-region-cities',
       component: FindCountryRegionCitiesDemo
+    },
+    {
+      path: '/get-admin-division-details',
+      component: GetAdminDisivionDetailsDemo
+    },
+    {
+      path: '/get-city-details',
+      component: GetCityDetailsDemo
+    },
+    {
+      path: '/get-city-distance',
+      component: GetCityDistanceDemo
+    },
+    {
+      path: '/get-city-datetime',
+      component: GetCityDateTimeDemo
+    },
+    {
+      path: '/get-city-time',
+      component: GetCityTimeDemo
     },
     {
       path: '/get-currencies',

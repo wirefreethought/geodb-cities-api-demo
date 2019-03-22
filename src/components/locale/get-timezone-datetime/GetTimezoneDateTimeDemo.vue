@@ -52,7 +52,7 @@
       }
     },
     methods: {
-      onPlaceSelected(place) {
+      onDivisionSelected(place) {
         var self = this;
 
         geoApi.getCityUsingGET(place.id).then(

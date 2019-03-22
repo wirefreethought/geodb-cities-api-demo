@@ -55,6 +55,11 @@
         items: [
           {
             icon: 'widgets',
+            title: 'Find Admin Divisions',
+            action: '/find-admin-divisions'
+          },
+          {
+            icon: 'widgets',
             title: 'Find Cities',
             action: '/find-cities'
           },
@@ -62,6 +67,11 @@
             icon: 'widgets',
             title: 'Find Cities Near City',
             action: '/find-cities-near-city'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Cities Near Division',
+            action: '/find-cities-near-division'
           },
           {
             icon: 'widgets',
@@ -80,8 +90,28 @@
           },
           {
             icon: 'widgets',
+            title: 'Find Divisions Near Division',
+            action: '/find-divisions-near-division'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Divisions Near Location',
+            action: '/find-divisions-near-location'
+          },
+          {
+            icon: 'widgets',
+            title: 'Find Region Admin Divisions',
+            action: '/find-country-region-divisions'
+          },
+          {
+            icon: 'widgets',
             title: 'Find Region Cities',
             action: '/find-country-region-cities'
+          },
+          {
+            icon: 'widgets',
+            title: 'Get Admin-Division Details',
+            action: '/get-admin-division-details'
           },
           {
             icon: 'widgets',

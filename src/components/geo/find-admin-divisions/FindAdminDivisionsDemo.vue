@@ -1,14 +1,16 @@
 <template>
-  <div id="find-cities-near-city-demo">
+  <div id="find-admin-divisions-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Origin City</label><br/>
-          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
+          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the division name" style="width:150px"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
+        </div>
+        <div class="form-field">
+          <label>Near Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
         </div>
         <div class="form-field">
           <label>Within Radius</label><br/><input v-model="radius" placeholder="Radius in miles"/>
@@ -21,12 +23,12 @@
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="originPlaceId" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div class="form-button">
+        <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
     </div>
 
-    <data-table v-if="originPlaceId"
+    <data-table
       :data="currentPageData"
       :columns="columns"
       :count="count"
@@ -45,7 +47,6 @@
   import DataTable from '../../../shared/components/DataTable';
   import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
-  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -53,35 +54,35 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'find-cities-near-city-demo',
+    name: 'find-cities-demo',
     mixins: [PageableMixin],
     components: {
       DataTable,
       Language,
-      PlaceAutocomplete,
       SortBy
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
-        columns: ['distance', 'name', 'country', 'location'],
+        baseEndpointOperation: 'GET /v1/geo/adminDivisions',
+        columns: ['name', 'country', 'location'],
 
         sortByOptions: [
           {value: 'name', title: 'City Name, A-Z'},
           {value: '-name', title: 'City Name, Z-A'},
-          {value: 'countryId', title: 'Country Code, A-Z'},
-          {value: '-countryId', title: 'Country Code, Z-A'},
+          {value: 'countryCode', title: 'Country Code, A-Z'},
+          {value: '-countryCode', title: 'Country Code, Z-A'},
           {value: 'elevation', title: 'Elevation, LO-HI'},
           {value: '-elevation', title: 'Elevation, HI-LO'},
           {value: 'population', title: 'Population, LO-HI'},
           {value: '-population', title: 'Population, HI-LO'}
         ],
 
-        currentRequest: {radius: 100},
+        currentRequest: {},
 
-        originDivisionId: null,
+        namePrefix: null,
         minPopulation: null,
-        radius: 100,
+        location: null,
+        radius: null,
 
         sort: null,
         languageCode: null
@@ -89,14 +90,18 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.originDivisionId
-          ? this.baseEndpointOperation + "/" + this.originDivisionId + "/nearbyCities"
-          : this.baseEndpointOperation + "/{cityId}/nearbyCities";
+        var operation = this.baseEndpointOperation + "?limit=" + this.pageSize + "&offset=" + this.offset;
 
-        operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
+        if (this.namePrefix) {
+          operation += "&namePrefix=" + encodeURIComponent(this.namePrefix);
+        }
 
         if (this.minPopulation) {
           operation += "&minPopulation=" + this.minPopulation;
+        }
+
+        if (this.location) {
+          operation += "&location=" + encodeURIComponent(this.location);
         }
 
         if (this.radius) {
@@ -114,34 +119,31 @@
         return operation;
       }
     },
+    created: function () {
+      this.refreshPageData(0);
+    },
     methods: {
       onLanguageChanged(value) {
         this.languageCode = value;
       },
-      onDivisionSelected(place) {
-        this.originPlaceId = place.id;
-
-        this.onRequestUpdated();
-      },
       onRequestUpdated() {
         this.currentRequest = {
-          placeId: this.originDivisionId,
+          namePrefix: this.namePrefix,
           minPopulation: this.minPopulation,
-          radius: this.radius,
+          location: this.location,
+          radius: this.radius
         };
       },
       onSortChanged(value) {
         this.sort = value;
       },
       refreshPageData(page) {
-        if (!this.currentRequest.divisionId) {
-          return;
-        }
-
         var self = this;
 
-        geoApi.findCitiesNearCityUsingGET(this.currentRequest.divisionId, {
+        geoApi.findAdminDivisionsUsingGET({
+          'namePrefix': this.currentRequest.namePrefix,
           'minPopulation': this.currentRequest.minPopulation,
+          'location': this.currentRequest.location,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
           'sort': this.sort,
@@ -149,7 +151,7 @@
           'offset': this.offset,
           'hateoasMode': false
         }).then(
-          function (data) {
+          function(data) {
             var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
@@ -163,14 +165,14 @@
 
               location += "" + place.longitude;
 
-              _data.push({distance: place.distance, name: place.name, country: place.country, location: location});
+              _data.push({name: place.name, country: place.country, location: location });
             }
 
             self.count = placesResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 
-          function (error) {
+          function(error) {
             console.error(error);
           }
         );

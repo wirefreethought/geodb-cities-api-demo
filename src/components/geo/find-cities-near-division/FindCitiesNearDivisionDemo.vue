@@ -4,8 +4,8 @@
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Origin City</label><br/>
-          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
+          <label>Origin Division</label><br/>
+          <admin-division-autocomplete @onDivisionSelected="onDivisionSelected($event)"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
@@ -21,12 +21,12 @@
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="originPlaceId" class="form-button">
+      <div v-if="originDivisionId" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
 
-    <data-table v-if="originPlaceId"
+    <data-table v-if="originDivisionId"
       :data="currentPageData"
       :columns="columns"
       :count="count"
@@ -42,10 +42,10 @@
 </style>
 
 <script>
+  import AdminDivisionAutocomplete from "../../../shared/components/AdminDivisionAutocomplete";
   import DataTable from '../../../shared/components/DataTable';
   import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
-  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -53,17 +53,17 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'find-cities-near-city-demo',
+    name: 'find-cities-near-division-demo',
     mixins: [PageableMixin],
     components: {
+      AdminDivisionAutocomplete,
       DataTable,
       Language,
-      PlaceAutocomplete,
       SortBy
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/geo/adminDivisions',
         columns: ['distance', 'name', 'country', 'location'],
 
         sortByOptions: [
@@ -91,7 +91,7 @@
       endpointOperation() {
         var operation = this.originDivisionId
           ? this.baseEndpointOperation + "/" + this.originDivisionId + "/nearbyCities"
-          : this.baseEndpointOperation + "/{cityId}/nearbyCities";
+          : this.baseEndpointOperation + "/{divisionId}/nearbyCities";
 
         operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
@@ -118,14 +118,14 @@
       onLanguageChanged(value) {
         this.languageCode = value;
       },
-      onDivisionSelected(place) {
-        this.originPlaceId = place.id;
+      onDivisionSelected(division) {
+        this.originDivisionId = division.id;
 
         this.onRequestUpdated();
       },
       onRequestUpdated() {
         this.currentRequest = {
-          placeId: this.originDivisionId,
+          divisionId: this.originDivisionId,
           minPopulation: this.minPopulation,
           radius: this.radius,
         };
@@ -140,7 +140,7 @@
 
         var self = this;
 
-        geoApi.findCitiesNearCityUsingGET(this.currentRequest.divisionId, {
+        geoApi.findCitiesNearAdminDivisionUsingGET(this.currentRequest.divisionId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
@@ -150,11 +150,11 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
+            var places = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var place of placesResponse.data) {
+            for (var place of places.data) {
               var location = place.latitude;
 
               if (place.longitude >= 0) {
@@ -166,7 +166,7 @@
               _data.push({distance: place.distance, name: place.name, country: place.country, location: location});
             }
 
-            self.count = placesResponse.metadata.totalCount;
+            self.count = places.metadata.totalCount;
             self.currentPageData = _data;
           },
 

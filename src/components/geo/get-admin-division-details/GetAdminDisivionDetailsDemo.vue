@@ -1,18 +1,18 @@
 <template>
-  <div id="get-city-details-demo">
+  <div id="get-admin-division-details-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div class="form-field">
-        <label>City</label>
-        <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
+        <label>Administrative Division</label>
+        <admin-division-autocomplete @onDivisionSelected="onDivisionSelected($event)"/>
       </div>
 
-      <div v-if="placeDetails" width="100%" class="form-field">
-        <div v-if="placeDetails.region">State/Province/Region: {{placeDetails.region}}</div>
-        <div>Location (latitude, longitude): {{placeDetails.latitude}}, {{placeDetails.longitude}}</div>
-        <div>Time-Zone: {{placeDetails.timezone | formatTimeZone}}</div>
-        <div>Population: {{placeDetails.population}}</div>
-        <div v-if="placeDetails.elevationMeters">Elevation (meters): {{placeDetails.elevationMeters}}</div>
+      <div v-if="divisionDetails" width="100%" class="form-field">
+        <div v-if="divisionDetails.region">State/Province/Region: {{divisionDetails.region}}</div>
+        <div>Location (latitude, longitude): {{divisionDetails.latitude}}, {{divisionDetails.longitude}}</div>
+        <div>Time-Zone: {{divisionDetails.timezone | formatTimeZone}}</div>
+        <div>Population: {{divisionDetails.population}}</div>
+        <div v-if="divisionDetails.elevationMeters">Elevation (meters): {{divisionDetails.elevationMeters}}</div>
       </div>
     </div>
   </div>
@@ -23,10 +23,9 @@
 </style>
 
 <script>
-  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
-
   import Config from "../../../shared/scripts/config";
   import DateTimeUtils from '../../../shared/scripts/date-time-utils-mixin';
+  import AdminDivisionAutocomplete from "../../../shared/components/AdminDivisionAutocomplete";
 
   const geoApi = new Config.GEO_DB.GeoApi();
 
@@ -34,11 +33,11 @@
     name: 'get-city-details-demo',
     mixins: [DateTimeUtils],
     components: {
-      PlaceAutocomplete
+      AdminDivisionAutocomplete
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/geo/adminDivisions',
         divisionDetails: null
       }
     },
@@ -46,7 +45,7 @@
       endpointOperation() {
         var operation = this.divisionDetails
           ? this.baseEndpointOperation + "/" + this.divisionDetails.id
-          : this.baseEndpointOperation + "/{cityId}";
+          : this.baseEndpointOperation + "/{divisionId}";
 
         return operation;
       }
@@ -55,7 +54,7 @@
       onDivisionSelected(place) {
         var self = this;
 
-        geoApi.getCityUsingGET(
+        geoApi.getAdminDivisionUsingGET(
           place.id,
           {
             languageCode: this.languageCode

@@ -1,14 +1,14 @@
 <template>
   <autocomplete
     :options="currentResults"
-    placeholder="Enter city..."
+    placeholder="Enter administrative division..."
     width="250px"
     @input="onNamePrefixChanged"
-    @select="onPlaceSelected">
-    <template slot="item" scope="place">
+    @select="onDivisionSelected">
+    <template slot="item" scope="division">
       <div class="media">
         <p>
-          <strong>{{ place.title }}</strong>
+          <strong>{{ division.title }}</strong>
         </p>
       </div>
     </template>
@@ -23,7 +23,7 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'place-autocomplete',
+    name: 'admin-division-autocomplete',
     components: {
       Autocomplete
     },
@@ -36,7 +36,7 @@
       onNamePrefixChanged(prefix) {
         var self = this;
 
-        geoApi.findCitiesUsingGET({
+        geoApi.findAdminDivisionsUsingGET({
           'namePrefix': prefix,
           'limit': 5,
           'offset': 0,
@@ -47,12 +47,12 @@
 
             var _results = new Array();
 
-            for (var place of response.data) {
-              var fullPlaceName = place.regionCode
-                ? place.name + ", " + place.regionCode + ", " + place.countryCode
-                :  place.name + ", " + place.countryCode;
+            for (var division of response.data) {
+              var fullPlaceName = division.regionCode
+                ? division.name + ", " + division.regionCode + ", " + division.countryCode
+                :  division.name + ", " + division.countryCode;
 
-              _results.push({id: place.id, name: fullPlaceName});
+              _results.push({id: division.id, name: fullPlaceName});
             }
 
             self.currentResults = _results;
@@ -63,8 +63,8 @@
           }
         );
       },
-      onDivisionSelected(place) {
-        this.$emit("onDivisionSelected", place);
+      onDivisionSelected(division) {
+        this.$emit("onDivisionSelected", division);
       }
     }
   }

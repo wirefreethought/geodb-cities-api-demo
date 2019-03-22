@@ -1,11 +1,11 @@
 <template>
-  <div id="find-cities-near-city-demo">
+  <div id="find-divisions-near-location-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Origin City</label><br/>
-          <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
+          <label>Location</label><br/>
+          <input v-model="locationId" placeholder="Lat/Long: ±DD.DDDD±DDD.DDDD" style="width:250px"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
@@ -21,12 +21,12 @@
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="originPlaceId" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div class="form-button">
+        <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
       </div>
     </div>
 
-    <data-table v-if="originPlaceId"
+    <data-table v-if="count > 0"
       :data="currentPageData"
       :columns="columns"
       :count="count"
@@ -45,7 +45,6 @@
   import DataTable from '../../../shared/components/DataTable';
   import Language from '../../../shared/components/Language';
   import SortBy from '../../../shared/components/SortBy';
-  import PlaceAutocomplete from "../../../shared/components/PlaceAutocomplete";
 
   import Config from "../../../shared/scripts/config";
   import PageableMixin from '../../../shared/scripts/pageable-mixin';
@@ -53,17 +52,16 @@
   const geoApi = new Config.GEO_DB.GeoApi();
 
   export default {
-    name: 'find-cities-near-city-demo',
+    name: 'find-divisions-near-location-demo',
     mixins: [PageableMixin],
     components: {
       DataTable,
       Language,
-      PlaceAutocomplete,
       SortBy
     },
     data() {
       return {
-        baseEndpointOperation: 'GET /v1/geo/cities',
+        baseEndpointOperation: 'GET /v1/geo/locations',
         columns: ['distance', 'name', 'country', 'location'],
 
         sortByOptions: [
@@ -79,7 +77,7 @@
 
         currentRequest: {radius: 100},
 
-        originDivisionId: null,
+        locationId: null,
         minPopulation: null,
         radius: 100,
 
@@ -89,9 +87,9 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.originDivisionId
-          ? this.baseEndpointOperation + "/" + this.originDivisionId + "/nearbyCities"
-          : this.baseEndpointOperation + "/{cityId}/nearbyCities";
+        var operation = this.locationId
+          ? this.baseEndpointOperation + "/" + this.locationId + "/nearbyDivisions"
+          : this.baseEndpointOperation + "/{locationId}/nearbyDivisions";
 
         operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
 
@@ -118,29 +116,24 @@
       onLanguageChanged(value) {
         this.languageCode = value;
       },
-      onDivisionSelected(place) {
-        this.originPlaceId = place.id;
-
-        this.onRequestUpdated();
-      },
       onRequestUpdated() {
         this.currentRequest = {
-          placeId: this.originDivisionId,
+          locationId: this.locationId,
           minPopulation: this.minPopulation,
-          radius: this.radius,
+          radius: this.radius
         };
       },
       onSortChanged(value) {
         this.sort = value;
       },
       refreshPageData(page) {
-        if (!this.currentRequest.divisionId) {
+        if (!this.currentRequest.locationId) {
           return;
         }
 
         var self = this;
 
-        geoApi.findCitiesNearCityUsingGET(this.currentRequest.divisionId, {
+        geoApi.findDivisionsNearLocationUsingGET(this.currentRequest.locationId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,
@@ -150,23 +143,23 @@
           'hateoasMode': false
         }).then(
           function (data) {
-            var placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
+            var divisionsResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
 
             var _data = new Array();
 
-            for (var place of placesResponse.data) {
-              var location = place.latitude;
+            for (var division of divisionsResponse.data) {
+              var location = division.latitude;
 
-              if (place.longitude >= 0) {
+              if (division.longitude >= 0) {
                 location += "+";
               }
 
-              location += "" + place.longitude;
+              location += "" + division.longitude;
 
-              _data.push({distance: place.distance, name: place.name, country: place.country, location: location});
+              _data.push({distance: division.distance, name: division.name, country: division.country, location: location});
             }
 
-            self.count = placesResponse.metadata.totalCount;
+            self.count = divisionsResponse.metadata.totalCount;
             self.currentPageData = _data;
           },
 
