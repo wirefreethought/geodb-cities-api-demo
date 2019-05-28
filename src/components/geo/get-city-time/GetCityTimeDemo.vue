@@ -37,7 +37,7 @@
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
 
-        divisionId: null,
+        placeId: null,
         time: null
       }
     },
@@ -68,12 +68,12 @@
           this.time = null;
         }
       },
-      onDivisionSelected(place) {
+      onPlaceSelected(place) {
         this.placeId = place.id;
       }
     },
     watch: {
-      divisionId: function() {
+      placeId: function() {
         this.updateTime();
       }
     }

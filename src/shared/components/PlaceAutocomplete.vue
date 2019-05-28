@@ -63,8 +63,8 @@
           }
         );
       },
-      onDivisionSelected(place) {
-        this.$emit("onDivisionSelected", place);
+      onPlaceSelected(place) {
+        this.$emit("onPlaceSelected", place);
       }
     }
   }

@@ -39,20 +39,20 @@
     data() {
       return {
         baseEndpointOperation: 'GET /v1/geo/cities',
-        divisionDetails: null
+        placeDetails: null
       }
     },
     computed: {
       endpointOperation() {
-        var operation = this.divisionDetails
-          ? this.baseEndpointOperation + "/" + this.divisionDetails.id
+        var operation = this.placeDetails
+          ? this.baseEndpointOperation + "/" + this.placeDetails.id
           : this.baseEndpointOperation + "/{cityId}";
 
         return operation;
       }
     },
     methods: {
-      onDivisionSelected(place) {
+      onPlaceSelected(place) {
         var self = this;
 
         geoApi.getCityUsingGET(
@@ -63,7 +63,7 @@
             function (data) {
               var response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data);
 
-              self.divisionDetails = response.data;
+              self.placeDetails = response.data;
             },
 
             function (error) {

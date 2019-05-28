@@ -4,7 +4,7 @@
     placeholder="Enter administrative division..."
     width="250px"
     @input="onNamePrefixChanged"
-    @select="onDivisionSelected">
+    @select="onPlaceSelected">
     <template slot="item" scope="division">
       <div class="media">
         <p>
@@ -63,8 +63,8 @@
           }
         );
       },
-      onDivisionSelected(division) {
-        this.$emit("onDivisionSelected", division);
+      onPlaceSelected(division) {
+        this.$emit("onPlaceSelected", division);
       }
     }
   }

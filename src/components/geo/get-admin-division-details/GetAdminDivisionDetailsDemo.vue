@@ -4,7 +4,7 @@
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div class="form-field">
         <label>Administrative Division</label>
-        <admin-division-autocomplete @onDivisionSelected="onDivisionSelected($event)"/>
+        <admin-division-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
       <div v-if="divisionDetails" width="100%" class="form-field">
@@ -51,7 +51,7 @@
       }
     },
     methods: {
-      onDivisionSelected(place) {
+      onPlaceSelected(place) {
         var self = this;
 
         geoApi.getAdminDivisionUsingGET(

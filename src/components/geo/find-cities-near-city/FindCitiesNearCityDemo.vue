@@ -79,7 +79,7 @@
 
         currentRequest: {radius: 100},
 
-        originDivisionId: null,
+        originPlaceId: null,
         minPopulation: null,
         radius: 100,
 
@@ -89,8 +89,8 @@
     },
     computed: {
       endpointOperation() {
-        var operation = this.originDivisionId
-          ? this.baseEndpointOperation + "/" + this.originDivisionId + "/nearbyCities"
+        var operation = this.originPlaceId
+          ? this.baseEndpointOperation + "/" + this.originPlaceId + "/nearbyCities"
           : this.baseEndpointOperation + "/{cityId}/nearbyCities";
 
         operation += "?limit=" + this.pageSize + "&offset=" + this.offset;
@@ -118,14 +118,14 @@
       onLanguageChanged(value) {
         this.languageCode = value;
       },
-      onDivisionSelected(place) {
+      onPlaceSelected(place) {
         this.originPlaceId = place.id;
 
         this.onRequestUpdated();
       },
       onRequestUpdated() {
         this.currentRequest = {
-          placeId: this.originDivisionId,
+          placeId: this.originPlaceId,
           minPopulation: this.minPopulation,
           radius: this.radius,
         };
@@ -134,13 +134,13 @@
         this.sort = value;
       },
       refreshPageData(page) {
-        if (!this.currentRequest.divisionId) {
+        if (!this.currentRequest.placeId) {
           return;
         }
 
         var self = this;
 
-        geoApi.findCitiesNearCityUsingGET(this.currentRequest.divisionId, {
+        geoApi.findCitiesNearCityUsingGET(this.currentRequest.placeId, {
           'minPopulation': this.currentRequest.minPopulation,
           'radius': this.currentRequest.radius,
           'languageCode': this.languageCode,

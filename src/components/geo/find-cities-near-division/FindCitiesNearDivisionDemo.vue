@@ -5,7 +5,7 @@
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Origin Division</label><br/>
-          <admin-division-autocomplete @onDivisionSelected="onDivisionSelected($event)"/>
+          <admin-division-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
@@ -118,7 +118,7 @@
       onLanguageChanged(value) {
         this.languageCode = value;
       },
-      onDivisionSelected(division) {
+      onPlaceSelected(division) {
         this.originDivisionId = division.id;
 
         this.onRequestUpdated();
