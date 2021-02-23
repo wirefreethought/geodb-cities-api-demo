@@ -27,6 +27,7 @@ import FindCountryRegionDivisionsDemo from "./components/geo/find-country-region
 import FindDivisionsNearDivisionDemo from './components/geo/find-divisions-near-division/FindDivisionsNearDivisionDemo';
 import FindDivisionsNearLocationDemo from './components/geo/find-divisions-near-location/FindDivisionsNearLocationDemo';
 import GetAdminDisivionDetailsDemo from "./components/geo/get-admin-division-details/GetAdminDivisionDetailsDemo";
+import GetCityAdminRegionDemo from "./components/geo/get-city-admin-region/GetCityAdminRegionDemo";
 import GetCityDetailsDemo from './components/geo/get-city-details/GetCityDetailsDemo';
 import GetCityDistanceDemo from './components/geo/get-city-distance/GetCityDistanceDemo';
 import GetCityDateTimeDemo from './components/geo/get-city-datetime/GetCityDateTimeDemo';
@@ -102,6 +103,10 @@ const router = new VueRouter({
     {
       path: '/get-admin-division-details',
       component: GetAdminDisivionDetailsDemo
+    },
+    {
+      path: '/get-city-admin-region',
+      component: GetCityAdminRegionDemo
     },
     {
       path: '/get-city-details',

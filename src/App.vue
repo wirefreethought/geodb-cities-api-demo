@@ -115,6 +115,11 @@
           },
           {
             icon: 'widgets',
+            title: 'Get City Admin-Region',
+            action: '/get-city-admin-region'
+          },
+          {
+            icon: 'widgets',
             title: 'Get City Date-Time',
             action: '/get-city-datetime'
           },
