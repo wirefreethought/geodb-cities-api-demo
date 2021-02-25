@@ -3,18 +3,6 @@ import VueRouter from 'vue-router';
 
 import './plugins/vuetify'
 
-import {
-  VApp,
-  VNavigationDrawer,
-  VFooter,
-  VList,
-  VBtn,
-  VIcon,
-  VGrid,
-  VToolbar,
-  transitions
-} from 'vuetify';
-
 import FindAdminDivisionsDemo from "./components/geo/find-admin-divisions/FindAdminDivisionsDemo";
 import FindCitiesDemo from './components/geo/find-cities/FindCitiesDemo';
 import FindCitiesNearCityDemo from './components/geo/find-cities-near-city/FindCitiesNearCityDemo';
@@ -151,7 +139,7 @@ const router = new VueRouter({
 })
 
 new Vue({
-  el: '#app',
+  vuetify,
   router,
   render: h => h(App)
-});
+}).$mount('#app')

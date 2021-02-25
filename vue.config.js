@@ -50,6 +50,9 @@ module.exports = {
       .entry('geodb-get-admin-division-details-demo')
         .add('./src/components/geo/get-admin-division-details/index.js')
         .end()
+      .entry('geodb-get-city-admin-region-demo')
+      .add('./src/components/geo/get-city-admin-region/index.js')
+      .end()
       .entry('geodb-get-city-details-demo')
         .add('./src/components/geo/get-city-details/index.js')
         .end()
@@ -118,4 +121,8 @@ module.exports = {
     noInfo: true,
     overlay: true
   },
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 };

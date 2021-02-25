@@ -10,27 +10,30 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "ng": "0.0.0",
+    "core-js": "^3.6.5",
     "vue": "^2.6.12",
-    "vue-router": "^3.5.1",
-    "vuetify": "^1.5.24",
-    "wft-geodb-js-client": "^1.4.0"
+    "vue-router": "^3.2.0",
+    "vuetify": "^2.4.0",
+    "wft-geodb-js-client": "^1.4.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.11",
+    "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-standard": "^4.0.0",
-    "compression-webpack-plugin": "^2.0.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "imports-loader": "^0.8.0",
+    "babel-eslint": "^10.1.0",
+    "compression-webpack-plugin": "^7.1.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.1.1",
     "stylus": "^0.54.8",
-    "stylus-loader": "^3.0.2",
-    "vue-cli-plugin-vuetify": "^0.5.0",
+    "stylus-loader": "^5.0.0",
+    "vue-cli-plugin-vuetify": "~2.1.0",
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.7.2",
-    "webpack-chain": "^5.2.4"
+    "webpack-chain": "^6.5.1"
   },
   "eslintConfig": {
     "root": true,
@@ -39,21 +42,16 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "@vue/standard"
+      "eslint:recommended"
     ],
-    "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+    },
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not dead"
   ]
 }
