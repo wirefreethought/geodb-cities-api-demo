@@ -1,57 +1,44 @@
 {
   "name": "geodb-cities-api-demo",
-  "version": "1.1.0",
-  "author": "mmogley <mmogley@wirefreethought.com>",
-  "license": "MIT",
+  "version": "1.2.0",
   "private": true,
+  "author": "mmogley <mmogley@wirefreethought.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "cache-loader": "^4.1.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.12",
+    "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
-    "wft-geodb-js-client": "^1.4.1"
+    "wft-geodb-js-client": "^1.4.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.1",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "^4.5.11",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/cli-service": "^4.5.11",
+    "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
-    "compression-webpack-plugin": "^7.1.2",
+    "compression-webpack-plugin": "^6.1.1",
     "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "imports-loader": "^0.8.0",
     "sass": "^1.32.0",
-    "sass-loader": "^10.1.1",
-    "stylus": "^0.54.8",
-    "stylus-loader": "^5.0.0",
+    "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.1.0",
-    "vue-template-compiler": "^2.6.12",
-    "vuetify-loader": "^1.7.2",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0",
+    "webpack": "^4.46.0",
     "webpack-chain": "^6.5.1"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "license": "GNU GPL V3"
 }

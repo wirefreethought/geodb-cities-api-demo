@@ -1,5 +1,5 @@
 export default {
-  data() {
+  data () {
     return {
       count: 0,
       currentPage: 0,
@@ -8,24 +8,24 @@ export default {
     }
   },
   computed: {
-    offset: function() {
-      return this.currentPage * this.pageSize;
+    offset: function () {
+      return this.currentPage * this.pageSize
     }
   },
   methods: {
-    onPageChanged(page) {
-      this.currentPage = page;
+    onPageChanged (page) {
+      this.currentPage = page
     },
-    refreshPageData(page) {
+    refreshPageData (page) {
     }
   },
   watch: {
     currentPage: function (val) {
-      this.refreshPageData(val);
+      this.refreshPageData(val)
     },
     currentRequest: function (val) {
-      this.currentPage = 0;
-      this.refreshPageData(0);
+      this.currentPage = 0
+      this.refreshPageData(0)
     }
   }
 }

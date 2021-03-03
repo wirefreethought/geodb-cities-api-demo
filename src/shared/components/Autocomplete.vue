@@ -84,70 +84,69 @@
 </style>
 
 <script>
-  export default {
-    name: 'autocomplete',
-    props: {
-      options: {
-        type: Array,
-        required: true
-      },
-      placeholder: {
-        type: String,
-        default: ''
-      },
-      selectedIcon: {
-        type: String,
-        default: ''
-      },
-      width: {
-        type: String,
-        default: 'fit-content'
-      }
+export default {
+  name: 'autocomplete',
+  props: {
+    options: {
+      type: Array,
+      required: true
     },
-    data() {
-      return {
-        isOpen: false,
-        highlightedPosition: 0,
-        keyword: '',
-        thumbImageUri: null
-      }
+    placeholder: {
+      type: String,
+      default: ''
     },
-    methods: {
-      onInput(value) {
-        this.isOpen = !!value;
-        this.highlightedPosition = 0;
-      },
-      moveDown() {
-        if (!this.isOpen) {
-          return;
-        }
-
-        this.highlightedPosition = (this.highlightedPosition + 1) % this.options.length;
-      },
-      moveUp() {
-        if (!this.isOpen) {
-          return;
-        }
-
-        this.highlightedPosition = this.highlightedPosition - 1 < 0
-          ? this.options.length - 1
-          : this.highlightedPosition - 1;
-      },
-      select() {
-        const selectedOption = this.options[this.highlightedPosition];
-
-        this.keyword = selectedOption.name;
-
-        this.isOpen = false;
-
-        this.$emit('select', selectedOption);
-      }
+    selectedIcon: {
+      type: String,
+      default: ''
     },
-    watch: {
-      keyword: function (val) {
-
-        this.$emit('input', val);
+    width: {
+      type: String,
+      default: 'fit-content'
+    }
+  },
+  data () {
+    return {
+      isOpen: false,
+      highlightedPosition: 0,
+      keyword: '',
+      thumbImageUri: null
+    }
+  },
+  methods: {
+    onInput (value) {
+      this.isOpen = !!value
+      this.highlightedPosition = 0
+    },
+    moveDown () {
+      if (!this.isOpen) {
+        return
       }
+
+      this.highlightedPosition = (this.highlightedPosition + 1) % this.options.length
+    },
+    moveUp () {
+      if (!this.isOpen) {
+        return
+      }
+
+      this.highlightedPosition = this.highlightedPosition - 1 < 0
+        ? this.options.length - 1
+        : this.highlightedPosition - 1
+    },
+    select () {
+      const selectedOption = this.options[this.highlightedPosition]
+
+      this.keyword = selectedOption.name
+
+      this.isOpen = false
+
+      this.$emit('select', selectedOption)
+    }
+  },
+  watch: {
+    keyword: function (val) {
+      this.$emit('input', val)
     }
   }
+}
 </script>

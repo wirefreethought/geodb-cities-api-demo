@@ -1,18 +1,8 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import {transitions, VApp, VBtn, VFooter, VGrid, VIcon, VList, VNavigationDrawer, VToolbar} from "vuetify";
+import Vuetify from 'vuetify/lib/framework'
+import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VFooter,
-    VList,
-    VBtn,
-    VIcon,
-    VGrid,
-    VToolbar,
-    transitions
-  },
-  iconfont: 'md'
+Vue.use(Vuetify)
+
+export default new Vuetify({
 })

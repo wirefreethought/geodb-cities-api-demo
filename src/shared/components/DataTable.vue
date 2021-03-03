@@ -2,7 +2,7 @@
   <table :style="{width:width, textAlign:'center'}">
     <thead>
     <tr>
-      <th v-for="key in columns">{{ key | capitalize }}</th>
+      <th v-for="(key,idx) in columns" :key="idx">{{ key | capitalize }}</th>
     </tr>
     </thead>
     <tfoot v-if="count > pageSize">
@@ -12,21 +12,21 @@
           <span v-if="!atFirstPage()">
             <a @click="onFirstPage">First</a> | <a @click="onPrevPage">Prev</a>
           </span>
-          <span v-else>&nbsp</span>
+          <span v-else>&nbsp;</span>
 
           <span>Page {{currentPage + 1}} of {{count / pageSize | roundUp}}</span>
 
           <span v-if="!atLastPage()">
             <a @click="onNextPage">Next</a> | <a @click="onLastPage">Last</a>
           </span>
-          <span v-else>&nbsp</span>
+          <span v-else>&nbsp;</span>
         </div>
       </td>
     </tr>
     </tfoot>
     <tbody>
-    <tr v-for="entry in data">
-      <td v-for="key in columns">
+    <tr v-for="(entry,idx) in data" :key="idx">
+      <td v-for="key in columns" v-bind:key="key">
         {{entry[key]}}
       </td>
     </tr>
@@ -72,51 +72,51 @@
 </style>
 
 <script>
-  export default {
-    name: 'data-table',
-    props: {
-      count: Number,
-      columns: Array,
-      currentPage: Number,
-      data: Array,
-      pageSize: Number,
-      width: {
-        type: String,
-        default: '100%'
-      }
+export default {
+  name: 'data-table',
+  props: {
+    count: Number,
+    columns: Array,
+    currentPage: Number,
+    data: Array,
+    pageSize: Number,
+    width: {
+      type: String,
+      default: '100%'
+    }
+  },
+  computed: {
+    lastPage: function () {
+      return Math.ceil(this.count / this.pageSize) - 1
+    }
+  },
+  filters: {
+    capitalize: function (str) {
+      return str.charAt(0).toUpperCase() + str.slice(1)
     },
-    computed: {
-      lastPage: function() {
-        return Math.ceil(this.count / this.pageSize) - 1;
-      }
+    roundUp: function (value) {
+      return Math.ceil(value)
+    }
+  },
+  methods: {
+    atFirstPage: function () {
+      return this.currentPage === 0
     },
-    filters: {
-      capitalize: function (str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-      },
-      roundUp: function (value) {
-        return Math.ceil(value);
-      }
+    atLastPage: function () {
+      return this.currentPage === this.lastPage
     },
-    methods: {
-      atFirstPage: function() {
-        return this.currentPage === 0;
-      },
-      atLastPage: function() {
-        return this.currentPage === this.lastPage;
-      },
-      onFirstPage: function() {
-        this.$emit("pageChanged", 0);
-      },
-      onLastPage: function() {
-        this.$emit("pageChanged", this.lastPage);
-      },
-      onNextPage: function() {
-        this.$emit("pageChanged", this.currentPage + 1);
-      },
-      onPrevPage: function() {
-        this.$emit("pageChanged", this.currentPage - 1);
-      }
+    onFirstPage: function () {
+      this.$emit('pageChanged', 0)
+    },
+    onLastPage: function () {
+      this.$emit('pageChanged', this.lastPage)
+    },
+    onNextPage: function () {
+      this.$emit('pageChanged', this.currentPage + 1)
+    },
+    onPrevPage: function () {
+      this.$emit('pageChanged', this.currentPage - 1)
     }
   }
+}
 </script>

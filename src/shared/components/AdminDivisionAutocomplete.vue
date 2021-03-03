@@ -1,11 +1,11 @@
 <template>
   <autocomplete
     :options="currentResults"
-    placeholder="Enter administrative division..."
+    placeholder="Enter administrative division"
     width="250px"
     @input="onNamePrefixChanged"
     @select="onPlaceSelected">
-    <template slot="item" scope="division">
+    <template slot="item" slot-scope="division">
       <div class="media">
         <p>
           <strong>{{ division.title }}</strong>
@@ -16,56 +16,56 @@
 </template>
 
 <script>
-  import Autocomplete from './Autocomplete';
+import Autocomplete from './Autocomplete'
 
-  import Config from '../../shared/scripts/config';
+import Config from '../../shared/scripts/config'
 
-  const geoApi = new Config.GEO_DB.GeoApi();
+const geoApi = new Config.GEO_DB.GeoApi()
 
-  export default {
-    name: 'admin-division-autocomplete',
-    components: {
-      Autocomplete
-    },
-    data() {
-      return {
-        currentResults: []
-      }
-    },
-    methods: {
-      onNamePrefixChanged(prefix) {
-        var self = this;
+export default {
+  name: 'admin-division-autocomplete',
+  components: {
+    Autocomplete
+  },
+  data () {
+    return {
+      currentResults: []
+    }
+  },
+  methods: {
+    onNamePrefixChanged (prefix) {
+      const self = this
 
-        geoApi.findAdminDivisionsUsingGET({
-          'namePrefix': prefix,
-          'limit': 5,
-          'offset': 0,
-          'hateoasMode': false
-        }).then(
-          function (data) {
-            var response = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data);
+      geoApi.findAdminDivisionsUsingGET({
+        namePrefix: prefix,
+        limit: 5,
+        offset: 0,
+        hateoasMode: false
+      }).then(
+        function (data) {
+          const response = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 
-            var _results = new Array();
+          const _results = []
 
-            for (var division of response.data) {
-              var fullPlaceName = division.regionCode
-                ? division.name + ", " + division.regionCode + ", " + division.countryCode
-                :  division.name + ", " + division.countryCode;
+          for (const division of response.data) {
+            const fullPlaceName = division.regionCode
+              ? division.name + ', ' + division.regionCode + ', ' + division.countryCode
+              : division.name + ', ' + division.countryCode
 
-              _results.push({id: division.id, name: fullPlaceName});
-            }
-
-            self.currentResults = _results;
-          },
-
-          function (error) {
-            console.error(error);
+            _results.push({ id: division.id, name: fullPlaceName })
           }
-        );
-      },
-      onPlaceSelected(division) {
-        this.$emit("onPlaceSelected", division);
-      }
+
+          self.currentResults = _results
+        },
+
+        function (error) {
+          console.error(error)
+        }
+      )
+    },
+    onPlaceSelected (division) {
+      this.$emit('onPlaceSelected', division)
     }
   }
+}
 </script>
