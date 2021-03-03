@@ -49,3 +49,9 @@ for c in ${LOCALE_COMPONENTS[@]}; do
   FILENAME=`kebabToPascalCase $c`.vue
   $BUILD_CMD build --target wc --name $c "src/components/locale/$FILENAME" --no-clean --dest "dist/components/locale"
 done
+
+(cd dist & find . -name '*.js' -delete)
+
+for f in `(cd dist &  find . -name '*.js.gz')`; do
+  mv $f ${f%.gz}
+done
