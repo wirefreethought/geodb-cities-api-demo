@@ -50,8 +50,8 @@ for c in ${LOCALE_COMPONENTS[@]}; do
   $BUILD_CMD build --target wc --name $c "src/components/locale/$FILENAME" --no-clean --dest "dist/components/locale"
 done
 
-(cd dist & find . -name '*.js' -delete)
+find dist -name '*.js' -delete
 
-for f in `(cd dist &  find . -name '*.js.gz')`; do
+for f in `find dist -name '*.js.gz'`; do
   mv $f ${f%.gz}
 done
