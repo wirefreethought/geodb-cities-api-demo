@@ -10,7 +10,14 @@ module.exports = {
       rules: [
         {
           test: /wft-geodb-js-client\/.*\.js$/,
-          use: 'imports-loader?define=>false'
+          use: [
+            {
+              loader: 'imports-loader',
+              options: {
+                additionalCode: 'var define = false;',
+              },
+            },
+          ]
         }
       ]
     },
