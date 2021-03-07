@@ -101,6 +101,11 @@ export default {
         },
         {
           icon: 'widgets',
+          title: 'Find Country Region Admin Divisions',
+          action: '/find-country-region-admin-divisions'
+        },
+        {
+          icon: 'widgets',
           title: 'Find Country Region Cities',
           action: '/find-country-region-cities'
         },

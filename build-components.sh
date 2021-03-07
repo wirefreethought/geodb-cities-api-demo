@@ -18,6 +18,7 @@ GEO_COMPONENTS=(
   'find-cities-near-division-demo'
   'find-cities-near-location-demo'
   'find-countries-demo'
+  'find-country-region-admin-divisions-demo'
   'find-country-region-cities-demo'
   'find-country-regions-demo'
   'get-admin-division-details-demo'

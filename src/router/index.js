@@ -9,6 +9,7 @@ import FindCitiesNearCityDemo from '@/components/geo/FindCitiesNearCityDemo'
 import FindCitiesNearDivisionDemo from '@/components/geo/FindCitiesNearDivisionDemo'
 import FindCitiesNearLocationDemo from '@/components/geo/FindCitiesNearLocationDemo'
 import FindCountriesDemo from '@/components/geo/FindCountriesDemo'
+import FindCountryRegionAdminDivisionsDemo from '@/components/geo/FindCountryRegionAdminDivisionsDemo'
 import FindCountryRegionCitiesDemo from '@/components/geo/FindCountryRegionCitiesDemo'
 import FindCountryRegionsDemo from '@/components/geo/FindCountryRegionsDemo'
 import FindAdminDivisionsNearLocationDemo from '@/components/geo/FindAdminDivisionsNearLocationDemo'
@@ -71,6 +72,10 @@ const routes = [
   {
     path: '/find-country-regions',
     component: FindCountryRegionsDemo
+  },
+  {
+    path: '/find-country-region-admin-divisions',
+    component: FindCountryRegionAdminDivisionsDemo
   },
   {
     path: '/find-country-region-cities',
