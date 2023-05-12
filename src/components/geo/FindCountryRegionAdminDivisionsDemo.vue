@@ -70,8 +70,8 @@ export default {
       columns: ['name', 'location'],
 
       sortByOptions: [
-        { value: 'name', title: 'Division Name, A-Z' },
-        { value: '-name', title: 'Division Name, Z-A' },
+        { value: 'name', title: 'Name, A-Z' },
+        { value: '-name', title: 'Name, Z-A' },
         { value: 'elevation', title: 'Elevation, LO-HI' },
         { value: '-elevation', title: 'Elevation, HI-LO' },
         { value: 'population', title: 'Population, LO-HI' },

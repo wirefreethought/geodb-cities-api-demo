@@ -67,8 +67,8 @@ export default {
       columns: ['distance', 'name', 'country', 'location'],
 
       sortByOptions: [
-        { value: 'name', title: 'City Name, A-Z' },
-        { value: '-name', title: 'City Name, Z-A' },
+        { value: 'name', title: 'Name, A-Z' },
+        { value: '-name', title: 'Name, Z-A' },
         { value: 'countryId', title: 'Country Code, A-Z' },
         { value: '-countryId', title: 'Country Code, Z-A' },
         { value: 'elevation', title: 'Elevation, LO-HI' },
