@@ -96,6 +96,11 @@ export default {
         },
         {
           icon: 'widgets',
+          title: 'Find Country Places',
+          action: '/find-country-places'
+        },
+        {
+          icon: 'widgets',
           title: 'Find Country Regions',
           action: '/find-country-regions'
         },

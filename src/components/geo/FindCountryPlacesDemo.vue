@@ -1,15 +1,15 @@
 <template>
-  <div id="find-country-region-cities-demo">
+  <div id="find-country-places-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
-    <data-table v-if="regionCode"
-      :data="currentPageData"
-      :columns="columns"
-      :count="count"
-      :currentPage="currentPage"
-      :pageSize="pageSize"
-      @pageChanged="onPageChanged">
+    <data-table v-if="country"
+        :data="currentPageData"
+        :columns="columns"
+        :count="count"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        @pageChanged="onPageChanged">
     </data-table>
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
@@ -17,22 +17,14 @@
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
-        <div v-if="country" class="form-field">
-          <label>Region</label>
-          <region-autocomplete :countryId="country.code" @onRegionSelected="onRegionSelected($event)"/>
-        </div>
-        <div v-if="regionCode" class="form-field">
-          <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
-        </div>
       </div>
 
       <div style="display:flex; flex-flow:row">
         <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
-
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="regionCode" class="form-button">
+      <div v-if="country" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
@@ -56,13 +48,12 @@ import PageableMixin from '@/shared/scripts/pageable-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'find-country-region-cities-demo',
+  name: 'find-country-places-demo',
   mixins: [PageableMixin],
   components: {
     CountryAutocomplete,
     DataTable,
     Language,
-    RegionAutocomplete,
     SortBy
   },
   data () {
@@ -82,7 +73,6 @@ export default {
       currentRequest: {},
 
       country: null,
-      regionCode: null,
       minPopulation: null,
 
       sort: null,
@@ -95,9 +85,7 @@ export default {
         ? this.baseEndpointOperation + '/' + this.country.code
         : this.baseEndpointOperation + '/{countryId}'
 
-      operation += this.regionCode
-        ? '/regions/' + this.regionCode + '/cities'
-        : '/regions/{regionCode}/cities'
+      operation += '/places'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
 
@@ -119,22 +107,15 @@ export default {
   methods: {
     onCountrySelected (country) {
       this.country = country
-      this.regionCode = null
 
       this.onRequestUpdated()
     },
     onLanguageChanged (value) {
       this.languageCode = value
     },
-    onRegionSelected (region) {
-      this.regionCode = region.code
-
-      this.onRequestUpdated()
-    },
     onRequestUpdated () {
       this.currentRequest = {
         countryId: this.country.code,
-        regionCode: this.regionCode,
         minPopulation: this.minPopulation,
         sort: this.sort
       }
@@ -143,13 +124,13 @@ export default {
       this.sort = sort
     },
     refreshPageData () {
-      if (!this.country || !this.regionCode) {
+      if (!this.country) {
         return
       }
 
       const self = this
 
-      geoApi.findRegionCitiesUsingGET(this.country.code, this.regionCode, {
+      geoApi.findCountryPlacesUsingGET(this.country.code,{
         minPopulation: this.currentRequest.minPopulation,
         languageCode: this.languageCode,
         sort: this.sort,

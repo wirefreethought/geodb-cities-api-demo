@@ -2,6 +2,16 @@
   <div id="find-country-region-admin-divisions-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    </div>
+    <data-table v-if="regionCode"
+      :data="currentPageData"
+      :columns="columns"
+      :count="count"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      @pageChanged="onPageChanged">
+    </data-table>
+    <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Country</label>
@@ -26,15 +36,6 @@
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
-
-    <data-table v-if="regionCode"
-      :data="currentPageData"
-      :columns="columns"
-      :count="count"
-      :currentPage="currentPage"
-      :pageSize="pageSize"
-      @pageChanged="onPageChanged">
-    </data-table>
   </div>
 </template>
 
@@ -94,8 +95,8 @@ export default {
         ? this.baseEndpointOperation + '/' + this.country.code
         : this.baseEndpointOperation + '/{countryId}'
 
-      operation += this.regionDetails
-        ? '/regions/' + this.regionDetails.isoCode + '/divisions'
+      operation += this.regionCode
+        ? '/regions/' + this.regionCode + '/divisions'
         : '/regions/{regionCode}/cities'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset

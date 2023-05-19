@@ -3,7 +3,6 @@
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
-    <br/>
     <data-table
       :data="currentPageData"
       :columns="columns"

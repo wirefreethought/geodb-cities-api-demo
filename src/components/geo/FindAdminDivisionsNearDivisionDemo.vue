@@ -2,6 +2,16 @@
   <div id="find-divisions-near-division-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    </div>
+    <data-table v-if="originDivisionId"
+      :data="currentPageData"
+      :columns="columns"
+      :count="count"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      @pageChanged="onPageChanged">
+    </data-table>
+    <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Origin Division</label><br/>
@@ -25,15 +35,6 @@
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
-
-    <data-table v-if="originDivisionId"
-      :data="currentPageData"
-      :columns="columns"
-      :count="count"
-      :currentPage="currentPage"
-      :pageSize="pageSize"
-      @pageChanged="onPageChanged">
-    </data-table>
   </div>
 </template>
 

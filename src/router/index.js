@@ -9,6 +9,7 @@ import FindCitiesNearCityDemo from '@/components/geo/FindCitiesNearCityDemo'
 import FindCitiesNearDivisionDemo from '@/components/geo/FindCitiesNearDivisionDemo'
 import FindCitiesNearLocationDemo from '@/components/geo/FindCitiesNearLocationDemo'
 import FindCountriesDemo from '@/components/geo/FindCountriesDemo'
+import FindCountryPlacesDemo from "@/components/geo/FindCountryPlacesDemo.vue";
 import FindCountryRegionAdminDivisionsDemo from '@/components/geo/FindCountryRegionAdminDivisionsDemo'
 import FindCountryRegionCitiesDemo from '@/components/geo/FindCountryRegionCitiesDemo'
 import FindCountryRegionsDemo from '@/components/geo/FindCountryRegionsDemo'
@@ -68,6 +69,10 @@ const routes = [
   {
     path: '/find-countries',
     component: FindCountriesDemo
+  },
+  {
+    path: '/find-country-places',
+    component: FindCountryPlacesDemo
   },
   {
     path: '/find-country-regions',

@@ -14,7 +14,7 @@
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.5",
-    "wft-geodb-js-client": "^1.4.7"
+    "wft-geodb-js-client": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",

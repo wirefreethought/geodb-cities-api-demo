@@ -2,6 +2,16 @@
   <div id="find-countries-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    </div>
+    <data-table
+      :data="currentPageData"
+      :columns="columns"
+      :count="count"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      @pageChanged="onPageChanged">
+    </data-table>
+    <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the country name" style="width:225px"/>
@@ -14,15 +24,6 @@
         <button @click="onRequestUpdated">Update Results</button>
       </div>
     </div>
-
-    <data-table
-      :data="currentPageData"
-      :columns="columns"
-      :count="count"
-      :currentPage="currentPage"
-      :pageSize="pageSize"
-      @pageChanged="onPageChanged">
-    </data-table>
   </div>
 </template>
 

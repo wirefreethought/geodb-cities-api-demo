@@ -2,6 +2,18 @@
   <div id="find-country-regions">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    </div>
+    <div v-if="country">
+      <data-table
+        :data="currentPageData"
+        :columns="columns"
+        :count="count"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        @pageChanged="onPageChanged">
+      </data-table>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
           <label>Country</label>
@@ -17,17 +29,6 @@
       <div v-if="country" class="form-button">
         <button @click="onRequestUpdated">Update Results</button>
       </div>
-    </div>
-
-    <div v-if="country">
-      <data-table
-        :data="currentPageData"
-        :columns="columns"
-        :count="count"
-        :currentPage="currentPage"
-        :pageSize="pageSize"
-        @pageChanged="onPageChanged">
-      </data-table>
     </div>
   </div>
 </template>
