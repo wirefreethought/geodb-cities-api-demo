@@ -2,24 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 
-import FindAdminDivisionsDemo from '@/components/geo/FindAdminDivisionsDemo'
-import FindAdminDivisionsNearDivisionDemo from '@/components/geo/FindAdminDivisionsNearDivisionDemo'
-import FindCitiesDemo from '@/components/geo/FindCitiesDemo'
-import FindCitiesNearCityDemo from '@/components/geo/FindCitiesNearCityDemo'
-import FindCitiesNearDivisionDemo from '@/components/geo/FindCitiesNearDivisionDemo'
-import FindCitiesNearLocationDemo from '@/components/geo/FindCitiesNearLocationDemo'
 import FindCountriesDemo from '@/components/geo/FindCountriesDemo'
 import FindCountryPlacesDemo from "@/components/geo/FindCountryPlacesDemo.vue";
-import FindCountryRegionAdminDivisionsDemo from '@/components/geo/FindCountryRegionAdminDivisionsDemo'
 import FindCountryRegionCitiesDemo from '@/components/geo/FindCountryRegionCitiesDemo'
 import FindCountryRegionsDemo from '@/components/geo/FindCountryRegionsDemo'
-import FindAdminDivisionsNearLocationDemo from '@/components/geo/FindAdminDivisionsNearLocationDemo'
-import GetAdminDivisionDetailsDemo from '@/components/geo/GetAdminDivisionDetailsDemo'
-import GetCityAdminRegionDemo from '@/components/geo/GetCityAdminRegionDemo'
-import GetCityDateTimeDemo from '@/components/geo/GetCityDateTimeDemo'
-import GetCityDetailsDemo from '@/components/geo/GetCityDetailsDemo'
-import GetCityDistanceDemo from '@/components/geo/GetCityDistanceDemo'
-import GetCityTimeDemo from '@/components/geo/GetCityTimeDemo'
 import GetCountryDetailsDemo from '@/components/geo/GetCountryDetailsDemo'
 import GetCountryRegionDetailsDemo from '@/components/geo/GetCountryRegionDetailsDemo'
 import GetCurrenciesDemo from '@/components/locale/GetCurrenciesDemo'
@@ -27,6 +13,15 @@ import GetLanguagesDemo from '@/components/locale/GetLanguagesDemo'
 import GetLocalesDemo from '@/components/locale/GetLocalesDemo'
 import GetTimezonesDemo from '@/components/locale/GetTimezonesDemo'
 import GetTimezoneTimeDemo from '@/components/locale/GetTimezoneTimeDemo'
+import FindPlacesDemo from "@/components/geo/FindPlacesDemo.vue";
+import FindPlacesNearLocationDemo from "@/components/geo/FindPlacesNearLocationDemo.vue";
+import FindPlacesNearPlaceDemo from "@/components/geo/FindPlacesNearPlaceDemo.vue";
+import GetPlaceAdminRegionDemo from "@/components/geo/GetPlaceAdminRegionDemo.vue";
+import GetPlaceDateTimeDemo from "@/components/geo/GetPlaceDateTimeDemo.vue";
+import GetPlaceDetailsDemo from "@/components/geo/GetPlaceDetailsDemo.vue";
+import GetPlaceDistanceDemo from "@/components/geo/GetPlaceDistanceDemo.vue";
+import GetPlaceTimeDemo from "@/components/geo/GetPlaceTimeDemo.vue";
+import GetTimezoneDateTimeDemo from "@/components/locale/GetTimezoneDateTimeDemo.vue";
 
 Vue.use(VueRouter)
 
@@ -35,36 +30,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-
-  // Admin Divisions
-  {
-    path: '/find-admin-divisions',
-    component: FindAdminDivisionsDemo
-  },
-  {
-    path: '/find-admin-divisions-near-division',
-    component: FindAdminDivisionsNearDivisionDemo
-  },
-  {
-    path: '/find-admin-divisions-near-location',
-    component: FindAdminDivisionsNearLocationDemo
-  },
-  {
-    path: '/find-cities',
-    component: FindCitiesDemo
-  },
-  {
-    path: '/find-cities-near-city',
-    component: FindCitiesNearCityDemo
-  },
-  {
-    path: '/find-cities-near-division',
-    component: FindCitiesNearDivisionDemo
-  },
-  {
-    path: '/find-cities-near-location',
-    component: FindCitiesNearLocationDemo
   },
   {
     path: '/find-countries',
@@ -79,36 +44,40 @@ const routes = [
     component: FindCountryRegionsDemo
   },
   {
-    path: '/find-country-region-admin-divisions',
-    component: FindCountryRegionAdminDivisionsDemo
-  },
-  {
     path: '/find-country-region-cities',
     component: FindCountryRegionCitiesDemo
   },
   {
-    path: '/get-admin-division-details',
-    component: GetAdminDivisionDetailsDemo
+    path: '/find-places',
+    component: FindPlacesDemo
   },
   {
-    path: '/get-city-admin-region',
-    component: GetCityAdminRegionDemo
+    path: '/find-places-near-location',
+    component: FindPlacesNearLocationDemo
   },
   {
-    path: '/get-city-datetime',
-    component: GetCityDateTimeDemo
+    path: '/find-places-near-place',
+    component: FindPlacesNearPlaceDemo
   },
   {
-    path: '/get-city-details',
-    component: GetCityDetailsDemo
+    path: '/get-place-admin-region',
+    component: GetPlaceAdminRegionDemo
   },
   {
-    path: '/get-city-distance',
-    component: GetCityDistanceDemo
+    path: '/get-place-datetime',
+    component: GetPlaceDateTimeDemo
   },
   {
-    path: '/get-city-time',
-    component: GetCityTimeDemo
+    path: '/get-place-details',
+    component: GetPlaceDetailsDemo
+  },
+  {
+    path: '/get-place-distance',
+    component: GetPlaceDistanceDemo
+  },
+  {
+    path: '/get-place-time',
+    component: GetPlaceTimeDemo
   },
   {
     path: '/get-country-details',
@@ -136,7 +105,7 @@ const routes = [
   },
   {
     path: '/get-timezone-datetime',
-    component: GetCityDateTimeDemo
+    component: GetTimezoneDateTimeDemo
   },
   {
     path: '/get-timezone-time',

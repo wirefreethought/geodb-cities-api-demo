@@ -1,9 +1,9 @@
 <template>
-  <div id="get-city-details-demo">
+  <div id="get-place-details-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div class="form-field">
-        <label>City</label>
+        <label>Place</label>
         <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
@@ -49,14 +49,14 @@ import DateTimeUtils from '@/shared/scripts/date-time-utils-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'get-city-details-demo',
+  name: 'get-place-details-demo',
   mixins: [DateTimeUtils],
   components: {
     PlaceAutocomplete
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
       placeDetails: null
     }
   },
@@ -64,28 +64,29 @@ export default {
     endpointOperation () {
       return this.placeDetails
         ? this.baseEndpointOperation + '/' + this.placeDetails.id
-        : this.baseEndpointOperation + '/{cityId}'
+        : this.baseEndpointOperation + '/{placeId}'
     }
   },
   methods: {
     onPlaceSelected (place) {
       const self = this
 
-      geoApi.getCityUsingGET(
+      geoApi.getPlaceUsingGET(
         place.id,
         {
           languageCode: this.languageCode
-        }).then(
-        function (data) {
-          const response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data)
+        })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data)
 
-          self.placeDetails = response.data
-        },
+            self.placeDetails = response.data
+          },
 
-        function (error) {
-          console.error(error)
-        }
-      )
+          function (error) {
+            console.error(error)
+          }
+        )
     }
   }
 }

@@ -77,17 +77,18 @@ export default {
     onRegionSelected (region) {
       const self = this
 
-      geoApi.getRegionUsingGET(this.countryId, region.code, {}).then(
-        function (data) {
-          const response = Config.GEO_DB.RegionResponse.constructFromObject(data)
+      geoApi.getRegionUsingGET(this.countryId, region.code, {})
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.RegionResponse.constructFromObject(data)
 
-          self.regionDetails = response.data
-        },
+            self.regionDetails = response.data
+          },
 
-        function (error) {
-          console.error(error)
-        }
-      )
+          function (error) {
+            console.error(error)
+          }
+        )
     }
   }
 }

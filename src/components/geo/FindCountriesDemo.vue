@@ -96,24 +96,25 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.CountriesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.CountriesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const country of response.data) {
-            _data.push({ name: country.name, code: country.code, currencies: country.currencyCodes })
+            for (const country of response.data) {
+              _data.push({ name: country.name, code: country.code, currencies: country.currencyCodes })
+            }
+
+            self.count = response.metadata.totalCount
+            self.currentPageData = _data
+          },
+
+          function (error) {
+            console.error(error)
           }
-
-          self.count = response.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

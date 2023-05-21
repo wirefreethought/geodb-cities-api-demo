@@ -10,24 +10,18 @@ function kebabToPascalCase()
 BUILD_CMD=node_modules/.bin/vue-cli-service
 
 GEO_COMPONENTS=(
-  'find-admin-divisions-demo'
-  'find-admin-divisions-near-division-demo'
-  'find-admin-divisions-near-location-demo'
-  'find-cities-demo'
-  'find-cities-near-city-demo'
-  'find-cities-near-division-demo'
-  'find-cities-near-location-demo'
+  'find-places-demo'
+  'find-places-near-place-demo'
+  'find-places-near-location-demo'
   'find-countries-demo',
   'find-country-places-demo',
-  'find-country-region-admin-divisions-demo'
-  'find-country-region-cities-demo'
+  'find-country-region-places-demo'
   'find-country-regions-demo'
-  'get-admin-division-details-demo'
-  'get-city-admin-region-demo'
-  'get-city-date-time-demo'
-  'get-city-details-demo'
-  'get-city-distance-demo'
-  'get-city-time-demo'
+  'get-place-admin-region-demo'
+  'get-place-date-time-demo'
+  'get-place-details-demo'
+  'get-place-distance-demo'
+  'get-place-time-demo'
   'get-country-details-demo'
   'get-country-region-details-demo'
 )

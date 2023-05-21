@@ -69,14 +69,15 @@ export default {
       if (this.zoneId) {
         const self = this
 
-        localeApi.getTimeZoneTimeUsingGET(this.zoneId).then(
-          data => {
-            self.time = data.data
-          },
-          error => {
-            console.error(error)
-          }
-        )
+        localeApi.getTimeZoneTimeUsingGET(this.zoneId)
+          .then(
+            data => {
+              self.time = data.data
+            },
+            error => {
+              console.error(error)
+            }
+          )
       } else {
         this.time = null
       }

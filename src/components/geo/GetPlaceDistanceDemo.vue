@@ -1,5 +1,5 @@
 <template>
-  <div id="get-city-distance-demo">
+  <div id="get-place-distance-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
@@ -31,13 +31,13 @@ import PlaceAutocomplete from '@/shared/components/PlaceAutocomplete'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'get-city-distance-demo',
+  name: 'get-place-distance-demo',
   components: {
     PlaceAutocomplete
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
 
       fromPlaceId: null,
       toPlaceId: null,
@@ -48,11 +48,11 @@ export default {
     endpointOperation () {
       var operation = this.toPlaceId
         ? this.baseEndpointOperation + '/' + this.toPlaceId + '/distance'
-        : this.baseEndpointOperation + '/{toCityId}/distance'
+        : this.baseEndpointOperation + '/{toPlaceId}/distance'
 
       operation = this.fromPlaceId
-        ? operation + '?fromCityId=' + this.fromPlaceId
-        : operation + '?fromCityId={fromCityId}'
+        ? operation + '?toPlaceId=' + this.fromPlaceId
+        : operation + '?toPlaceId=toPlaceId}'
 
       return operation
     }
@@ -62,15 +62,16 @@ export default {
       if (this.fromPlaceId && this.toPlaceId) {
         const self = this
 
-        geoApi.getCityDistanceUsingGET(this.toPlaceId, this.fromPlaceId, {}).then(
-          function (data) {
-            self.distance = data.data
-          },
+        geoApi.getPlaceDistanceUsingGET(this.toPlaceId, this.fromPlaceId, {})
+          .then(
+            function (data) {
+              self.distance = data.data
+            },
 
-          function (error) {
-            console.error(error)
-          }
-        )
+            function (error) {
+              console.error(error)
+            }
+          )
       } else {
         this.distance = null
       }

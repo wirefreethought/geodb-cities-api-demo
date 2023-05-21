@@ -9,7 +9,7 @@
         </div>
         <div v-if="dateTime" class="form-field">
           <label>Date-Time (ISO8601, UTC)</label>
-          <div>{{dateTime | formatDateTime}}</div>
+          <div>{{dateTime}}</div>
         </div>
       </div>
     </div>
@@ -69,14 +69,15 @@ export default {
       if (this.zoneId) {
         const self = this
 
-        localeApi.getTimeZoneDateTimeUsingGET(this.zoneId).then(
-          data => {
-            self.dateTime = data.data
-          },
-          error => {
-            console.error(error)
-          }
-        )
+        localeApi.getTimeZoneDateTimeUsingGET(this.zoneId)
+          .then(
+            data => {
+              self.dateTime = data.data
+            },
+            error => {
+              console.error(error)
+            }
+          )
       } else {
         this.dateTime = null
       }

@@ -54,18 +54,19 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.LocalesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.LocalesResponse.constructFromObject(data)
 
-          self.count = response.metadata.totalCount
-          self.currentPageData = response.data
-        },
+            self.count = response.metadata.totalCount
+            self.currentPageData = response.data
+          },
 
-        function (error) {
-          console.error(error)
-        }
-      )
+          function (error) {
+            console.error(error)
+          }
+        )
     }
   }
 }

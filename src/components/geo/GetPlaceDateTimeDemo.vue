@@ -1,15 +1,15 @@
 <template>
-  <div id="get-city-datetime-demo">
+  <div id="get-place-datetime-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>City</label>
+          <label>Place</label>
           <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div v-if="dateTime" class="form-field">
           <label>Date-Time (ISO-8601, UTC)</label>
-          <div>{{dateTime | formatDateTime}}</div>
+          <div>{{dateTime}}</div>
         </div>
       </div>
     </div>
@@ -24,18 +24,19 @@
 import PlaceAutocomplete from '@/shared/components/PlaceAutocomplete'
 import Config from '@/shared/scripts/config'
 import DateTimeUtils from '@/shared/scripts/date-time-utils-mixin'
+import {Temporal} from "@js-temporal/polyfill";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'get-city-datetime-demo',
+  name: 'get-place-datetime-demo',
   mixins: [DateTimeUtils],
   components: {
     PlaceAutocomplete
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
 
       dateTime: null,
       placeId: null
@@ -45,7 +46,7 @@ export default {
     endpointOperation () {
       var operation = this.placeId
         ? this.baseEndpointOperation + '/' + this.placeId + '/dateTime'
-        : this.baseEndpointOperation + '/{cityId}/dateTime'
+        : this.baseEndpointOperation + '/{placeId}/dateTime'
 
       return operation
     }
@@ -58,15 +59,16 @@ export default {
       if (this.placeId) {
         const self = this
 
-        geoApi.getCityDateTimeUsingGET(this.placeId).then(
-          function (data) {
-            self.dateTime = data.data
-          },
+        geoApi.getPlaceDateTimeUsingGET(this.placeId)
+          .then(
+            function (data) {
+              self.dateTime = data.data
+            },
 
-          function (error) {
-            console.error(error)
-          }
-        )
+            function (error) {
+              console.error(error)
+            }
+          )
       } else {
         this.dateTime = null
       }

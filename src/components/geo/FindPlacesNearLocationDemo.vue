@@ -53,7 +53,7 @@ import PageableMixin from '@/shared/scripts/pageable-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'find-cities-near-location-demo',
+  name: 'find-places-near-location-demo',
   mixins: [PageableMixin],
   components: {
     DataTable,
@@ -138,7 +138,7 @@ export default {
 
       const self = this
 
-      geoApi.findCitiesNearLocationUsingGET(this.currentRequest.locationId, {
+      geoApi.findPlacesNearLocationUsingGET(this.currentRequest.locationId, {
         minPopulation: this.currentRequest.minPopulation,
         radius: this.currentRequest.radius,
         languageCode: this.languageCode,
@@ -146,32 +146,33 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const place of placesResponse.data) {
-            var location = place.latitude
+            for (const place of placesResponse.data) {
+              var location = place.latitude
 
-            if (place.longitude >= 0) {
-              location += '+'
+              if (place.longitude >= 0) {
+                location += '+'
+              }
+
+              location += '' + place.longitude
+
+              _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
             }
 
-            location += '' + place.longitude
+            self.count = placesResponse.metadata.totalCount
+            self.currentPageData = _data
+          },
 
-            _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
+          function (error) {
+            console.error(error)
           }
-
-          self.count = placesResponse.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
-  <div id="get-city-time-demo">
+  <div id="get-place-time-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>City</label>
+          <label>Place</label>
           <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div v-if="time" class="form-field">
@@ -28,14 +28,14 @@ import PlaceAutocomplete from '@/shared/components/PlaceAutocomplete'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'get-city-datetime-demo',
+  name: 'get-place-datetime-demo',
   mixins: [DateTimeUtils],
   components: {
     PlaceAutocomplete
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
 
       placeId: null,
       time: null
@@ -45,7 +45,7 @@ export default {
     endpointOperation () {
       return this.placeId
         ? this.baseEndpointOperation + '/' + this.placeId + '/time'
-        : this.baseEndpointOperation + '/{cityId}/time'
+        : this.baseEndpointOperation + '/{placeId}/time'
     }
   },
   methods: {
@@ -53,15 +53,16 @@ export default {
       if (this.placeId) {
         const self = this
 
-        geoApi.getCityTimeUsingGET(this.placeId).then(
-          function (data) {
-            self.time = data.data
-          },
+        geoApi.getPlaceTimeUsingGET(this.placeId)
+          .then(
+            function (data) {
+              self.time = data.data
+            },
 
-          function (error) {
-            console.error(error)
-          }
-        )
+            function (error) {
+              console.error(error)
+            }
+          )
       } else {
         this.time = null
       }

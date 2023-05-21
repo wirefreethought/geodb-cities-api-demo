@@ -137,32 +137,33 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const place of placesResponse.data) {
-            var location = place.latitude
+            for (const place of placesResponse.data) {
+              var location = place.latitude
 
-            if (place.longitude >= 0) {
-              location += '+'
+              if (place.longitude >= 0) {
+                location += '+'
+              }
+
+              location += '' + place.longitude
+
+              _data.push({ name: place.name, location: location })
             }
 
-            location += '' + place.longitude
+            self.count = placesResponse.metadata.totalCount
+            self.currentPageData = _data
+          },
 
-            _data.push({ name: place.name, location: location })
+          function (error) {
+            console.error(error)
           }
-
-          self.count = placesResponse.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

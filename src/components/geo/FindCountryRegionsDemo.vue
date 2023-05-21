@@ -117,24 +117,25 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.RegionsResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.RegionsResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const region of response.data) {
-            _data.push({ name: region.name, fips: region.fipsCode, iso: region.isoCode })
+            for (const region of response.data) {
+              _data.push({ name: region.name, fips: region.fipsCode, iso: region.isoCode })
+            }
+
+            self.count = response.metadata.totalCount
+            self.currentPageData = _data
+          },
+
+          function (error) {
+            console.error(error)
           }
-
-          self.count = response.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="find-cities-demo">
+  <div id="find-places-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -14,7 +14,7 @@
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the city name" style="width:225px"/>
+          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the place name" style="width:225px"/>
         </div>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
@@ -55,7 +55,7 @@ import PageableMixin from '@/shared/scripts/pageable-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'find-cities-demo',
+  name: 'find-places-demo',
   mixins: [PageableMixin],
   components: {
     DataTable,
@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
       columns: ['name', 'country', 'location'],
 
       sortByOptions: [
@@ -145,7 +145,7 @@ export default {
     refreshPageData () {
       const self = this
 
-      geoApi.findCitiesUsingGET({
+      geoApi.findPlacesUsingGET({
         namePrefix: this.currentRequest.namePrefix,
         minPopulation: this.currentRequest.minPopulation,
         location: this.currentRequest.location,
@@ -155,32 +155,33 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const place of placesResponse.data) {
-            var location = place.latitude
+            for (const place of placesResponse.data) {
+              var location = place.latitude
 
-            if (place.longitude >= 0) {
-              location += '+'
+              if (place.longitude >= 0) {
+                location += '+'
+              }
+
+              location += '' + place.longitude
+
+              _data.push({ name: place.name, country: place.country, location: location })
             }
 
-            location += '' + place.longitude
+            self.count = placesResponse.metadata.totalCount
+            self.currentPageData = _data
+          },
 
-            _data.push({ name: place.name, country: place.country, location: location })
+          function (error) {
+            console.error(error)
           }
-
-          self.count = placesResponse.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

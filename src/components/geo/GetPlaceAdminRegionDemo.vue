@@ -6,7 +6,7 @@
         NOTE: If you don't see results after a few seconds, it means the service isn't able to determine the admin region based on existing Wikidata.
       </div>
       <div class="form-field">
-        <label>City</label>
+        <label>Place</label>
         <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
@@ -63,7 +63,7 @@ export default {
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
       selectedPlaceId: null,
       containingPlace: null
     }
@@ -72,7 +72,7 @@ export default {
     endpointOperation () {
       var operation = this.containingPlace
         ? this.baseEndpointOperation + '/' + this.selectedPlaceId + '/locatedIn'
-        : this.baseEndpointOperation + '/{cityId}/locatedIn'
+        : this.baseEndpointOperation + '/{placeId}/locatedIn'
 
       return operation
     }
@@ -83,21 +83,22 @@ export default {
 
       self.selectedPlaceId = place.id
 
-      geoApi.getCityLocatedInUsingGET(
+      geoApi.getPlaceLocatedInUsingGET(
         place.id,
         {
           languageCode: this.languageCode
-        }).then(
-        function (data) {
-          const response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data)
+        })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.PopulatedPlaceResponse.constructFromObject(data)
 
-          self.containingPlace = response.data
-        },
+            self.containingPlace = response.data
+          },
 
-        function (error) {
-          console.error(error)
-        }
-      )
+          function (error) {
+            console.error(error)
+          }
+        )
     }
   }
 }

@@ -54,24 +54,25 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.LanguagesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.LanguagesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const language of response.data) {
-            _data.push({ code: language.code, name: language.name })
+            for (const language of response.data) {
+              _data.push({ code: language.code, name: language.name })
+            }
+
+            self.count = response.metadata.totalCount
+            self.currentPageData = _data
+          },
+
+          function (error) {
+            console.error(error)
           }
-
-          self.count = response.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

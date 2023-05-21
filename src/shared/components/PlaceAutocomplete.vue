@@ -34,13 +34,18 @@ export default {
   },
   methods: {
     onNamePrefixChanged (prefix) {
+      if (prefix.length < 3) {
+        return;
+      }
+
       const self = this
 
-      geoApi.findCitiesUsingGET({
+      geoApi.findPlacesUsingGET({
         namePrefix: prefix,
         limit: 5,
         offset: 0,
-        hateoasMode: false
+        hateoasMode: false,
+        sort: '-population'
       }).then(
         function (data) {
           const response = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)

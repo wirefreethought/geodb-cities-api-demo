@@ -56,41 +56,6 @@ export default {
       items: [
         {
           icon: 'widgets',
-          title: 'Find Admin Divisions',
-          action: '/find-admin-divisions'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Admin Divisions Near Division',
-          action: '/find-admin-divisions-near-division'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Admin Divisions Near Location',
-          action: '/find-admin-divisions-near-location'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Cities',
-          action: '/find-cities'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Cities Near City',
-          action: '/find-cities-near-city'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Cities Near Division',
-          action: '/find-cities-near-division'
-        },
-        {
-          icon: 'widgets',
-          title: 'Find Cities Near Location',
-          action: '/find-cities-near-location'
-        },
-        {
-          icon: 'widgets',
           title: 'Find Countries',
           action: '/find-countries'
         },
@@ -106,43 +71,43 @@ export default {
         },
         {
           icon: 'widgets',
-          title: 'Find Country Region Admin Divisions',
-          action: '/find-country-region-admin-divisions'
+          title: 'Find Places',
+          action: '/find-places'
         },
         {
           icon: 'widgets',
-          title: 'Find Country Region Cities',
-          action: '/find-country-region-cities'
+          title: 'Find Places Near Location',
+          action: '/find-places-near-location'
         },
         {
           icon: 'widgets',
-          title: 'Get Admin Division Details',
-          action: '/get-admin-division-details'
+          title: 'Find Places Near Place',
+          action: '/find-places-near-place'
         },
         {
           icon: 'widgets',
-          title: 'Get City Admin Region',
-          action: '/get-city-admin-region'
+          title: 'Get Place Admin Region',
+          action: '/get-place-admin-region'
         },
         {
           icon: 'widgets',
-          title: 'Get City Date-Time',
-          action: '/get-city-datetime'
+          title: 'Get Place Date-Time',
+          action: '/get-place-datetime'
         },
         {
           icon: 'widgets',
-          title: 'Get City Details',
-          action: '/get-city-details'
+          title: 'Get Place Details',
+          action: '/get-place-details'
         },
         {
           icon: 'widgets',
-          title: 'Get City Distance',
-          action: '/get-city-distance'
+          title: 'Get Place Distance',
+          action: '/get-place-distance'
         },
         {
           icon: 'widgets',
-          title: 'Get City Time',
-          action: '/get-city-time'
+          title: 'Get Place Time',
+          action: '/get-place-time'
         },
         {
           icon: 'widgets',

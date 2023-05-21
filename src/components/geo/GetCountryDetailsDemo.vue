@@ -60,17 +60,18 @@ export default {
     onCountrySelected (country) {
       const self = this
 
-      geoApi.getCountryUsingGET(country.code, {}).then(
-        function (data) {
-          const response = Config.GEO_DB.CountryResponse.constructFromObject(data)
+      geoApi.getCountryUsingGET(country.code, {})
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.CountryResponse.constructFromObject(data)
 
-          self.countryDetails = response.data
-        },
+            self.countryDetails = response.data
+          },
 
-        function (error) {
-          console.error(error)
-        }
-      )
+          function (error) {
+            console.error(error)
+          }
+        )
     }
   }
 }

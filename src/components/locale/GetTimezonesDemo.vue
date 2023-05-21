@@ -54,24 +54,25 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.TimeZonesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.TimeZonesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const timeZone of response.data) {
-            _data.push({ id: timeZone.id, zone: timeZone.name, 'utc-offset-hours': timeZone.rawUtcOffsetHours })
+            for (const timeZone of response.data) {
+              _data.push({ id: timeZone.id, zone: timeZone.name, 'utc-offset-hours': timeZone.rawUtcOffsetHours })
+            }
+
+            self.count = response.metadata.totalCount
+            self.currentPageData = _data
+          },
+
+          function (error) {
+            console.error(error)
           }
-
-          self.count = response.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

@@ -36,6 +36,10 @@ export default {
   },
   methods: {
     onNamePrefixChanged (prefix) {
+      if (prefix.length < 3) {
+        return;
+      }
+
       const self = this
 
       geoApi.getCountriesUsingGET({

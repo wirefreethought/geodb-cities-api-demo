@@ -1,5 +1,5 @@
 <template>
-  <div id="find-cities-near-city-demo">
+  <div id="find-places-near-place-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -14,7 +14,7 @@
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
         <div class="form-field">
-          <label>Origin City</label><br/>
+          <label>Origin Place</label><br/>
           <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
         <div class="form-field">
@@ -54,7 +54,7 @@ import PageableMixin from '@/shared/scripts/pageable-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'find-cities-near-city-demo',
+  name: 'find-places-near-place-demo',
   mixins: [PageableMixin],
   components: {
     DataTable,
@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      baseEndpointOperation: 'GET /v1/geo/cities',
+      baseEndpointOperation: 'GET /v1/geo/places',
       columns: ['distance', 'name', 'country', 'location'],
 
       sortByOptions: [
@@ -91,8 +91,8 @@ export default {
   computed: {
     endpointOperation () {
       var operation = this.originPlaceId
-        ? this.baseEndpointOperation + '/' + this.originPlaceId + '/nearbyCities'
-        : this.baseEndpointOperation + '/{cityId}/nearbyCities'
+        ? this.baseEndpointOperation + '/' + this.originPlaceId + '/nearbyPlaces'
+        : this.baseEndpointOperation + '/{placeId}/nearbyPlaces'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
 
@@ -145,7 +145,7 @@ export default {
 
       const self = this
 
-      geoApi.findCitiesNearCityUsingGET(this.currentRequest.placeId, {
+      geoApi.findPlacesNearPlaceUsingGET(this.currentRequest.placeId, {
         minPopulation: this.currentRequest.minPopulation,
         radius: this.currentRequest.radius,
         languageCode: this.languageCode,
@@ -153,32 +153,33 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const place of placesResponse.data) {
-            var location = place.latitude
+            for (const place of placesResponse.data) {
+              var location = place.latitude
 
-            if (place.longitude >= 0) {
-              location += '+'
+              if (place.longitude >= 0) {
+                location += '+'
+              }
+
+              location += '' + place.longitude
+
+              _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
             }
 
-            location += '' + place.longitude
+            self.count = placesResponse.metadata.totalCount
+            self.currentPageData = _data
+          },
 
-            _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
+          function (error) {
+            console.error(error)
           }
-
-          self.count = placesResponse.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }

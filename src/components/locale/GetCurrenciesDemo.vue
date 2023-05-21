@@ -54,24 +54,25 @@ export default {
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false
-      }).then(
-        function (data) {
-          const response = Config.GEO_DB.CurrenciesResponse.constructFromObject(data)
+      })
+        .then(
+          function (data) {
+            const response = Config.GEO_DB.CurrenciesResponse.constructFromObject(data)
 
-          const _data = []
+            const _data = []
 
-          for (const currency of response.data) {
-            _data.push({ code: currency.code, symbol: currency.symbol, countries: currency.countryCodes.join(', ') })
+            for (const currency of response.data) {
+              _data.push({ code: currency.code, symbol: currency.symbol, countries: currency.countryCodes.join(', ') })
+            }
+
+            self.count = response.metadata.totalCount
+            self.currentPageData = _data
+          },
+
+          function (error) {
+            console.error(error)
           }
-
-          self.count = response.metadata.totalCount
-          self.currentPageData = _data
-        },
-
-        function (error) {
-          console.error(error)
-        }
-      )
+        )
     }
   }
 }
