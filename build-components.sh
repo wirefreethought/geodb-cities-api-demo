@@ -13,8 +13,8 @@ GEO_COMPONENTS=(
   'find-places-demo'
   'find-places-near-place-demo'
   'find-places-near-location-demo'
-  'find-countries-demo',
-  'find-country-places-demo',
+  'find-countries-demo'
+  'find-country-places-demo'
   'find-country-region-places-demo'
   'find-country-regions-demo'
   'get-place-admin-region-demo'
