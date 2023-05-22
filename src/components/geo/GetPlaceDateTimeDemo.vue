@@ -24,7 +24,6 @@
 import PlaceAutocomplete from '@/shared/components/PlaceAutocomplete'
 import Config from '@/shared/scripts/config'
 import DateTimeUtils from '@/shared/scripts/date-time-utils-mixin'
-import {Temporal} from "@js-temporal/polyfill";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 

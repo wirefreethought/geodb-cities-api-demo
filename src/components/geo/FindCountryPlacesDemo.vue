@@ -17,8 +17,8 @@
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
+        <place-type @placeTypesChanged="onPlaceTypesChanged"/>
       </div>
-
       <div style="display:flex; flex-flow:row">
         <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
         <language @languageChanged="onLanguageChanged"/>
@@ -44,6 +44,7 @@ import SortBy from '@/shared/components/SortBy'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import PlaceType from "@/shared/components/PlaceType.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -51,6 +52,7 @@ export default {
   name: 'find-country-places-demo',
   mixins: [PageableMixin],
   components: {
+    PlaceType,
     CountryAutocomplete,
     DataTable,
     Language,
@@ -74,6 +76,7 @@ export default {
 
       country: null,
       minPopulation: null,
+      types: [],
 
       sort: null,
       languageCode: null
@@ -88,6 +91,10 @@ export default {
       operation += '/places'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
+
+      if (this.types.length > 0) {
+        operation += '&types=' + this.types
+      }
 
       if (this.minPopulation) {
         operation += '&minPopulation=' + this.minPopulation
@@ -113,9 +120,13 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
+    onPlaceTypesChanged (types) {
+      this.types = types
+    },
     onRequestUpdated () {
       this.currentRequest = {
         countryId: this.country.code,
+        types: this.types,
         minPopulation: this.minPopulation,
         sort: this.sort
       }
@@ -130,15 +141,18 @@ export default {
 
       const self = this
 
-      geoApi.findCountryPlacesUsingGET(this.country.code,{
-        minPopulation: this.currentRequest.minPopulation,
-        languageCode: this.languageCode,
-        sort: this.sort,
-        limit: this.pageSize,
-        offset: this.offset,
-        hateoasMode: false
-      })
-        .then(
+      geoApi.findCountryPlacesUsingGET(
+        this.country.code,
+        {
+          types: this.types,
+          minPopulation: this.currentRequest.minPopulation,
+          languageCode: this.languageCode,
+          sort: this.sort,
+          limit: this.pageSize,
+          offset: this.offset,
+          hateoasMode: false
+        }
+        ).then(
           function (data) {
             const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
 

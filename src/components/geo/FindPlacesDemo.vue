@@ -16,6 +16,7 @@
         <div class="form-field">
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the place name" style="width:225px"/>
         </div>
+        <place-type @placeTypesChanged="onPlaceTypesChanged"/>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -51,6 +52,7 @@ import SortBy from '@/shared/components/SortBy'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import PlaceType from "@/shared/components/PlaceType.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -60,6 +62,7 @@ export default {
   components: {
     DataTable,
     Language,
+    PlaceType,
     SortBy
   },
   data () {
@@ -81,6 +84,7 @@ export default {
       currentRequest: {},
 
       namePrefix: null,
+      types: [],
       minPopulation: null,
       location: null,
       radius: null,
@@ -92,6 +96,10 @@ export default {
   computed: {
     endpointOperation () {
       var operation = this.baseEndpointOperation + '?limit=' + this.pageSize + '&offset=' + this.offset
+
+      if (this.types.length > 0) {
+        operation += '&types=' + this.types
+      }
 
       if (this.namePrefix) {
         operation += '&namePrefix=' + encodeURIComponent(this.namePrefix)
@@ -133,11 +141,15 @@ export default {
       }
 
       this.currentRequest = {
+        types: this.types,
         namePrefix: this.namePrefix,
         minPopulation: this.minPopulation,
         location: this.location,
         radius: this.radius
       }
+    },
+    onPlaceTypesChanged (types) {
+      this.types = types
     },
     onSortChanged (value) {
       this.sort = value
@@ -146,6 +158,7 @@ export default {
       const self = this
 
       geoApi.findPlacesUsingGET({
+        types: this.currentRequest.types,
         namePrefix: this.currentRequest.namePrefix,
         minPopulation: this.currentRequest.minPopulation,
         location: this.currentRequest.location,
