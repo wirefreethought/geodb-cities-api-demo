@@ -39,12 +39,11 @@
 import CountryAutocomplete from '@/shared/components/CountryAutocomplete'
 import DataTable from '@/shared/components/DataTable'
 import Language from '@/shared/components/Language'
-import RegionAutocomplete from '@/shared/components/RegionAutocomplete'
+import PlaceType from "@/shared/components/PlaceType.vue";
 import SortBy from '@/shared/components/SortBy'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
-import PlaceType from "@/shared/components/PlaceType.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -52,10 +51,10 @@ export default {
   name: 'find-country-places-demo',
   mixins: [PageableMixin],
   components: {
-    PlaceType,
     CountryAutocomplete,
     DataTable,
     Language,
+    PlaceType,
     SortBy
   },
   data () {
@@ -126,9 +125,9 @@ export default {
     onRequestUpdated () {
       this.currentRequest = {
         countryId: this.country.code,
-        types: this.types,
         minPopulation: this.minPopulation,
-        sort: this.sort
+        sort: this.sort,
+        types: this.types
       }
     },
     onSortChanged (sort) {

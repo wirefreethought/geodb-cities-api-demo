@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 
 import FindCountriesDemo from '@/components/geo/FindCountriesDemo'
-import FindCountryPlacesDemo from "@/components/geo/FindCountryPlacesDemo.vue";
-import FindCountryRegionCitiesDemo from '@/components/geo/FindCountryRegionCitiesDemo'
+import FindCountryPlacesDemo from "@/components/geo/FindCountryPlacesDemo";
 import FindCountryRegionsDemo from '@/components/geo/FindCountryRegionsDemo'
 import GetCountryDetailsDemo from '@/components/geo/GetCountryDetailsDemo'
 import GetCountryRegionDetailsDemo from '@/components/geo/GetCountryRegionDetailsDemo'
@@ -13,15 +12,16 @@ import GetLanguagesDemo from '@/components/locale/GetLanguagesDemo'
 import GetLocalesDemo from '@/components/locale/GetLocalesDemo'
 import GetTimezonesDemo from '@/components/locale/GetTimezonesDemo'
 import GetTimezoneTimeDemo from '@/components/locale/GetTimezoneTimeDemo'
-import FindPlacesDemo from "@/components/geo/FindPlacesDemo.vue";
-import FindPlacesNearLocationDemo from "@/components/geo/FindPlacesNearLocationDemo.vue";
-import FindPlacesNearPlaceDemo from "@/components/geo/FindPlacesNearPlaceDemo.vue";
-import GetPlaceAdminRegionDemo from "@/components/geo/GetPlaceAdminRegionDemo.vue";
-import GetPlaceDateTimeDemo from "@/components/geo/GetPlaceDateTimeDemo.vue";
-import GetPlaceDetailsDemo from "@/components/geo/GetPlaceDetailsDemo.vue";
-import GetPlaceDistanceDemo from "@/components/geo/GetPlaceDistanceDemo.vue";
-import GetPlaceTimeDemo from "@/components/geo/GetPlaceTimeDemo.vue";
-import GetTimezoneDateTimeDemo from "@/components/locale/GetTimezoneDateTimeDemo.vue";
+import FindPlacesDemo from "@/components/geo/FindPlacesDemo";
+import FindPlacesNearLocationDemo from "@/components/geo/FindPlacesNearLocationDemo";
+import FindPlacesNearPlaceDemo from "@/components/geo/FindPlacesNearPlaceDemo";
+import GetPlaceAdminRegionDemo from "@/components/geo/GetPlaceAdminRegionDemo";
+import GetPlaceDateTimeDemo from "@/components/geo/GetPlaceDateTimeDemo";
+import GetPlaceDetailsDemo from "@/components/geo/GetPlaceDetailsDemo";
+import GetPlaceDistanceDemo from "@/components/geo/GetPlaceDistanceDemo";
+import GetPlaceTimeDemo from "@/components/geo/GetPlaceTimeDemo";
+import GetTimezoneDateTimeDemo from "@/components/locale/GetTimezoneDateTimeDemo";
+import FindCountryRegionPlacesDemo from "@/components/geo/FindCountryRegionPlacesDemo";
 
 Vue.use(VueRouter)
 
@@ -44,8 +44,8 @@ const routes = [
     component: FindCountryRegionsDemo
   },
   {
-    path: '/find-country-region-cities',
-    component: FindCountryRegionCitiesDemo
+    path: '/find-country-region-places',
+    component: FindCountryRegionPlacesDemo
   },
   {
     path: '/find-places',

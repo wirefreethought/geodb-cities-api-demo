@@ -1,5 +1,5 @@
 <template>
-  <div id="find-country-region-cities-demo">
+  <div id="find-country-region-places-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -12,7 +12,7 @@
       @pageChanged="onPageChanged">
     </data-table>
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <div style="display:flex; justify-content:flex-start">
+      <div style="display:flex; flex-direction:row; justify-content:flex-start">
         <div class="form-field">
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
@@ -21,6 +21,7 @@
           <label>Region</label>
           <region-autocomplete :countryId="country.code" @onRegionSelected="onRegionSelected($event)"/>
         </div>
+        <place-type v-if="regionCode" @placeTypesChanged="onPlaceTypesChanged"/>
         <div v-if="regionCode" class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -47,6 +48,7 @@
 import CountryAutocomplete from '@/shared/components/CountryAutocomplete'
 import DataTable from '@/shared/components/DataTable'
 import Language from '@/shared/components/Language'
+import PlaceType from "@/shared/components/PlaceType.vue"
 import RegionAutocomplete from '@/shared/components/RegionAutocomplete'
 import SortBy from '@/shared/components/SortBy'
 
@@ -56,13 +58,14 @@ import PageableMixin from '@/shared/scripts/pageable-mixin'
 const geoApi = new Config.GEO_DB.GeoApi()
 
 export default {
-  name: 'find-country-region-cities-demo',
+  name: 'find-country-region-places-demo',
   mixins: [PageableMixin],
   components: {
     CountryAutocomplete,
     DataTable,
     Language,
     RegionAutocomplete,
+    PlaceType,
     SortBy
   },
   data () {
@@ -84,6 +87,7 @@ export default {
       country: null,
       regionCode: null,
       minPopulation: null,
+      types: [],
 
       sort: null,
       languageCode: null
@@ -96,10 +100,14 @@ export default {
         : this.baseEndpointOperation + '/{countryId}'
 
       operation += this.regionCode
-        ? '/regions/' + this.regionCode + '/cities'
-        : '/regions/{regionCode}/cities'
+        ? '/regions/' + this.regionCode + '/places'
+        : '/regions/{regionCode}/places'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
+
+      if (this.types.length > 0) {
+        operation += '&types=' + this.types
+      }
 
       if (this.minPopulation) {
         operation += '&minPopulation=' + this.minPopulation
@@ -126,6 +134,9 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
+    onPlaceTypesChanged (types) {
+      this.types = types
+    },
     onRegionSelected (region) {
       this.regionCode = region.code
 
@@ -136,7 +147,8 @@ export default {
         countryId: this.country.code,
         regionCode: this.regionCode,
         minPopulation: this.minPopulation,
-        sort: this.sort
+        sort: this.sort,
+        types: this.types
       }
     },
     onSortChanged (sort) {
@@ -149,14 +161,18 @@ export default {
 
       const self = this
 
-      geoApi.findRegionCitiesUsingGET(this.country.code, this.regionCode, {
-        minPopulation: this.currentRequest.minPopulation,
-        languageCode: this.languageCode,
-        sort: this.sort,
-        limit: this.pageSize,
-        offset: this.offset,
-        hateoasMode: false
-      })
+      geoApi.findRegionPlacesUsingGET(
+        this.country.code,
+        this.regionCode,
+        {
+          types: this.types,
+          minPopulation: this.currentRequest.minPopulation,
+          languageCode: this.languageCode,
+          sort: this.sort,
+          limit: this.pageSize,
+          offset: this.offset,
+          hateoasMode: false
+        })
         .then(
           function (data) {
             const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
