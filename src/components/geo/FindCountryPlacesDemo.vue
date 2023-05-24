@@ -17,7 +17,7 @@
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
-        <place-type @placeTypesChanged="onPlaceTypesChanged"/>
+        <place-type @placeTypeChanged="onPlaceTypeChanged"/>
       </div>
       <div style="display:flex; flex-flow:row">
         <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
@@ -75,7 +75,7 @@ export default {
 
       country: null,
       minPopulation: null,
-      types: [],
+      type: null,
 
       sort: null,
       languageCode: null
@@ -91,8 +91,8 @@ export default {
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
 
-      if (this.types.length > 0) {
-        operation += '&types=' + this.types
+      if (this.type) {
+        operation += '&types=' + this.type
       }
 
       if (this.minPopulation) {
@@ -119,15 +119,15 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
-    onPlaceTypesChanged (types) {
-      this.types = types
+    onPlaceTypeChanged (type) {
+      this.type = type
     },
     onRequestUpdated () {
       this.currentRequest = {
         countryId: this.country.code,
         minPopulation: this.minPopulation,
         sort: this.sort,
-        types: this.types
+        type: this.type
       }
     },
     onSortChanged (sort) {
@@ -143,7 +143,7 @@ export default {
       geoApi.findCountryPlacesUsingGET(
         this.country.code,
         {
-          types: this.types,
+          types: this.type,
           minPopulation: this.currentRequest.minPopulation,
           languageCode: this.languageCode,
           sort: this.sort,

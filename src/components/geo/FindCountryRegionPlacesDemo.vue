@@ -21,7 +21,7 @@
           <label>Region</label>
           <region-autocomplete :countryId="country.code" @onRegionSelected="onRegionSelected($event)"/>
         </div>
-        <place-type v-if="regionCode" @placeTypesChanged="onPlaceTypesChanged"/>
+        <place-type v-if="regionCode" @placeTypeChanged="onPlaceTypeChanged"/>
         <div v-if="regionCode" class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -87,7 +87,7 @@ export default {
       country: null,
       regionCode: null,
       minPopulation: null,
-      types: [],
+      type: null,
 
       sort: null,
       languageCode: null
@@ -105,8 +105,8 @@ export default {
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
 
-      if (this.types.length > 0) {
-        operation += '&types=' + this.types
+      if (this.type) {
+        operation += '&types=' + this.type
       }
 
       if (this.minPopulation) {
@@ -134,8 +134,8 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
-    onPlaceTypesChanged (types) {
-      this.types = types
+    onPlaceTypeChanged (type) {
+      this.type = type
     },
     onRegionSelected (region) {
       this.regionCode = region.code
@@ -148,7 +148,7 @@ export default {
         regionCode: this.regionCode,
         minPopulation: this.minPopulation,
         sort: this.sort,
-        types: this.types
+        type: this.type
       }
     },
     onSortChanged (sort) {
@@ -165,7 +165,7 @@ export default {
         this.country.code,
         this.regionCode,
         {
-          types: this.types,
+          types: this.type,
           minPopulation: this.currentRequest.minPopulation,
           languageCode: this.languageCode,
           sort: this.sort,

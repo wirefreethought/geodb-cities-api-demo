@@ -16,7 +16,7 @@
         <div class="form-field">
           <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the place name" style="width:225px"/>
         </div>
-        <place-type @placeTypesChanged="onPlaceTypesChanged"/>
+        <place-type @placeTypeChanged="onPlaceTypeChanged"/>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -84,7 +84,7 @@ export default {
       currentRequest: {},
 
       namePrefix: null,
-      types: [],
+      type: null,
       minPopulation: null,
       location: null,
       radius: null,
@@ -97,8 +97,8 @@ export default {
     endpointOperation () {
       var operation = this.baseEndpointOperation + '?limit=' + this.pageSize + '&offset=' + this.offset
 
-      if (this.types.length > 0) {
-        operation += '&types=' + this.types
+      if (this.type) {
+        operation += '&types=' + this.type
       }
 
       if (this.namePrefix) {
@@ -141,15 +141,15 @@ export default {
       }
 
       this.currentRequest = {
-        types: this.types,
+        type: this.type,
         namePrefix: this.namePrefix,
         minPopulation: this.minPopulation,
         location: this.location,
         radius: this.radius
       }
     },
-    onPlaceTypesChanged (types) {
-      this.types = types
+    onPlaceTypeChanged (type) {
+      this.type = type
     },
     onSortChanged (value) {
       this.sort = value
@@ -158,7 +158,7 @@ export default {
       const self = this
 
       geoApi.findPlacesUsingGET({
-        types: this.currentRequest.types,
+        types: this.currentRequest.type,
         namePrefix: this.currentRequest.namePrefix,
         minPopulation: this.currentRequest.minPopulation,
         location: this.currentRequest.location,
