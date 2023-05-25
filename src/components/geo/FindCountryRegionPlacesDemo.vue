@@ -71,7 +71,7 @@ export default {
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/countries',
-      columns: ['name', 'location'],
+      columns: ['name', 'population', 'location'],
 
       sortByOptions: [
         { value: 'name', title: 'Name, A-Z' },
@@ -188,7 +188,7 @@ export default {
 
               location += '' + place.longitude
 
-              _data.push({ name: place.name, location: location })
+              _data.push({ name: place.name, population: place.population, location: location })
             }
 
             self.count = placesResponse.metadata.totalCount

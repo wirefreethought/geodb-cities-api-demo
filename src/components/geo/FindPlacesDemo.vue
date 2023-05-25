@@ -68,7 +68,7 @@ export default {
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/places',
-      columns: ['name', 'country', 'location'],
+      columns: ['name', 'population', 'location', 'country'],
 
       sortByOptions: [
         { value: 'name', title: 'Name, A-Z' },
@@ -83,8 +83,8 @@ export default {
 
       currentRequest: {},
 
-      namePrefix: null,
       type: null,
+      namePrefix: null,
       minPopulation: null,
       location: null,
       radius: null,
@@ -135,6 +135,9 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
+    onPlaceTypeChanged (type) {
+      this.type = type
+    },
     onRequestUpdated () {
       if (this.radius > 100) {
         this.radius = 100
@@ -147,9 +150,6 @@ export default {
         location: this.location,
         radius: this.radius
       }
-    },
-    onPlaceTypeChanged (type) {
-      this.type = type
     },
     onSortChanged (value) {
       this.sort = value
@@ -184,7 +184,7 @@ export default {
 
               location += '' + place.longitude
 
-              _data.push({ name: place.name, country: place.country, location: location })
+              _data.push({ name: place.name, population: place.population, location: location, country: place.country })
             }
 
             self.count = placesResponse.metadata.totalCount

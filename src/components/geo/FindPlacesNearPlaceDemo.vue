@@ -17,6 +17,7 @@
           <label>Origin Place</label><br/>
           <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
+        <place-type @placeTypeChanged="onPlaceTypeChanged"/>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -50,6 +51,7 @@ import PlaceAutocomplete from '@/shared/components/PlaceAutocomplete'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import PlaceType from "@/shared/components/PlaceType.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -60,12 +62,13 @@ export default {
     DataTable,
     Language,
     PlaceAutocomplete,
+    PlaceType,
     SortBy
   },
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/places',
-      columns: ['distance', 'name', 'country', 'location'],
+      columns: ['distance', 'name', 'population', 'location', 'country'],
 
       sortByOptions: [
         { value: 'name', title: 'Name, A-Z' },
@@ -81,6 +84,7 @@ export default {
       currentRequest: { radius: 100 },
 
       originPlaceId: null,
+      type: null,
       minPopulation: null,
       radius: 100,
 
@@ -95,6 +99,10 @@ export default {
         : this.baseEndpointOperation + '/{placeId}/nearbyPlaces'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
+
+      if (this.type) {
+        operation += '&types=' + this.type
+      }
 
       if (this.minPopulation) {
         operation += '&minPopulation=' + this.minPopulation
@@ -119,6 +127,9 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
+    onPlaceTypeChanged (type) {
+      this.type = type
+    },
     onPlaceSelected (place) {
       this.originPlaceId = place.id
 
@@ -131,6 +142,7 @@ export default {
 
       this.currentRequest = {
         placeId: this.originPlaceId,
+        type: this.type,
         minPopulation: this.minPopulation,
         radius: this.radius
       }
@@ -145,15 +157,18 @@ export default {
 
       const self = this
 
-      geoApi.findPlacesNearPlaceUsingGET(this.currentRequest.placeId, {
-        minPopulation: this.currentRequest.minPopulation,
-        radius: this.currentRequest.radius,
-        languageCode: this.languageCode,
-        sort: this.sort,
-        limit: this.pageSize,
-        offset: this.offset,
-        hateoasMode: false
-      })
+      geoApi.findPlacesNearPlaceUsingGET(
+        this.currentRequest.placeId,
+        {
+          types: this.currentRequest.type,
+          minPopulation: this.currentRequest.minPopulation,
+          radius: this.currentRequest.radius,
+          languageCode: this.languageCode,
+          sort: this.sort,
+          limit: this.pageSize,
+          offset: this.offset,
+          hateoasMode: false
+        })
         .then(
           function (data) {
             const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
@@ -169,7 +184,7 @@ export default {
 
               location += '' + place.longitude
 
-              _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
+              _data.push({ distance: place.distance, name: place.name, population: place.population, location: location , country: place.country })
             }
 
             self.count = placesResponse.metadata.totalCount

@@ -1,5 +1,5 @@
 <template>
-  <div id="find-cities-near-location-demo">
+  <div id="find-places-near-location-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <pre class="endpoint-operation">{{ endpointOperation }}</pre>
     </div>
@@ -17,6 +17,7 @@
           <label>Location</label><br/>
           <input v-model="locationId" placeholder="Lat/Long: ±DD.DDDD±DDD.DDDD" style="width:250px"/>
         </div>
+        <place-type @placeTypeChanged="onPlaceTypeChanged"/>
         <div class="form-field">
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
@@ -49,6 +50,7 @@ import SortBy from '@/shared/components/SortBy'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import PlaceType from "@/shared/components/PlaceType.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -58,12 +60,13 @@ export default {
   components: {
     DataTable,
     Language,
+    PlaceType,
     SortBy
   },
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/locations',
-      columns: ['distance', 'name', 'country', 'location'],
+      columns: ['distance', 'name', 'population', 'location', 'country'],
 
       sortByOptions: [
         { value: 'name', title: 'Name, A-Z' },
@@ -79,6 +82,7 @@ export default {
       currentRequest: { radius: 100 },
 
       locationId: null,
+      type: null,
       minPopulation: null,
       radius: 100,
 
@@ -89,10 +93,14 @@ export default {
   computed: {
     endpointOperation () {
       var operation = this.locationId
-        ? this.baseEndpointOperation + '/' + this.locationId + '/nearbyCities'
-        : this.baseEndpointOperation + '/{locationId}/nearbyCities'
+        ? this.baseEndpointOperation + '/' + this.locationId + '/nearbyPlaces'
+        : this.baseEndpointOperation + '/{locationId}/nearbyPlaces'
 
       operation += '?limit=' + this.pageSize + '&offset=' + this.offset
+
+      if (this.type) {
+        operation += '&types=' + this.type
+      }
 
       if (this.minPopulation) {
         operation += '&minPopulation=' + this.minPopulation
@@ -117,6 +125,9 @@ export default {
     onLanguageChanged (value) {
       this.languageCode = value
     },
+    onPlaceTypeChanged (type) {
+      this.type = type
+    },
     onRequestUpdated () {
       if (this.radius > 100) {
         this.radius = 100
@@ -124,6 +135,7 @@ export default {
 
       this.currentRequest = {
         locationId: this.locationId,
+        type: this.type,
         minPopulation: this.minPopulation,
         radius: this.radius
       }
@@ -138,15 +150,18 @@ export default {
 
       const self = this
 
-      geoApi.findPlacesNearLocationUsingGET(this.currentRequest.locationId, {
-        minPopulation: this.currentRequest.minPopulation,
-        radius: this.currentRequest.radius,
-        languageCode: this.languageCode,
-        sort: this.sort,
-        limit: this.pageSize,
-        offset: this.offset,
-        hateoasMode: false
-      })
+      geoApi.findPlacesNearLocationUsingGET(
+        this.currentRequest.locationId,
+        {
+          types: this.currentRequest.type,
+          minPopulation: this.currentRequest.minPopulation,
+          radius: this.currentRequest.radius,
+          languageCode: this.languageCode,
+          sort: this.sort,
+          limit: this.pageSize,
+          offset: this.offset,
+          hateoasMode: false
+        })
         .then(
           function (data) {
             const placesResponse = Config.GEO_DB.PopulatedPlacesResponse.constructFromObject(data)
@@ -162,7 +177,7 @@ export default {
 
               location += '' + place.longitude
 
-              _data.push({ distance: place.distance, name: place.name, country: place.country, location: location })
+              _data.push({ distance: place.distance, name: place.name, population: place.population, location: location, country: place.country })
             }
 
             self.count = placesResponse.metadata.totalCount
