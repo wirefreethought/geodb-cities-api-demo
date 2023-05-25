@@ -8,6 +8,10 @@
   padding:8px;
 }
 
+.form-field select {
+  padding:0
+}
+
 .form-button {
   padding-left:8px;
   padding-top:8px;
