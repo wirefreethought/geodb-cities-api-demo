@@ -1,6 +1,6 @@
 {
   "name": "geodb-cities-api-demo",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "author": "mmogley <mmogley@wirefreethought.com>",
   "scripts": {
@@ -11,9 +11,9 @@
   "dependencies": {
     "cache-loader": "^4.1.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11",
+    "vue": "^2.6.14",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.4.5",
+    "vuetify": "^2.6.15",
     "wft-geodb-js-client": "^2.0.3"
   },
   "devDependencies": {
@@ -34,12 +34,17 @@
     "imports-loader": "^1.2.0",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
-    "vue-cli-plugin-compression": "~1.0.3",
-    "vue-cli-plugin-vuetify": "~2.1.0",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0",
+    "vue-cli-plugin-compression": "~1.2.0",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.9.2",
     "webpack": "^4.46.0",
     "webpack-chain": "^6.5.1"
   },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
   "license": "GNU GPL V3"
 }

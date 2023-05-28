@@ -21,10 +21,10 @@
           <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
         </div>
         <div class="form-field">
-          <label>Near Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
+          <label>Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
         </div>
         <div class="form-field">
-          <label>Within Radius (&lt;=100)</label><br/><input v-model="radius" placeholder="Radius in miles"/>
+          <label>Radius</label><br/><input v-model="radius" placeholder="Radius miles (<= 100)"/>
         </div>
       </div>
 

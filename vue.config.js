@@ -1,6 +1,8 @@
 module.exports = {
   filenameHashing: false,
 
+  publicPath: '/',
+
   chainWebpack: config => {
     config.module.rules.delete('eslint')
   },
