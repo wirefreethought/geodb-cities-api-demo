@@ -4,20 +4,23 @@
 -->
 <template>
   <div>
-    <p>
+    <div style="display:flex; flex-direction:row; justify-content:start">
+      <div v-if="selectedIcon"
+           :style="{width: '75px', backgroundRepeat: 'no-repeat', backgroundPosition: 'left', backgroundSize: 'contain', backgroundImage: 'url(' + selectedIcon + ')'}"
+      />
       <input
         v-model="keyword"
-        class="input"
+        class="form_field"
         :placeholder="placeholder"
-        :style="{width: width, backgroundRepeat: 'no-repeat', backgroundPosition: 'right center', backgroundSize: 'contain', backgroundImage: 'url(' + selectedIcon + ')'}"
+        :style="{width: width}"
         @input="onInput($event.target.value)"
         @keyup.esc="isOpen = false"
         @blur="isOpen = false"
         @keydown.down="moveDown"
         @keydown.up="moveUp"
         @keydown.enter="select"
-      >
-    </p>
+      />
+    </div>
     <ul
       class="options-list"
       :style="{width: width}"

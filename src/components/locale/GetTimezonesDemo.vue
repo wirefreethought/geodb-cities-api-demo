@@ -1,7 +1,7 @@
 <template>
   <div id="get-timezones">
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <data-table
       :data="currentPageData"

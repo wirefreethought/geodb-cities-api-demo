@@ -1,7 +1,7 @@
 <template>
   <div id="find-country-region-places-demo">
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <data-table v-if="regionCode"
       :data="currentPageData"
@@ -11,30 +11,30 @@
       :pageSize="pageSize"
       @pageChanged="onPageChanged">
     </data-table>
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <div style="display:flex; flex-direction:row; justify-content:flex-start">
-        <div class="form-field">
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <div style="display:flex; flex-direction:row; justify-content:start">
+        <div class="form_element_container">
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
-        <div v-if="country" class="form-field">
+        <div v-if="country" class="form_element_container">
           <label>Region</label>
           <region-autocomplete :countryId="country.code" @onRegionSelected="onRegionSelected($event)"/>
         </div>
         <place-type v-if="regionCode" @placeTypeChanged="onPlaceTypeChanged"/>
-        <div v-if="regionCode" class="form-field">
-          <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
+        <div v-if="regionCode" class="form_element_container">
+          <label>Min Population</label><br/>
+          <input v-model="minPopulation" placeholder="Minimum population" class="form_field"/>
         </div>
       </div>
 
       <div style="display:flex; flex-flow:row">
         <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
-
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="regionCode" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div v-if="regionCode" class="form_element_container">
+        <button @click="onRequestUpdated" class="form_button">Update Results</button>
       </div>
     </div>
   </div>

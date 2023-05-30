@@ -1,13 +1,13 @@
 <template>
   <div id="get-place-datetime-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
+        <div class="form_field">
           <label>Place</label>
           <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
         </div>
-        <div v-if="dateTime" class="form-field">
+        <div v-if="dateTime" class="form_field">
           <label>Date-Time (ISO-8601, UTC)</label>
           <div>{{dateTime}}</div>
         </div>

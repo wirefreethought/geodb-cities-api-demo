@@ -1,7 +1,7 @@
 <template>
   <div id="find-country-regions">
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <div v-if="country">
       <data-table
@@ -13,21 +13,25 @@
         @pageChanged="onPageChanged">
       </data-table>
     </div>
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <div style="display:flex; flex-direction:row; justify-content:start">
+        <div class="form_element_container">
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
-        <div class="form-field">
-          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the region name" style="width:225px"/>
+        <div class="form_element_container">
+          <label>Name Prefix</label><br/>
+          <input v-model="namePrefix" placeholder="Region name prefix" class="form_field" style="width:150px"/>
         </div>
       </div>
 
-      <language @languageChanged="onLanguageChanged"/>
+      <div style="display:flex; flex-flow:row; justify-content:start">
+        <sort-by :options="sortByOptions" :multiLevel="false" @sortChanged="onSortChanged"/>
+        <language @languageChanged="onLanguageChanged"/>
+      </div>
 
-      <div v-if="country" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div v-if="country" class="form_element_container">
+        <button @click="onRequestUpdated" class="form_button">Update Results</button>
       </div>
     </div>
   </div>
@@ -44,6 +48,7 @@ import Language from '@/shared/components/Language'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import SortBy from "@/shared/components/SortBy.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -53,18 +58,29 @@ export default {
   components: {
     CountryAutocomplete,
     DataTable,
-    Language
+    Language,
+    SortBy
   },
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/countries',
       columns: ['name', 'fips', 'iso'],
 
+      sortByOptions: [
+        { value: 'name', title: 'Name, A-Z' },
+        { value: '-name', title: 'Name, Z-A' },
+        { value: 'fipsCode', title: 'FIPS, A-Z' },
+        { value: '-fipsCode', title: 'FIPS, Z-A' },
+        { value: 'isoCode', title: 'ISO, A-Z' },
+        { value: '-isoCode', title: 'ISO, Z-A' }
+      ],
+
       currentRequest: {},
 
       country: null,
       namePrefix: null,
 
+      sort: null,
       languageCode: null
     }
   },
@@ -86,6 +102,10 @@ export default {
         operation += '&languageCode=' + this.languageCode
       }
 
+      if (this.sort) {
+        operation += '&sort=' + this.sort
+      }
+
       return operation
     }
   },
@@ -104,6 +124,9 @@ export default {
         namePrefix: this.namePrefix
       }
     },
+    onSortChanged (value) {
+      this.sort = value
+    },
     refreshPageData () {
       if (!this.country) {
         return
@@ -114,6 +137,7 @@ export default {
       geoApi.getRegionsUsingGET(this.currentRequest.countryId, {
         namePrefix: this.currentRequest.namePrefix,
         languageCode: this.languageCode,
+        sort: this.sort,
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false

@@ -1,11 +1,9 @@
 <template>
-  <div style="display:flex; justify-content:flex-start">
-    <div class="form-field">
-      <label>Language</label><br/>
-      <select v-model="languageCode" @change="onChanged">
-        <option v-for="language in languages" v-bind="language" :value="language.code">{{language.name}}</option>
-      </select>
-    </div>
+  <div class="form_element_container">
+    <label>Language</label><br/>
+    <select v-model="languageCode" @change="onChanged" class="form_field">
+      <option v-for="language in languages" v-bind="language" :value="language.code">{{language.name}}</option>
+    </select>
   </div>
 </template>
 

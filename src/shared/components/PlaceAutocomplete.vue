@@ -1,8 +1,8 @@
 <template>
   <autocomplete
     :options="currentResults"
-    placeholder="Enter city"
-    width="250px"
+    placeholder="Enter place"
+    width="200px"
     @input="onNamePrefixChanged"
     @select="onPlaceSelected">
     <template slot="item" slot-scope="place">

@@ -1,16 +1,16 @@
 <template>
   <div id="get-country-region-details-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
-      <div class="form-field">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
+      <div class="form_field">
         <label>Country</label>
         <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
       </div>
-      <div v-if="countryId" class="form-field">
+      <div v-if="countryId" class="form_field">
         <label>Region</label>
         <region-autocomplete :countryId="countryId" @onRegionSelected="onRegionSelected($event)"/>
       </div>
-      <div v-if="regionDetails" style="width:100%" class="form-field">
+      <div v-if="regionDetails" style="width:100%" class="form_field">
         <table>
           <tr><td width="100px"/><td width="250px"/></tr>
           <tr>

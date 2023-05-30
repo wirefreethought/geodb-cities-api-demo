@@ -1,7 +1,7 @@
 <template>
   <div id="find-places-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <data-table
       :data="currentPageData"
@@ -11,31 +11,34 @@
       :pageSize="pageSize"
       @pageChanged="onPageChanged">
     </data-table>
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
-          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the place name" style="width:225px"/>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <div style="display:flex; justify-content:start">
+        <div class="form_element_container">
+          <label>Name Prefix</label><br/>
+          <input v-model="namePrefix" placeholder="Place name prefix" class="form_field" style="width:125px"/>
         </div>
         <place-type @placeTypeChanged="onPlaceTypeChanged"/>
-        <div class="form-field">
-          <label>Min Population</label><br/><input v-model="minPopulation" placeholder="Minimum population"/>
+        <div class="form_element_container">
+          <label>Min Population</label><br/>
+          <input v-model="minPopulation" placeholder="Minimum population" class="form_field"/>
         </div>
-        <div class="form-field">
-          <label>Location</label><br/><input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" style="width:150px"/>
+        <div class="form_element_container">
+          <label>Location</label><br/>
+          <input v-model="location" placeholder="±DD.DDDD±DDD.DDDD" class="form_field" style="width:150px"/>
         </div>
-        <div class="form-field">
-          <label>Radius</label><br/><input v-model="radius" placeholder="Radius miles (<= 100)"/>
+        <div class="form_element_container">
+          <label>Radius</label><br/>
+          <input v-model="radius" placeholder="<= 100 MI (demo)" class="form_field" style="width:125px" />
         </div>
       </div>
 
-      <div style="display:flex; flex-flow:row">
+      <div style="display:flex; flex-flow:row; justify-content:start">
         <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
-
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div class="form-button">
-        <button @click="onRequestUpdated" class="input.form_field_submit_button">Update Results</button>
+      <div class="form_element_container">
+        <button @click="onRequestUpdated" class="form_button">Update Results</button>
       </div>
     </div>
   </div>

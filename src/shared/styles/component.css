@@ -1,19 +1,24 @@
-.endpoint-operation {
+p {
+  margin: 0;
+}
+
+.endpoint_operation {
   background-color: lavender;
   padding: 8px;
   width:100%;
 }
 
-.form-field {
+.form_element_container {
+  margin:8px;
+}
+
+.form_field {
   padding:8px;
 }
 
-.form-field select {
-  padding:0
-}
-
-.form-button {
-  padding-left:8px;
-  padding-top:8px;
-  padding-bottom:16px;
+.form_button {
+  padding:8px;
+  background: #474747;
+  color:#fff;
+  border-color:#474747;
 }

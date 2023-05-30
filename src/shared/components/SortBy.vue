@@ -1,15 +1,15 @@
 <template>
-  <div style="display:flex; justify-content:flex-start">
-    <div class="form-field">
+  <div style="display:flex; flex-direction:row; justify-content:start">
+    <div class="form_element_container">
       <label>Sort By</label><br/>
-      <select v-model="sort1" @change="onSort1Changed">
+      <select v-model="sort1" @change="onSort1Changed" class="form_field">
         <option value="">NONE</option>
         <option v-for="option in options" v-bind="option" :value="option.value">{{option.title}}</option>
       </select>
     </div>
-    <div v-if="sort1 !== ''" class="form-field">
+    <div v-if="multiLevel && sort1 !== ''" class="form_element_container">
       <label>Then By</label><br/>
-      <select v-model="sort2" @change="onChanged">
+      <select v-model="sort2" @change="onChanged" class="form_field">
         <option value="">NONE</option>
         <option v-if="!isSort1Value(option.value)" v-for="option in options" v-bind="option" :value="option.value">{{option.title}}</option>
       </select>
@@ -21,6 +21,7 @@
 export default {
   name: 'sort-by',
   props: {
+    multiLevel: true,
     options: Array
   },
   data () {

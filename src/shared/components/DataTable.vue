@@ -1,5 +1,5 @@
 <template>
-  <table :style="{width:width, textAlign:'center'}">
+  <table :style="{width:width, textAlign:'left'}">
     <thead>
     <tr>
       <th v-for="(key,idx) in columns" :key="idx">{{ key | capitalize }}</th>

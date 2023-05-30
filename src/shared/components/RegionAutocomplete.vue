@@ -2,7 +2,7 @@
   <autocomplete
     :options="currentResults"
     placeholder="Enter region"
-    width="250px"
+    width="150px"
     @input="onNamePrefixChanged"
     @select="onRegionSelected">
     <template slot="item" slot-scope="region">

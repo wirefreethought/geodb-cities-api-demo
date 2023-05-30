@@ -1,7 +1,7 @@
 <template>
   <div id="find-country-places-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <data-table v-if="country"
         :data="currentPageData"
@@ -13,7 +13,7 @@
     </data-table>
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
       <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
+        <div class="form_field">
           <label>Country</label>
           <country-autocomplete @onCountrySelected="onCountrySelected($event)"/>
         </div>
@@ -24,8 +24,8 @@
         <language @languageChanged="onLanguageChanged"/>
       </div>
 
-      <div v-if="country" class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div v-if="country" class="form_element_container">
+        <button @click="onRequestUpdated" class="form_button">Update Results</button>
       </div>
     </div>
   </div>

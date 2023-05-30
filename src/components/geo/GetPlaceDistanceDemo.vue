@@ -1,17 +1,17 @@
 <template>
   <div id="get-place-distance-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
       <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
+        <div class="form_field">
           <label>From</label>
           <place-autocomplete @onPlaceSelected="onFromPlaceSelected($event)"/>
         </div>
-        <div class="form-field">
+        <div class="form_field">
           <label>To</label>
           <place-autocomplete @onPlaceSelected="onToPlaceSelected($event)"/>
         </div>
-        <div v-if="distance" class="form-field">
+        <div v-if="distance" class="form_field">
           <label>Distance</label>
           <div>{{distance}} miles</div>
         </div>

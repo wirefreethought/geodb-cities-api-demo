@@ -1,7 +1,7 @@
 <template>
   <div id="find-countries-demo">
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
     </div>
     <data-table
       :data="currentPageData"
@@ -11,17 +11,21 @@
       :pageSize="pageSize"
       @pageChanged="onPageChanged">
     </data-table>
-    <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <div style="display:flex; justify-content:flex-start">
-        <div class="form-field">
-          <label>Name Prefix</label><br/><input v-model="namePrefix" placeholder="First letters of the country name" style="width:225px"/>
+    <div style="display:flex; flex-direction:column; justify-content:start">
+      <div style="display:flex; flex-direction:row; justify-content:start">
+        <div class="form_element_container">
+          <label>Name Prefix</label><br/>
+          <input v-model="namePrefix" placeholder="First letters of the country name" class="form_field" style="width:125px"/>
         </div>
       </div>
 
-      <language @languageChanged="onLanguageChanged"/>
+      <div style="display:flex; flex-flow:row; justify-content:start">
+        <sort-by :options="sortByOptions" @sortChanged="onSortChanged"/>
+        <language @languageChanged="onLanguageChanged"/>
+      </div>
 
-      <div class="form-button">
-        <button @click="onRequestUpdated">Update Results</button>
+      <div class="form_element_container">
+        <button @click="onRequestUpdated" class="form_button">Update Results</button>
       </div>
     </div>
   </div>
@@ -37,6 +41,7 @@ import Language from '@/shared/components/Language'
 
 import Config from '@/shared/scripts/config'
 import PageableMixin from '@/shared/scripts/pageable-mixin'
+import SortBy from "@/shared/components/SortBy.vue";
 
 const geoApi = new Config.GEO_DB.GeoApi()
 
@@ -45,17 +50,26 @@ export default {
   mixins: [PageableMixin],
   components: {
     DataTable,
-    Language
+    Language,
+    SortBy
   },
   data () {
     return {
       baseEndpointOperation: 'GET /v1/geo/countries',
       columns: ['name', 'code', 'currencies'],
 
+      sortByOptions: [
+        { value: 'name', title: 'Name, A-Z' },
+        { value: '-name', title: 'Name, Z-A' },
+        { value: 'code', title: 'Country Code, A-Z' },
+        { value: '-code', title: 'Country Code, Z-A' }
+      ],
+
       currentRequest: {},
 
       namePrefix: null,
 
+      sort: null,
       languageCode: null
     }
   },
@@ -69,6 +83,10 @@ export default {
 
       if (this.languageCode) {
         operation += '&languageCode=' + this.languageCode
+      }
+
+      if (this.sort) {
+        operation += '&sort=' + this.sort
       }
 
       return operation
@@ -86,6 +104,9 @@ export default {
         namePrefix: this.namePrefix
       }
     },
+    onSortChanged (value) {
+      this.sort = value
+    },
     refreshPageData () {
       const self = this
 
@@ -93,6 +114,7 @@ export default {
         namePrefix: this.currentRequest.namePrefix,
         currencyCode: this.currentRequest.currencyCode,
         languageCode: this.languageCode,
+        sort: this.sort,
         limit: this.pageSize,
         offset: this.offset,
         hateoasMode: false

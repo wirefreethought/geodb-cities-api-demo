@@ -1,16 +1,16 @@
 <template>
   <div>
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
       <div>
         NOTE: If you don't see results after a few seconds, it means the service isn't able to determine the admin region based on existing Wikidata.
       </div>
-      <div class="form-field">
+      <div class="form_field">
         <label>Place</label>
         <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
-      <div v-if="containingPlace" style="width:100%" class="form-field">
+      <div v-if="containingPlace" style="width:100%" class="form_field">
         <table>
           <tr><td width="200px"/><td width="250px"/></tr>
           <tr>

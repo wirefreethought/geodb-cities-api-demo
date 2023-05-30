@@ -3,7 +3,7 @@
     :options="currentResults"
     :selectedIcon="this.selectedCountry ? this.selectedCountry.flagImageUri : ''"
     placeholder="Enter country"
-    width="250px"
+    width="150px"
     @input="onNamePrefixChanged"
     @select="onCountrySelected">
     <template slot="item" slot-scope="country">

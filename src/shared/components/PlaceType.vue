@@ -1,11 +1,9 @@
 <template>
-  <div style="display:flex; justify-content:flex-start">
-    <div class="form-field">
-      <label>Type</label><br/>
-      <select v-model="selectedType" @change="onChanged" size="1">
-        <option v-for="option in typeOptions" v-bind="option" :value="option.value">{{option.title}}</option>
-      </select>
-    </div>
+  <div class="form_element_container">
+    <label>Type</label><br/>
+    <select class="form_field" v-model="selectedType" @change="onChanged" size="1">
+      <option v-for="option in typeOptions" v-bind="option" :value="option.value">{{option.title}}</option>
+    </select>
   </div>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
   <div id="get-place-details-demo">
     <div style="display:flex; flex-direction:column; justify-content:flex-start">
-      <pre class="endpoint-operation">{{ endpointOperation }}</pre>
-      <div class="form-field">
+      <pre class="endpoint_operation">{{ endpointOperation }}</pre>
+      <div class="form_field">
         <label>Place</label>
         <place-autocomplete @onPlaceSelected="onPlaceSelected($event)"/>
       </div>
 
-      <div v-if="placeDetails" style="width:100%" class="form-field">
+      <div v-if="placeDetails" style="width:100%" class="form_field">
         <table>
           <tr><td width="200px"/><td width="250px"/></tr>
           <tr v-if="placeDetails.region">
